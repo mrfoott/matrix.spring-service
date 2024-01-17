@@ -1,7 +1,11 @@
 package matrix.spring.springservice.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,10 +18,23 @@ import java.util.UUID;
 @AllArgsConstructor
 public class Review {
 
+    @Id
+    @GeneratedValue
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
+
+    @Version
     private Integer version;
+
+    @NotNull
+    @NotBlank
     private String review_content;
+
+    @NotNull
+    @Positive
     private Double review_rating;
+
     private LocalDateTime is_deleted;
     private UUID user_id;
     private UUID product_id;

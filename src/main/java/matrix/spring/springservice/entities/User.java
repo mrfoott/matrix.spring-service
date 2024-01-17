@@ -1,7 +1,10 @@
 package matrix.spring.springservice.entities;
 
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -14,14 +17,38 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User {
 
+    @Id
+    @GeneratedValue
+    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
+    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
     private UUID id;
+
+    @Version
     private Integer version;
+
+    @NotNull
+    @NotBlank
     private String user_email;
+
+    @NotNull
+    @NotBlank
     private String password;
+
+    @NotNull
+    @NotBlank
     private String full_name;
+
+    @NotNull
+    @NotBlank
     private String user_phone;
+
+    @NotNull
+    @NotBlank
     private String avatar;
+
+    @NotNull
     private Double membership_point;
+
     private LocalDateTime membership_promoted_day;
     private LocalDateTime membership_expired_day;
     private LocalDateTime is_deleted;
