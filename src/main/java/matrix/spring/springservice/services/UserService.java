@@ -20,6 +20,8 @@ public interface UserService {
 
     Boolean deleteItemInCart(UUID product_id);
 
+    void updateItemInCart(UUID product_id, CartDetailDTO cartDetailDTO);
+
     CartDetailDTO addProductToCart(ProductDTO productDTO);
 
     ReviewDTO reviewProduct(ReviewDTO reviewDTO);
