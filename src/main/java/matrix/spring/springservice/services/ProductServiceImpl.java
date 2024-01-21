@@ -16,46 +16,70 @@ public class ProductServiceImpl implements ProductService {
     public ProductServiceImpl(){
         this.productDTOMap = new HashMap<>();
 
-
     }
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return null;
+        return new ArrayList<>(productDTOMap.values());
     }
 
     @Override
     public Optional<ProductDTO> getProductById(UUID product_id) {
-        return Optional.empty();
+        return Optional.of(productDTOMap.get(product_id));
     }
 
     @Override
-    public Optional<ProductDTO> getProductByCategory(String category_name) {
+    public Optional<ProductDTO> getProductByCategory(UUID category_id) {
         return Optional.empty();
     }
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
+
+        ProductDTO newProduct = ProductDTO.builder()
+                .product_name(productDTO.getProduct_name())
+                .product_description(productDTO.getProduct_description())
+                .price(productDTO.getPrice())
+                .product_quantity(productDTO.getProduct_quantity())
+                .brand(productDTO.getBrand())
+                .sold_quantity(0)
+                .build();
+
+        productDTOMap.put(newProduct.getId(), productDTO);
+
+        return newProduct;
+    }
+
+    @Override
+    public Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO) {
+
+        ProductDTO existing = productDTOMap.get(product_id);
+
+        existing.setProduct_name(productDTO.getProduct_name());
+        existing.setProduct_description(productDTO.getProduct_description());
+        existing.setPrice(productDTO.getPrice());
+        existing.setProduct_quantity(productDTO.getProduct_quantity());
+        existing.setBrand(productDTO.getBrand());
+        existing.setSold_quantity(productDTO.getSold_quantity());
+        existing.setIs_deleted(productDTO.getIs_deleted());
+
+        productDTOMap.put(existing.getId(), existing);
+
+        return Optional.of(existing);
+    }
+
+    @Override
+    public Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO) {
+
+        ProductDTO existing = productDTOMap.get(product_id);
+
+
+
         return null;
     }
 
     @Override
-    public void updateProduct(UUID product_id, ProductDTO productDTO) {
-
-    }
-
-    @Override
-    public Boolean deleteProductById(UUID product_id) {
-        return null;
-    }
-
-    @Override
-    public Boolean deleteUserById(UUID user_id) {
-        return null;
-    }
-
-    @Override
-    public List<ReviewDTO> getProductReviews(UUID product_id) {
+    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
         return null;
     }
 }

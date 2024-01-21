@@ -13,16 +13,14 @@ public interface ProductService {
 
     Optional<ProductDTO> getProductById(UUID product_id);
 
-    Optional<ProductDTO> getProductByCategory(String category_name);
+    Optional<ProductDTO> getProductByCategory(UUID category_id);
 
     ProductDTO createProduct(ProductDTO productDTO);
 
-    void updateProduct(UUID product_id, ProductDTO productDTO);
+    Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO);
 
-    Boolean deleteProductById(UUID product_id);
+    Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO);
 
-    Boolean deleteUserById(UUID user_id);
-
-    List<ReviewDTO> getProductReviews(UUID product_id);
+    Optional<ReviewDTO> getProductReviews(UUID product_id);
 
 }

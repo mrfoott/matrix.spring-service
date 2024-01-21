@@ -2,15 +2,19 @@ package matrix.spring.springservice.services;
 
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.mappers.ProductMapper;
+import matrix.spring.springservice.mappers.ReviewMapper;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
 import matrix.spring.springservice.repositories.ProductRepository;
+import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -20,6 +24,8 @@ public class ProductServiceJPA implements ProductService {
 
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ReviewRepository reviewRepository;
+    private final ReviewMapper reviewMapper;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -31,36 +37,62 @@ public class ProductServiceJPA implements ProductService {
 
     @Override
     public Optional<ProductDTO> getProductById(UUID product_id) {
-        return Optional.empty();
+        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(product_id)
+                .orElse(null)));
     }
 
     @Override
-    public Optional<ProductDTO> getProductByCategory(String category_name) {
+    public Optional<ProductDTO> getProductByCategory(UUID category_id) {
         return Optional.empty();
     }
 
     @Override
     public ProductDTO createProduct(ProductDTO productDTO) {
-        return null;
+        return productMapper.productToProductDto(productRepository.save(productMapper.productDtoToProduct(productDTO)));
     }
 
     @Override
-    public void updateProduct(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO) {
+        AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
+        productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
+            existingProduct.setProduct_name(productDTO.getProduct_name());
+            existingProduct.setProduct_description(productDTO.getProduct_description());
+            existingProduct.setPrice(productDTO.getPrice());
+            existingProduct.setProduct_quantity(productDTO.getProduct_quantity());
+            existingProduct.setBrand(productDTO.getBrand());
+            existingProduct.setSold_quantity(productDTO.getSold_quantity());
+            existingProduct.setIs_deleted(productDTO.getIs_deleted());
+
+            atomicReference.set(Optional.of(productMapper
+                    .productToProductDto(productRepository.save(existingProduct))));
+        }, () -> {
+            atomicReference.set(Optional.empty());
+        });
+
+        return atomicReference.get();
     }
 
     @Override
-    public Boolean deleteProductById(UUID product_id) {
-        return null;
+    public Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO) {
+
+        AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
+
+        productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
+            existingProduct.setIs_deleted(LocalDateTime.now());
+
+            atomicReference.set(Optional.of(productMapper
+                    .productToProductDto(productRepository.save(existingProduct))));
+        }, () -> {
+            atomicReference.set(Optional.empty());
+        });
+
+        return atomicReference.get();
     }
 
     @Override
-    public Boolean deleteUserById(UUID user_id) {
-        return null;
-    }
-
-    @Override
-    public List<ReviewDTO> getProductReviews(UUID product_id) {
-        return null;
+    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
+        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(product_id)
+                .orElse(null)));
     }
 }

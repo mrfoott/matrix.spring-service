@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
@@ -51,10 +52,12 @@ public class Product {
     private String brand;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     private Integer sold_quantity;
 
     private LocalDateTime is_deleted;
+
+    private UUID category_id;
 
     @CreationTimestamp
     private LocalDateTime created_at;
