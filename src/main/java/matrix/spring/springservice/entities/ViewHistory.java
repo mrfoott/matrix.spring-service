@@ -22,6 +22,7 @@ public class ViewHistory {
 
     @Version
     private Integer version;
+
     private Integer view;
     private UUID user_id;
     private UUID product_id;

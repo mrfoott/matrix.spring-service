@@ -27,6 +27,7 @@ public class CartDetail {
 
     @Version
     private Integer version;
+
     private UUID user_id;
 
     @NotNull

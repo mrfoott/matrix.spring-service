@@ -1,27 +1,32 @@
 package matrix.spring.springservice.services;
 
-import lombok.extern.slf4j.Slf4j;
+import lombok.RequiredArgsConstructor;
+import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.repositories.ProductRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.*;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
-@Slf4j
 @Service
-public class ProductServiceImpl implements ProductService {
+@Primary
+@RequiredArgsConstructor
+public class ProductServiceJPA implements ProductService {
 
-    private Map<UUID, ProductDTO> productDTOMap;
-
-    public ProductServiceImpl(){
-        this.productDTOMap = new HashMap<>();
-
-
-    }
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return null;
+        return productRepository.findAll()
+                .stream()
+                .map(productMapper::productToProductDto)
+                .collect(Collectors.toList());
     }
 
     @Override

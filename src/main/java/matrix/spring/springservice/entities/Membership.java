@@ -44,7 +44,6 @@ public class Membership {
     @Positive
     private BigDecimal max_price;
 
-    @NotNull
     private LocalDateTime is_deleted;
 
     @CreationTimestamp

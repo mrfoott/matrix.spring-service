@@ -31,6 +31,7 @@ public class Role {
     @NotNull
     @NotBlank
     private String role_name;
+
     private LocalDateTime is_deleted;
 
     @CreationTimestamp

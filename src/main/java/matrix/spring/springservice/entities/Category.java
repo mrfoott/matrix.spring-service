@@ -32,7 +32,6 @@ public class Category {
     @NotBlank
     private String category_name;
 
-    @NotNull
     private LocalDateTime is_deleted;
 
     @CreationTimestamp
