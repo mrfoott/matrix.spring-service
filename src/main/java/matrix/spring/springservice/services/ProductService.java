@@ -17,10 +17,10 @@ public interface ProductService {
 
     ProductDTO createProduct(ProductDTO productDTO);
 
-    Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO);
+    Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO);
 
     Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO);
 
-    Optional<ReviewDTO> getProductReviews(UUID product_id);
+    List<ReviewDTO> getProductReviews(UUID product_id);
 
 }

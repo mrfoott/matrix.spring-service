@@ -5,6 +5,7 @@ import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Slf4j
@@ -13,9 +14,11 @@ public class ProductServiceImpl implements ProductService {
 
     private Map<UUID, ProductDTO> productDTOMap;
 
-    public ProductServiceImpl(){
-        this.productDTOMap = new HashMap<>();
+    private Map<UUID, ReviewDTO> reviewDTOMap;
 
+    public ProductServiceImpl() {
+        this.productDTOMap = new HashMap<>();
+        this.reviewDTOMap = new HashMap<>();
     }
 
     @Override
@@ -51,7 +54,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO) {
 
         ProductDTO existing = productDTOMap.get(product_id);
 
@@ -71,15 +74,22 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO) {
 
-        ProductDTO existing = productDTOMap.get(product_id);
+        ProductDTO existingProduct = productDTOMap.get(product_id);
 
+        existingProduct.setIs_deleted(LocalDateTime.now());
 
+        productDTOMap.put(existingProduct.getId(), existingProduct);
 
-        return null;
+        return Optional.of(existingProduct);
     }
 
     @Override
-    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
-        return null;
+    public List<ReviewDTO> getProductReviews(UUID product_id) {
+
+//        List<ReviewDTO> productReviews = (List<ReviewDTO>) reviewDTOMap.values();
+//        return productReviews;
+
+        return new ArrayList<>(reviewDTOMap.values());
+
     }
 }

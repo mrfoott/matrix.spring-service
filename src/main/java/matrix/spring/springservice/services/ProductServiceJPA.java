@@ -10,7 +10,6 @@ import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,7 +51,7 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> updateProduct(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO) {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
         productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
@@ -79,7 +78,7 @@ public class ProductServiceJPA implements ProductService {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
         productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
-            existingProduct.setIs_deleted(LocalDateTime.now());
+            existingProduct.setIs_deleted(productDTO.getIs_deleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -90,9 +89,26 @@ public class ProductServiceJPA implements ProductService {
         return atomicReference.get();
     }
 
+//    @Override
+//    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
+//        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(product_id)
+//                .orElse(null)));
+//    }
+
+//    @Override
+//    public List<ReviewDTO> getProductReviews(UUID product_id) {
+//        return reviewRepository.findAll(product_id)
+//                .stream()
+//                .map(reviewMapper::reviewToReviewDto)
+//                .collect(Collectors.toList());
+//    }
+
     @Override
-    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
-        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(product_id)
-                .orElse(null)));
+    public List<ReviewDTO> getProductReviews(UUID product_id) {
+        return reviewRepository.findAll()
+                .stream()
+                .map(reviewMapper::reviewToReviewDto)
+                .collect(Collectors.toList());
     }
+
 }
