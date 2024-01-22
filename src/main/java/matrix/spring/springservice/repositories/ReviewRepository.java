@@ -1,5 +1,6 @@
 package matrix.spring.springservice.repositories;
 
+import jakarta.transaction.Transactional;
 import matrix.spring.springservice.entities.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,5 +1,6 @@
 package matrix.spring.springservice.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.mappers.ReviewMapper;
@@ -16,6 +17,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
+@Transactional
 @Service
 @Primary
 @RequiredArgsConstructor

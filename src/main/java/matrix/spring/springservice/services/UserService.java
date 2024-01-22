@@ -12,17 +12,17 @@ public interface UserService {
 
     Optional<UserDTO> getUserById(UUID user_id);
 
-    Boolean deleteUserById(UUID user_id);
+    Optional<UserDTO> deleteUserById(UUID user_id);
 
-    List<CategoryDTO> getCartInfo();
+    List<CartDetailDTO> getCartInfo(UUID user_id);
 
-    Boolean updateUserById(UUID user_id, UserDTO userDTO);
+    Optional<UserDTO> updateUserById(UUID user_id, UserDTO userDTO);
 
-    Boolean deleteItemInCart(UUID product_id);
+    Boolean deleteItemInCart(UUID cartdetail_id);
 
-    void updateItemInCart(UUID product_id, CartDetailDTO cartDetailDTO);
+    Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer item_quantity);
 
-    CartDetailDTO addProductToCart(ProductDTO productDTO);
+    CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 
     ReviewDTO reviewProduct(ReviewDTO reviewDTO);
 

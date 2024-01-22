@@ -44,7 +44,7 @@ public class Product {
     private BigDecimal price;
 
     @NotNull
-    @Positive
+    @PositiveOrZero
     private Integer product_quantity;
 
     @NotNull
