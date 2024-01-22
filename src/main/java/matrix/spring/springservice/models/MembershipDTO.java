@@ -16,7 +16,7 @@ import java.util.UUID;
 @Data
 public class MembershipDTO {
 
-    private UUID id;
+    private Integer id;
     private Integer version;
 
     @NotNull

@@ -45,6 +45,11 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
+    public UserDTO createUser(UserDTO userDTO) {
+        return null;
+    }
+
+    @Override
     public Optional<UserDTO> deleteUserById(UUID user_id) {
         AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
 

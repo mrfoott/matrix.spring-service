@@ -12,6 +12,8 @@ public interface UserService {
 
     Optional<UserDTO> getUserById(UUID user_id);
 
+    UserDTO createUser(UserDTO userDTO);
+
     Optional<UserDTO> deleteUserById(UUID user_id);
 
     List<CartDetailDTO> getCartInfo(UUID user_id);

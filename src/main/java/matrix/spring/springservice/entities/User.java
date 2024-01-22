@@ -52,8 +52,8 @@ public class User {
     private LocalDateTime membership_promoted_day;
     private LocalDateTime membership_expired_day;
     private LocalDateTime is_deleted;
-    private UUID role_id;
-    private UUID membership_id;
+    private Integer role_id;
+    private Integer membership_id;
 
     @CreationTimestamp
     private LocalDateTime created_at;
