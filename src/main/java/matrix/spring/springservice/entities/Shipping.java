@@ -30,13 +30,13 @@ public class Shipping {
 
     @NotNull
     @NotBlank
-    private String shipping_status;
+    private String shippingStatus;
 
     @NotNull
     @NotBlank
-    private String shipping_location;
+    private String shippingLocation;
 
-    private UUID order_id;
+    private UUID orderId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

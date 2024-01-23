@@ -2,7 +2,6 @@ package matrix.spring.springservice.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -29,11 +28,11 @@ public class CartDetail {
     @Version
     private Integer version;
 
-    private UUID user_id;
+    private UUID userId;
 
     @NotNull
     @PositiveOrZero
-    private Integer item_quantity;
+    private Integer itemQuantity;
 
     @CreationTimestamp
     private LocalDateTime created_at;

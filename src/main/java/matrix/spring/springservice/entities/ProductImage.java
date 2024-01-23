@@ -30,14 +30,14 @@ public class ProductImage {
 
     @NotNull
     @NotBlank
-    private String image_link;
+    private String imageLink;
 
     @NotNull
     @NotBlank
-    private String image_description;
+    private String imageDescription;
 
-    private LocalDateTime is_deleted;
-    private UUID product_id;
+    private LocalDateTime isDeleted;
+    private UUID productId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

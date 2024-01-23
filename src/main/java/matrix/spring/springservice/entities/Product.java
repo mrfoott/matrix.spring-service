@@ -33,11 +33,11 @@ public class Product {
 
     @NotNull
     @NotBlank
-    private String product_name;
+    private String productName;
 
     @NotNull
     @NotBlank
-    private String product_description;
+    private String productDescription;
 
     @NotNull
     @Positive
@@ -45,7 +45,7 @@ public class Product {
 
     @NotNull
     @PositiveOrZero
-    private Integer product_quantity;
+    private Integer productQuantity;
 
     @NotNull
     @NotBlank
@@ -53,11 +53,11 @@ public class Product {
 
     @NotNull
     @PositiveOrZero
-    private Integer sold_quantity;
+    private Integer soldQuantity;
 
-    private LocalDateTime is_deleted;
+    private LocalDateTime isDeleted;
 
-    private UUID category_id;
+    private UUID categoryId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

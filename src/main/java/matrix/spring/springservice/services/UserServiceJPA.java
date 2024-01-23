@@ -54,7 +54,7 @@ public class UserServiceJPA implements UserService {
         AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
 
         userRepository.findById(user_id).ifPresentOrElse(existingUser -> {
-            existingUser.setIs_deleted(LocalDateTime.now());
+            existingUser.setIsDeleted(LocalDateTime.now());
 
             atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
         }, () -> {
@@ -78,9 +78,9 @@ public class UserServiceJPA implements UserService {
         AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
 
         userRepository.findById(user_id).ifPresentOrElse(existingUser -> {
-            existingUser.setUser_email(userDTO.getUser_email());
-            existingUser.setFull_name(userDTO.getFull_name());
-            existingUser.setUser_phone(userDTO.getUser_phone());
+            existingUser.setUserEmail(userDTO.getUser_email());
+            existingUser.setFullName(userDTO.getFull_name());
+            existingUser.setUserPhone(userDTO.getUser_phone());
 
             atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
         }, () -> {
@@ -107,7 +107,7 @@ public class UserServiceJPA implements UserService {
         AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
 
         cartDetailRepository.findById(cartdetail_id).ifPresentOrElse(existingCartDetail -> {
-            existingCartDetail.setItem_quantity(existingCartDetail.getItem_quantity() + item_quantity);
+            existingCartDetail.setItemQuantity(existingCartDetail.getItemQuantity() + item_quantity);
 
             atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
                     .save(existingCartDetail))));

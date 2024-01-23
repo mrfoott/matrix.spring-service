@@ -11,7 +11,6 @@ import matrix.spring.springservice.repositories.ProductRepository;
 import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -59,13 +58,13 @@ public class ProductServiceJPA implements ProductService {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
         productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
-            existingProduct.setProduct_name(productDTO.getProduct_name());
-            existingProduct.setProduct_description(productDTO.getProduct_description());
+            existingProduct.setProductName(productDTO.getProduct_name());
+            existingProduct.setProductDescription(productDTO.getProduct_description());
             existingProduct.setPrice(productDTO.getPrice());
-            existingProduct.setProduct_quantity(productDTO.getProduct_quantity());
+            existingProduct.setProductQuantity(productDTO.getProduct_quantity());
             existingProduct.setBrand(productDTO.getBrand());
-            existingProduct.setSold_quantity(productDTO.getSold_quantity());
-            existingProduct.setIs_deleted(productDTO.getIs_deleted());
+            existingProduct.setSoldQuantity(productDTO.getSold_quantity());
+            existingProduct.setIsDeleted(productDTO.getIs_deleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -82,7 +81,7 @@ public class ProductServiceJPA implements ProductService {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
         productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
-            existingProduct.setIs_deleted(productDTO.getIs_deleted());
+            existingProduct.setIsDeleted(productDTO.getIs_deleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));

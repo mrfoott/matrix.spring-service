@@ -3,6 +3,7 @@ package matrix.spring.springservice.controller;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import matrix.spring.springservice.models.UserDTO;
+import matrix.spring.springservice.services.ProductService;
 import matrix.spring.springservice.services.UserService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +19,11 @@ public class UserController {
     public static final String USER_ID_PATH = USER_PATH + "/{userId}";
 
     private final UserService userService;
+    private final ProductService productService;
 
 
-    @GetMapping
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
-    }
+
+
+
 
 }

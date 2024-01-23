@@ -32,18 +32,18 @@ public class OrderDetail {
 
     @NotNull
     @Positive
-    private Integer order_quantity;
+    private Integer orderQuantity;
 
     @NotNull
     @Positive
-    private BigDecimal price_at_order;
+    private BigDecimal priceAtOrder;
 
     @NotNull
     @NotBlank
-    private String product_name_at_order;
+    private String productNameAtOrder;
 
-    private UUID order_id;
-    private UUID product_id;
+    private UUID orderId;
+    private UUID productId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

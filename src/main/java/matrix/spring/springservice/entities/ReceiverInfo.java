@@ -8,7 +8,6 @@ import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
-import java.rmi.server.UID;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -31,21 +30,21 @@ public class ReceiverInfo {
 
     @NotNull
     @NotBlank
-    private String receiver_name;
+    private String receiverName;
 
     @NotNull
     @NotBlank
-    private String receiver_address;
+    private String receiverAddress;
 
     @NotNull
     @NotBlank
-    private String receiver_phone;
+    private String receiverPhone;
 
     @NotNull
-    private Integer is_default;
+    private Integer isDefault;
 
-    private LocalDateTime is_deleted;
-    private UUID user_id;
+    private LocalDateTime isDeleted;
+    private UUID userId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

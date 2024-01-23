@@ -24,7 +24,7 @@ public class ViewHistory {
     private Integer version;
 
     private Integer view;
-    private UUID user_id;
-    private UUID product_id;
+    private UUID userId;
+    private UUID productId;
 
 }

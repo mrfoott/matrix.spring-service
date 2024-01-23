@@ -32,22 +32,22 @@ public class Order {
 
     @NotNull
     @Positive
-    private BigDecimal total_price;
+    private BigDecimal totalPrice;
 
     @NotNull
     @Positive
-    private BigDecimal shipping_fee;
+    private BigDecimal shippingFee;
 
     @NotNull
     @NotBlank
-    private String payment_method;
+    private String paymentMethod;
 
     @NotNull
     @NotBlank
-    private String payment_status;
+    private String paymentStatus;
 
-    private UUID user_id;
-    private UUID receiver_info_id;
+    private UUID userId;
+    private UUID receiverInfoId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

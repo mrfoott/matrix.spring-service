@@ -30,10 +30,10 @@ public class ReviewImage {
 
     @NotNull
     @NotBlank
-    private String user_review_image;
+    private String userReviewImage;
 
-    private LocalDateTime is_deleted;
-    private UUID review_id;
+    private LocalDateTime isDeleted;
+    private UUID reviewId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

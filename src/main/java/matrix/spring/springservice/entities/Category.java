@@ -33,9 +33,9 @@ public class Category {
     @NotBlank
     @Size(max = 100)
     @Column(length = 50)
-    private String category_name;
+    private String categoryName;
 
-    private LocalDateTime is_deleted;
+    private LocalDateTime isDeleted;
 
     @CreationTimestamp
     private LocalDateTime created_at;

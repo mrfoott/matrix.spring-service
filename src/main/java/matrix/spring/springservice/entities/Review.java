@@ -31,15 +31,15 @@ public class Review {
 
     @NotNull
     @NotBlank
-    private String review_content;
+    private String reviewContent;
 
     @NotNull
     @Positive
-    private Double review_rating;
+    private Double reviewRating;
 
-    private LocalDateTime is_deleted;
-    private UUID user_id;
-    private UUID product_id;
+    private LocalDateTime isDeleted;
+    private UUID userId;
+    private UUID productId;
 
     @CreationTimestamp
     private LocalDateTime created_at;
