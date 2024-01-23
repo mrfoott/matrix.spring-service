@@ -70,9 +70,9 @@ public class ProductController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
-//    @GetMapping(value = PRODUCT_PATH_ID)
-//    public List<ReviewDTO> getProductReviews(@RequestParam(required = true) UUID product_id) {
-//        return productService.getProductReviews(product_id);
-//    }
+    @GetMapping(value = PRODUCT_PATH_ID)
+    public List<ReviewDTO> getProductReviews(@RequestParam(required = true) UUID product_id) {
+        return productService.getProductReviews(product_id);
+    }
 
 }

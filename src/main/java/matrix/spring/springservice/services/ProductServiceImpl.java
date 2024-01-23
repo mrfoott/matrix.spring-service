@@ -86,9 +86,6 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public List<ReviewDTO> getProductReviews(UUID product_id) {
 
-//        List<ReviewDTO> productReviews = (List<ReviewDTO>) reviewDTOMap.values();
-//        return productReviews;
-
         return new ArrayList<>(reviewDTOMap.values());
 
     }

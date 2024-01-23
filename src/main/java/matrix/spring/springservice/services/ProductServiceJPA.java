@@ -2,6 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import matrix.spring.springservice.entities.Review;
 import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.mappers.ReviewMapper;
 import matrix.spring.springservice.models.ProductDTO;
@@ -10,6 +11,7 @@ import matrix.spring.springservice.repositories.ProductRepository;
 import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.Optional;
@@ -107,10 +109,25 @@ public class ProductServiceJPA implements ProductService {
 
     @Override
     public List<ReviewDTO> getProductReviews(UUID product_id) {
-        return reviewRepository.findAll()
+
+        List<Review> listReviews;
+
+        if (!product_id.equals("")) {
+            listReviews = listReviewsOfAProduct(product_id);
+        } else {
+            return null;
+        }
+
+        return listReviews
                 .stream()
                 .map(reviewMapper::reviewToReviewDto)
                 .collect(Collectors.toList());
+
     }
+
+    public List<Review> listReviewsOfAProduct(UUID product_id) {
+        return reviewRepository.findAllByProduct_id(product_id);
+    }
+
 
 }
