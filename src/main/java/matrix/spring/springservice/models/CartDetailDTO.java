@@ -15,11 +15,11 @@ public class CartDetailDTO {
     private UUID id;
     private Integer version;
 
-    private UUID user_id;
+    private UUID userId;
 
     @NotNull
     @Positive
-    private Integer item_quantity;
+    private Integer itemQuantity;
 
     private LocalDateTime created_at;
     private LocalDateTime updated_at;

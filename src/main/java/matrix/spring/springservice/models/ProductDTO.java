@@ -1,14 +1,11 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -23,11 +20,11 @@ public class ProductDTO {
 
     @NotNull
     @NotBlank
-    private String product_name;
+    private String productName;
 
     @NotNull
     @NotBlank
-    private String product_description;
+    private String productDescription;
 
     @NotNull
     @Positive
@@ -35,7 +32,7 @@ public class ProductDTO {
 
     @NotNull
     @Positive
-    private Integer product_quantity;
+    private Integer productQuantity;
 
     @NotNull
     @NotBlank
@@ -43,9 +40,9 @@ public class ProductDTO {
 
     @NotNull
     @PositiveOrZero
-    private Integer sold_quantity;
+    private Integer soldQuantity;
 
-    private LocalDateTime is_deleted;
+    private LocalDateTime isDeleted;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

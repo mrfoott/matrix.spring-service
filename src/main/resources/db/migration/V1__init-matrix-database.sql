@@ -22,21 +22,7 @@ CREATE TABLE category
     created_at    TIMESTAMP,
     updated_at    TIMESTAMP,
     PRIMARY KEY (id)
- );
-
-CREATE TABLE membership
-(
-    id                  INT            NOT NULL,
-    `version`             INT,
-    membership_rank     INT            NOT NULL CHECK (membership_rank >= 0),
-    discount_percentage INT            NOT NULL,
-    min_price           DECIMAL(19, 2) NOT NULL CHECK (min_price >= 0),
-    max_price           DECIMAL(19, 2) NOT NULL CHECK (max_price > 0),
-    is_deleted          TIMESTAMP,
-    created_at          TIMESTAMP,
-    updated_at          TIMESTAMP,
-    PRIMARY KEY (id)
-);
+) ;
 
 CREATE TABLE `role`
 (
@@ -47,29 +33,7 @@ CREATE TABLE `role`
     created_at TIMESTAMP,
     updated_at TIMESTAMP,
     PRIMARY KEY (id)
- );
-
-CREATE TABLE `user`
-(
-    id                      VARCHAR(36)  NOT NULL,
-    `version`                 INT,
-    user_email              VARCHAR(255) NOT NULL,
-    password                VARCHAR(255) NOT NULL,
-    full_name               VARCHAR(255) NOT NULL,
-    user_phone              VARCHAR(20)  NOT NULL,
-    avatar                  VARCHAR(255) NOT NULL,
-    membership_point        DOUBLE       NOT NULL,
-    membership_promoted_day TIMESTAMP,
-    membership_expired_day  TIMESTAMP,
-    is_deleted              TIMESTAMP,
-    role_id                 INT,
-    membership_id           INT,
-    created_at              TIMESTAMP,
-    updated_at              TIMESTAMP,
-    PRIMARY KEY (id),
-    FOREIGN KEY (role_id) REFERENCES role (id),
-    FOREIGN KEY (membership_id) REFERENCES membership (id)
-);
+) ;
 
 CREATE TABLE product
 (
@@ -87,7 +51,7 @@ CREATE TABLE product
     updated_at          TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (category_id) REFERENCES category (id)
- );
+) ;
 
 CREATE TABLE `cart_detail`
 (
@@ -98,7 +62,43 @@ CREATE TABLE `cart_detail`
     created_at    TIMESTAMP,
     updated_at    TIMESTAMP,
     PRIMARY KEY (id)
- );
+) ;
+
+CREATE TABLE membership
+(
+    id                  INT            NOT NULL,
+    `version`             INT,
+    membership_rank     INT            NOT NULL CHECK (membership_rank >= 0),
+    discount_percentage INT            NOT NULL,
+    min_price           DECIMAL(19, 2) NOT NULL CHECK (min_price >= 0),
+    max_price           DECIMAL(19, 2) NOT NULL CHECK (max_price > 0),
+    is_deleted          TIMESTAMP,
+    created_at          TIMESTAMP,
+    updated_at          TIMESTAMP,
+    PRIMARY KEY (id)
+) ;
+
+CREATE TABLE `user`
+(
+    id                      VARCHAR(36)  NOT NULL,
+    `version`                 INT,
+    user_email              VARCHAR(255) NOT NULL,
+    `password`                VARCHAR(255) NOT NULL,
+    full_name               VARCHAR(255) NOT NULL,
+    user_phone              VARCHAR(20)  NOT NULL,
+    avatar                  VARCHAR(255) NOT NULL,
+    membership_point        DOUBLE       NOT NULL,
+    membership_promoted_day TIMESTAMP,
+    membership_expired_day  TIMESTAMP,
+    is_deleted              TIMESTAMP,
+    role_id                 INT,
+    membership_id           INT,
+    created_at              TIMESTAMP,
+    updated_at              TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (role_id) REFERENCES role (id),
+    FOREIGN KEY (membership_id) REFERENCES membership (id)
+) ;
 
 CREATE TABLE receiver_info
 (
@@ -114,11 +114,11 @@ CREATE TABLE receiver_info
     updated_at       TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES `user` (id)
-);
+) ;
 
 CREATE TABLE `order`
 (
-    uuid             VARCHAR(36)    NOT NULL,
+    id             VARCHAR(36)    NOT NULL,
     `version`          INT,
     total_price      DECIMAL(19, 2) NOT NULL CHECK (total_price > 0),
     shipping_fee     DECIMAL(19, 2) NOT NULL CHECK (shipping_fee >= 0),
@@ -128,26 +128,10 @@ CREATE TABLE `order`
     receiver_info_id VARCHAR(36),
     created_at       TIMESTAMP,
     updated_at       TIMESTAMP,
-    PRIMARY KEY (uuid),
+    PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES `user` (id),
     FOREIGN KEY (receiver_info_id) REFERENCES receiver_info (id)
- );
-
-CREATE TABLE order_detail
-(
-    id                    VARCHAR(36)    NOT NULL,
-    `version`               INT,
-    order_quantity        INT            NOT NULL CHECK (order_quantity > 0),
-    price_at_order        DECIMAL(19, 2) NOT NULL CHECK (price_at_order > 0),
-    product_name_at_order VARCHAR(255)   NOT NULL,
-    order_id              VARCHAR(36),
-    product_id            VARCHAR(36),
-    created_at            TIMESTAMP,
-    updated_at            TIMESTAMP,
-    PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES `order` (uuid),
-    FOREIGN KEY (product_id) REFERENCES product (id)
- );
+) ;
 
 CREATE TABLE product_image
 (
@@ -161,7 +145,7 @@ CREATE TABLE product_image
     updated_at        TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (product_id) REFERENCES product (id)
- );
+) ;
 
 CREATE TABLE review
 (
@@ -177,7 +161,7 @@ CREATE TABLE review
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES `user` (id),
     FOREIGN KEY (product_id) REFERENCES product (id)
- );
+) ;
 
 CREATE TABLE review_image
 (
@@ -190,7 +174,7 @@ CREATE TABLE review_image
     updated_at        TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (review_id) REFERENCES review (id)
- );
+) ;
 
 CREATE TABLE shipping
 (
@@ -202,22 +186,33 @@ CREATE TABLE shipping
     created_at        TIMESTAMP,
     updated_at        TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES `order` (uuid)
- );
+    FOREIGN KEY (order_id) REFERENCES `order` (id)
+) ;
 
 CREATE TABLE view_history
 (
     id         VARCHAR(36) NOT NULL,
     `version`    INT,
-    view       INT,
+    `view`       INT,
     user_id    VARCHAR(36),
     product_id VARCHAR(36),
     PRIMARY KEY (id),
     FOREIGN KEY (user_id) REFERENCES `user` (id),
     FOREIGN KEY (product_id) REFERENCES product (id)
- );
+) ;
 
-
-
-
-
+CREATE TABLE order_detail
+(
+    id                    VARCHAR(36)    NOT NULL,
+    `version`               INT,
+    order_quantity        INT            NOT NULL CHECK (order_quantity > 0),
+    price_at_order        DECIMAL(19, 2) NOT NULL CHECK (price_at_order > 0),
+    product_name_at_order VARCHAR(255)   NOT NULL,
+    order_id              VARCHAR(36),
+    product_id            VARCHAR(36),
+    created_at            TIMESTAMP,
+    updated_at            TIMESTAMP,
+    PRIMARY KEY (id),
+    FOREIGN KEY (order_id) REFERENCES `order` (id),
+    FOREIGN KEY (product_id) REFERENCES product (id)
+) ;

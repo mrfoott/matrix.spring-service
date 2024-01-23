@@ -1,12 +1,9 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,7 +17,7 @@ public class UserDTO {
 
     @NotNull
     @NotBlank
-    private String user_email;
+    private String userEmail;
 
     @NotNull
     @NotBlank
@@ -28,24 +25,24 @@ public class UserDTO {
 
     @NotNull
     @NotBlank
-    private String full_name;
+    private String fullName;
 
     @NotNull
     @NotBlank
-    private String user_phone;
+    private String userPhone;
 
     @NotNull
     @NotBlank
     private String avatar;
 
     @NotNull
-    private Double membership_point;
+    private Double membershipPoint;
 
-    private LocalDateTime membership_promoted_day;
-    private LocalDateTime membership_expired_day;
-    private LocalDateTime is_deleted;
-    private Integer role_id;
-    private Integer membership_id;
+    private LocalDateTime membershipPromotedDay;
+    private LocalDateTime membershipExpiredDay;
+    private LocalDateTime isDeleted;
+    private Integer roleId;
+    private Integer membershipId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

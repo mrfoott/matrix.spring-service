@@ -1,13 +1,10 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -22,18 +19,18 @@ public class OrderDetailDTO {
 
     @NotNull
     @Positive
-    private Integer order_quantity;
+    private Integer orderQuantity;
 
     @NotNull
     @Positive
-    private BigDecimal price_at_order;
+    private BigDecimal priceAtOrder;
 
     @NotNull
     @NotBlank
-    private String product_name_at_order;
+    private String productNameAtOrder;
 
-    private UUID order_id;
-    private UUID product_id;
+    private UUID orderId;
+    private UUID productId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

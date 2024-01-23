@@ -1,12 +1,9 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,10 +17,10 @@ public class ReviewImageDTO {
 
     @NotNull
     @NotBlank
-    private String user_review_image;
+    private String userReviewImage;
 
-    private LocalDateTime is_deleted;
-    private UUID review_id;
+    private LocalDateTime isDeleted;
+    private UUID reviewId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

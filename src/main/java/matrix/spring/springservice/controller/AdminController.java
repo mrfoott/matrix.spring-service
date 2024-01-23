@@ -21,9 +21,9 @@ public class AdminController {
     private static final String ADMIN_PATH_ID = ADMIN_PATH + "/{admin_id}";
 
     private static final String ADMIN_PATH_ALL_PRODUCTS = ADMIN_PATH + "/products";
-    private static final String ADMIN_PATH_PRODUCT_ID = ADMIN_PATH_ALL_PRODUCTS + "/{product_id}";
+    private static final String ADMIN_PATH_PRODUCT_ID = ADMIN_PATH_ALL_PRODUCTS + "/{productId}";
     private static final String ADMIN_PATH_ALL_USERS = ADMIN_PATH + "/users";
-    private static final String ADMIN_PATH_USER_ID = ADMIN_PATH_ALL_USERS + "/{user_id}";
+    private static final String ADMIN_PATH_USER_ID = ADMIN_PATH_ALL_USERS + "/{userId}";
 
 
     private final UserService userService;
@@ -37,10 +37,10 @@ public class AdminController {
         return userService.getAllUsers();
     }
 
-    @GetMapping(value = ADMIN_PATH)
-    public List<ProductDTO> getAllProducts() {
-        return productService.getAllProducts();
-    }
+//    @GetMapping(value = ADMIN_PATH)
+//    public List<ProductDTO> getAllProducts() {
+//        return productService.getAllProducts();
+//    }
 
 //    POST MAPPING
 

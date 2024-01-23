@@ -1,13 +1,10 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -17,27 +14,27 @@ import java.util.UUID;
 @Data
 public class OrderDTO {
 
-    private UUID uuid;
+    private UUID id;
     private Integer version;
 
     @NotNull
     @Positive
-    private BigDecimal total_price;
+    private BigDecimal totalPrice;
 
     @NotNull
     @Positive
-    private BigDecimal shipping_fee;
+    private BigDecimal shippingFee;
 
     @NotNull
     @NotBlank
-    private String payment_method;
+    private String paymentMethod;
 
     @NotNull
     @NotBlank
-    private String payment_status;
+    private String paymentStatus;
 
-    private UUID user_id;
-    private UUID receiver_info_id;
+    private UUID userId;
+    private UUID receiverInfoId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

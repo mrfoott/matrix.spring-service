@@ -27,8 +27,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductById(UUID product_id) {
-        return Optional.of(productDTOMap.get(product_id));
+    public Optional<ProductDTO> getProductById(UUID productId) {
+        return Optional.of(productDTOMap.get(productId));
     }
 
     @Override
@@ -40,12 +40,12 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
 
         ProductDTO newProduct = ProductDTO.builder()
-                .product_name(productDTO.getProduct_name())
-                .product_description(productDTO.getProduct_description())
+                .productName(productDTO.getProductName())
+                .productDescription(productDTO.getProductDescription())
                 .price(productDTO.getPrice())
-                .product_quantity(productDTO.getProduct_quantity())
+                .productQuantity(productDTO.getProductQuantity())
                 .brand(productDTO.getBrand())
-                .sold_quantity(0)
+                .soldQuantity(0)
                 .build();
 
         productDTOMap.put(newProduct.getId(), productDTO);
@@ -54,17 +54,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO) {
 
-        ProductDTO existing = productDTOMap.get(product_id);
+        ProductDTO existing = productDTOMap.get(productId);
 
-        existing.setProduct_name(productDTO.getProduct_name());
-        existing.setProduct_description(productDTO.getProduct_description());
+        existing.setProductName(productDTO.getProductName());
+        existing.setProductDescription(productDTO.getProductDescription());
         existing.setPrice(productDTO.getPrice());
-        existing.setProduct_quantity(productDTO.getProduct_quantity());
+        existing.setProductQuantity(productDTO.getProductQuantity());
         existing.setBrand(productDTO.getBrand());
-        existing.setSold_quantity(productDTO.getSold_quantity());
-        existing.setIs_deleted(productDTO.getIs_deleted());
+        existing.setSoldQuantity(productDTO.getSoldQuantity());
+        existing.setIsDeleted(productDTO.getIsDeleted());
 
         productDTOMap.put(existing.getId(), existing);
 
@@ -72,11 +72,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO) {
 
-        ProductDTO existingProduct = productDTOMap.get(product_id);
+        ProductDTO existingProduct = productDTOMap.get(productId);
 
-        existingProduct.setIs_deleted(LocalDateTime.now());
+        existingProduct.setIsDeleted(LocalDateTime.now());
 
         productDTOMap.put(existingProduct.getId(), existingProduct);
 
@@ -84,7 +84,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ReviewDTO> getProductReviews(UUID product_id) {
+    public List<ReviewDTO> getProductReviews(UUID productId) {
 
         return new ArrayList<>(reviewDTOMap.values());
 

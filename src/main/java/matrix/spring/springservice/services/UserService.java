@@ -10,19 +10,19 @@ public interface UserService {
 
     List<UserDTO> getAllUsers();
 
-    Optional<UserDTO> getUserById(UUID user_id);
+    Optional<UserDTO> getUserById(UUID userId);
 
     UserDTO createUser(UserDTO userDTO);
 
-    Optional<UserDTO> deleteUserById(UUID user_id);
+    Optional<UserDTO> deleteUserById(UUID userId);
 
-    List<CartDetailDTO> getCartInfo(UUID user_id);
+    List<CartDetailDTO> getCartInfo(UUID userId);
 
-    Optional<UserDTO> updateUserById(UUID user_id, UserDTO userDTO);
+    Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO);
 
     Boolean deleteItemInCart(UUID cartdetail_id);
 
-    Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer item_quantity);
+    Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity);
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 

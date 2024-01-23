@@ -39,8 +39,8 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUserById(UUID user_id) {
-        return Optional.ofNullable(userMapper.userToUserDto(userRepository.findById(user_id)
+    public Optional<UserDTO> getUserById(UUID userId) {
+        return Optional.ofNullable(userMapper.userToUserDto(userRepository.findById(userId)
                 .orElse(null)));
     }
 
@@ -50,10 +50,10 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> deleteUserById(UUID user_id) {
+    public Optional<UserDTO> deleteUserById(UUID userId) {
         AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
 
-        userRepository.findById(user_id).ifPresentOrElse(existingUser -> {
+        userRepository.findById(userId).ifPresentOrElse(existingUser -> {
             existingUser.setIsDeleted(LocalDateTime.now());
 
             atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
@@ -65,7 +65,7 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public List<CartDetailDTO> getCartInfo(UUID user_id) {
+    public List<CartDetailDTO> getCartInfo(UUID userId) {
         return cartDetailRepository.findAll()
                 .stream()
                 .map(cartDetailMapper::cartDetailToCartDetailDto)
@@ -73,14 +73,14 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> updateUserById(UUID user_id, UserDTO userDTO) {
+    public Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO) {
 
         AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
 
-        userRepository.findById(user_id).ifPresentOrElse(existingUser -> {
-            existingUser.setUserEmail(userDTO.getUser_email());
-            existingUser.setFullName(userDTO.getFull_name());
-            existingUser.setUserPhone(userDTO.getUser_phone());
+        userRepository.findById(userId).ifPresentOrElse(existingUser -> {
+            existingUser.setUserEmail(userDTO.getUserEmail());
+            existingUser.setFullName(userDTO.getFullName());
+            existingUser.setUserPhone(userDTO.getUserPhone());
 
             atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
         }, () -> {
@@ -102,12 +102,12 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer item_quantity) {
+    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity) {
 
         AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
 
         cartDetailRepository.findById(cartdetail_id).ifPresentOrElse(existingCartDetail -> {
-            existingCartDetail.setItemQuantity(existingCartDetail.getItemQuantity() + item_quantity);
+            existingCartDetail.setItemQuantity(existingCartDetail.getItemQuantity() + itemQuantity);
 
             atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
                     .save(existingCartDetail))));

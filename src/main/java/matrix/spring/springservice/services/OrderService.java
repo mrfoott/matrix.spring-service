@@ -12,11 +12,11 @@ public interface OrderService {
 
     List<OrderDTO> getAllOrders();
 
-    Optional<OrderDTO> getOrderById(UUID order_id);
+    Optional<OrderDTO> getOrderById(UUID orderId);
 
-    void updateShipping(UUID order_id, ShippingDTO shippingDTO);
+    void updateShipping(UUID orderId, ShippingDTO shippingDTO);
 
-    List<OrderDTO> getAllOrdersOfUserById(UUID user_id);
+    List<OrderDTO> getAllOrdersOfUserById(UUID userId);
 
     OrderDTO createOrder(OrderDTO orderDTO, OrderDetailDTO orderDetailDTO, ReceiverInfoDTO receiverInfoDTO);
 

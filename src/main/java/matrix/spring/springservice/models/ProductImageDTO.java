@@ -1,12 +1,9 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,14 +17,14 @@ public class ProductImageDTO {
 
     @NotNull
     @NotBlank
-    private String image_link;
+    private String imageLink;
 
     @NotNull
     @NotBlank
-    private String image_description;
+    private String imageDescription;
 
-    private LocalDateTime is_deleted;
-    private UUID product_id;
+    private LocalDateTime isDeleted;
+    private UUID productId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

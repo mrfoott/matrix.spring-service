@@ -38,8 +38,8 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductById(UUID product_id) {
-        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(product_id)
+    public Optional<ProductDTO> getProductById(UUID productId) {
+        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
                 .orElse(null)));
     }
 
@@ -54,17 +54,17 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO) {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
-        productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
-            existingProduct.setProductName(productDTO.getProduct_name());
-            existingProduct.setProductDescription(productDTO.getProduct_description());
+        productRepository.findById(productId).ifPresentOrElse(existingProduct -> {
+            existingProduct.setProductName(productDTO.getProductName());
+            existingProduct.setProductDescription(productDTO.getProductDescription());
             existingProduct.setPrice(productDTO.getPrice());
-            existingProduct.setProductQuantity(productDTO.getProduct_quantity());
+            existingProduct.setProductQuantity(productDTO.getProductQuantity());
             existingProduct.setBrand(productDTO.getBrand());
-            existingProduct.setSoldQuantity(productDTO.getSold_quantity());
-            existingProduct.setIsDeleted(productDTO.getIs_deleted());
+            existingProduct.setSoldQuantity(productDTO.getSoldQuantity());
+            existingProduct.setIsDeleted(productDTO.getIsDeleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -76,12 +76,12 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO) {
+    public Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO) {
 
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
-        productRepository.findById(product_id).ifPresentOrElse(existingProduct -> {
-            existingProduct.setIsDeleted(productDTO.getIs_deleted());
+        productRepository.findById(productId).ifPresentOrElse(existingProduct -> {
+            existingProduct.setIsDeleted(productDTO.getIsDeleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -93,26 +93,26 @@ public class ProductServiceJPA implements ProductService {
     }
 
 //    @Override
-//    public Optional<ReviewDTO> getProductReviews(UUID product_id) {
-//        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(product_id)
+//    public Optional<ReviewDTO> getProductReviews(UUID productId) {
+//        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(productId)
 //                .orElse(null)));
 //    }
 
 //    @Override
-//    public List<ReviewDTO> getProductReviews(UUID product_id) {
-//        return reviewRepository.findAll(product_id)
+//    public List<ReviewDTO> getProductReviews(UUID productId) {
+//        return reviewRepository.findAll(productId)
 //                .stream()
 //                .map(reviewMapper::reviewToReviewDto)
 //                .collect(Collectors.toList());
 //    }
 
     @Override
-    public List<ReviewDTO> getProductReviews(UUID product_id) {
+    public List<ReviewDTO> getProductReviews(UUID productId) {
 
         List<Review> listReviews;
 
-        if (!product_id.equals("")) {
-            listReviews = listReviewsOfAProduct(product_id);
+        if (!productId.equals("")) {
+            listReviews = listReviewsOfAProduct(productId);
         } else {
             return null;
         }
@@ -124,8 +124,8 @@ public class ProductServiceJPA implements ProductService {
 
     }
 
-    public List<Review> listReviewsOfAProduct(UUID product_id) {
-        return reviewRepository.findAllByProduct_id(product_id);
+    public List<Review> listReviewsOfAProduct(UUID productId) {
+        return reviewRepository.findAllByProductId(productId);
     }
 
 

@@ -20,7 +20,7 @@ import java.util.UUID;
 public class ProductController {
 
     private static final String PRODUCT_PATH = "/api/v1/product";
-    private static final String PRODUCT_PATH_ID = PRODUCT_PATH + "/{product_id}";
+    private static final String PRODUCT_PATH_ID = PRODUCT_PATH + "/{productId}";
     private static final String PRODUCT_PATH_CATEGORY = PRODUCT_PATH + "/{category_id}";
 
 
@@ -31,10 +31,10 @@ public class ProductController {
         return productService.getAllProducts();
     }
 
-    @GetMapping(value = PRODUCT_PATH_ID)
-    public ProductDTO getProductById(@PathVariable("product_id") UUID product_id) {
-        return productService.getProductById(product_id).orElseThrow(NotFoundException::new);
-    }
+//    @GetMapping(value = PRODUCT_PATH_ID)
+//    public ProductDTO getProductById(@PathVariable("productId") UUID productId) {
+//        return productService.getProductById(productId).orElseThrow(NotFoundException::new);
+//    }
 
     @GetMapping(value = PRODUCT_PATH_CATEGORY)
     public ProductDTO getProductByCategory(@PathVariable("category_id") UUID category_id) {
@@ -53,9 +53,9 @@ public class ProductController {
     }
 
     @PutMapping(value = PRODUCT_PATH_ID)
-    public ResponseEntity updateProductById(@PathVariable("product_id") UUID product_id, @Validated @RequestBody ProductDTO productDTO) {
+    public ResponseEntity updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
 
-        if (productService.updateProductById(product_id, productDTO).isEmpty()) {
+        if (productService.updateProductById(productId, productDTO).isEmpty()) {
             throw new NotFoundException();
         }
 
@@ -64,15 +64,15 @@ public class ProductController {
     }
 
     @PatchMapping(value = PRODUCT_PATH_ID)
-    public ResponseEntity deleteProductById(UUID product_id, @RequestBody ProductDTO productDTO) {
-        productService.deleteProductById(product_id, productDTO);
+    public ResponseEntity deleteProductById(UUID productId, @RequestBody ProductDTO productDTO) {
+        productService.deleteProductById(productId, productDTO);
 
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @GetMapping(value = PRODUCT_PATH_ID)
-    public List<ReviewDTO> getProductReviews(@RequestParam(required = true) UUID product_id) {
-        return productService.getProductReviews(product_id);
+    public List<ReviewDTO> getProductReviews(@RequestParam(required = true) UUID productId) {
+        return productService.getProductReviews(productId);
     }
 
 }

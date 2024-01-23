@@ -1,12 +1,9 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -20,21 +17,21 @@ public class ReceiverInfoDTO {
 
     @NotNull
     @NotBlank
-    private String receiver_name;
+    private String receiverName;
 
     @NotNull
     @NotBlank
-    private String receiver_address;
+    private String receiverAddress;
 
     @NotNull
     @NotBlank
-    private String receiver_phone;
+    private String receiverPhone;
 
     @NotNull
-    private Integer is_default;
+    private Integer isDefault;
 
-    private LocalDateTime is_deleted;
-    private UUID user_id;
+    private LocalDateTime isDeleted;
+    private UUID userId;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

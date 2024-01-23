@@ -26,8 +26,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> getUserById(UUID user_id) {
-        return Optional.of(userDTOMap.get(user_id));
+    public Optional<UserDTO> getUserById(UUID userId) {
+        return Optional.of(userDTOMap.get(userId));
     }
 
     @Override
@@ -35,14 +35,14 @@ public class UserServiceImpl implements UserService {
 
         UserDTO newUser = UserDTO.builder()
                 .id(userDTO.getId())
-                .user_email(userDTO.getUser_email())
+                .userEmail(userDTO.getUserEmail())
                 .password(userDTO.getPassword())
-                .full_name(userDTO.getFull_name())
+                .fullName(userDTO.getFullName())
                 .avatar(userDTO.getAvatar())
-                .membership_point(0.0)
-                .role_id(0)
-                .membership_id(0)
-                .membership_point(0.0)
+                .membershipPoint(0.0)
+                .roleId(0)
+                .membershipId(0)
+                .membershipPoint(0.0)
                 .created_at(LocalDateTime.now())
                 .updated_at(LocalDateTime.now()).build();
 
@@ -52,11 +52,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<UserDTO> deleteUserById(UUID user_id) {
+    public Optional<UserDTO> deleteUserById(UUID userId) {
 
-        UserDTO existingUser = userDTOMap.get(user_id);
+        UserDTO existingUser = userDTOMap.get(userId);
 
-        existingUser.setIs_deleted(LocalDateTime.now());
+        existingUser.setIsDeleted(LocalDateTime.now());
 
         userDTOMap.put(existingUser.getId(), existingUser);
 
@@ -65,12 +65,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<CartDetailDTO> getCartInfo(UUID user_id) {
+    public List<CartDetailDTO> getCartInfo(UUID userId) {
         return new ArrayList<>(cartDetailDTOMap.values());
     }
 
     @Override
-    public Optional<UserDTO> updateUserById(UUID user_id, UserDTO userDTO) {
+    public Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO) {
         return null;
     }
 
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer item_quantity) {
+    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity) {
         return null;
     }
 

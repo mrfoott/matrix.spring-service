@@ -11,16 +11,16 @@ public interface ProductService {
 
     List<ProductDTO> getAllProducts();
 
-    Optional<ProductDTO> getProductById(UUID product_id);
+    Optional<ProductDTO> getProductById(UUID productId);
 
     Optional<ProductDTO> getProductByCategory(UUID category_id);
 
     ProductDTO createProduct(ProductDTO productDTO);
 
-    Optional<ProductDTO> updateProductById(UUID product_id, ProductDTO productDTO);
+    Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO);
 
-    Optional<ProductDTO> deleteProductById(UUID product_id, ProductDTO productDTO);
+    Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO);
 
-    List<ReviewDTO> getProductReviews(UUID product_id);
+    List<ReviewDTO> getProductReviews(UUID productId);
 
 }

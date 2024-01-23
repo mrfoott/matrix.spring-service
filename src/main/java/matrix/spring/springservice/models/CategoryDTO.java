@@ -1,6 +1,5 @@
 package matrix.spring.springservice.models;
 
-import jakarta.persistence.Version;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -18,9 +17,9 @@ public class CategoryDTO {
 
     @NotNull
     @NotBlank
-    private String category_name;
+    private String categoryName;
 
-    private LocalDateTime is_deleted;
+    private LocalDateTime isDeleted;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

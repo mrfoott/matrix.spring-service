@@ -10,7 +10,7 @@ import java.util.UUID;
 
 public interface ReviewRepository extends JpaRepository<Review, UUID> {
 
-//    @Query(value = "SELECT * FROM review WHERE product_id=", nativeQuery = true)
-    List<Review> findAllByProduct_id(UUID product_id);
+//    @Query(value = "SELECT * FROM review WHERE productId=", nativeQuery = true)
+    List<Review> findAllByProductId(UUID productId);
 
 }
