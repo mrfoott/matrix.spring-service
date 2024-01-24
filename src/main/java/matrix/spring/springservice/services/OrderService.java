@@ -16,7 +16,7 @@ public interface OrderService {
 
     void updateShipping(UUID orderId, ShippingDTO shippingDTO);
 
-    List<OrderDTO> getAllOrdersOfUserById(UUID userId);
+    List<OrderDTO> getAllOrdersOfUserByUserId(UUID userId);
 
     OrderDTO createOrder(OrderDTO orderDTO, OrderDetailDTO orderDetailDTO, ReceiverInfoDTO receiverInfoDTO);
 

@@ -20,9 +20,11 @@ public interface UserService {
 
     Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO);
 
-    Boolean deleteItemInCart(UUID cartdetail_id);
+    Boolean deleteItemInCart(UUID cartDetailId);
 
-    Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity);
+    Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO);
+
+    Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO);
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 

@@ -2,6 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import matrix.spring.springservice.entities.CartDetail;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
@@ -46,7 +47,7 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        return null;
+        return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDTO)));
     }
 
     @Override
@@ -66,10 +67,23 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public List<CartDetailDTO> getCartInfo(UUID userId) {
-        return cartDetailRepository.findAll()
+
+        List<CartDetail> itemsInCartOfAUser;
+
+        if (!userId.equals("")) {
+            itemsInCartOfAUser = cartDetailByUserId(userId);
+        } else {
+            return null;
+        }
+
+        return itemsInCartOfAUser
                 .stream()
                 .map(cartDetailMapper::cartDetailToCartDetailDto)
                 .collect(Collectors.toList());
+    }
+
+    public List<CartDetail> cartDetailByUserId(UUID userId) {
+        return cartDetailRepository.findAllByUserId(userId);
     }
 
     @Override
@@ -92,9 +106,10 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Boolean deleteItemInCart(UUID cartdetail_id) {
-        if (cartDetailRepository.existsById(cartdetail_id)) {
-            cartDetailRepository.deleteById(cartdetail_id);
+    public Boolean deleteItemInCart(UUID cartDetailId) {
+
+        if (cartDetailRepository.existsById(cartDetailId)) {
+            cartDetailRepository.deleteById(cartDetailId);
             return true;
         }
 
@@ -102,21 +117,41 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity) {
+    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
 
         AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
 
-        cartDetailRepository.findById(cartdetail_id).ifPresentOrElse(existingCartDetail -> {
-            existingCartDetail.setItemQuantity(existingCartDetail.getItemQuantity() + itemQuantity);
+        cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
 
-            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
-                    .save(existingCartDetail))));
+            existingCartItem.setItemQuantity(cartDetailDTO.getItemQuantity() + 1);
+
+            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
         }, () -> {
             atomicReference.set(Optional.empty());
         });
+
         return atomicReference.get();
 
     }
+
+    @Override
+    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+
+        AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
+
+        cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
+
+            existingCartItem.setItemQuantity(cartDetailDTO.getItemQuantity() - 1);
+
+            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
+        }, () -> {
+            atomicReference.set(Optional.empty());
+        });
+
+        return atomicReference.get();
+
+    }
+
 
     @Override
     public CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO) {

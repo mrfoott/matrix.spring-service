@@ -17,30 +17,25 @@ import java.util.List;
 @RestController
 public class AdminController {
 
-    private static final String ADMIN_PATH = "/api/v1/admin";
-    private static final String ADMIN_PATH_ID = ADMIN_PATH + "/{admin_id}";
+    private final String ADMIN_PATH = "/api/v1/admin";
 
-    private static final String ADMIN_PATH_ALL_PRODUCTS = ADMIN_PATH + "/products";
-    private static final String ADMIN_PATH_PRODUCT_ID = ADMIN_PATH_ALL_PRODUCTS + "/{productId}";
-    private static final String ADMIN_PATH_ALL_USERS = ADMIN_PATH + "/users";
-    private static final String ADMIN_PATH_USER_ID = ADMIN_PATH_ALL_USERS + "/{userId}";
+//    Admin get all products
+    private final String ADMIN_PRODUCTS = ADMIN_PATH + "/products";
+//    Admin get product's info
+    private final String ADMIN_PRODUCT_ID = ADMIN_PRODUCTS + "/{productId}";
 
+//    Admin get all users
+    private final String ADMIN_USERS = ADMIN_PATH + "/users";
+//    Admin get user's info
+    private final String ADMIN_USER_ID = ADMIN_USERS + "/{userId}";
 
-    private final UserService userService;
-//    private final OrderService orderService;
-    private final ProductService productService;
+//    Admin get all orders
+    private final String ADMIN_ORDERS = ADMIN_PATH + "/orders";
+//    Admin get order's info
+    private final String ADMIN_ORDER_ID = ADMIN_ORDERS + "/{orderId}";
 
 //    GET MAPPING
 
-    @GetMapping(value = ADMIN_PATH)
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
-//    @GetMapping(value = ADMIN_PATH)
-//    public List<ProductDTO> getAllProducts() {
-//        return productService.getAllProducts();
-//    }
 
 //    POST MAPPING
 

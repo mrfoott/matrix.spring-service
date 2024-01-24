@@ -57,7 +57,7 @@ public class Product {
 
     private LocalDateTime isDeleted;
 
-    private UUID categoryId;
+    private Integer categoryId;
 
     @CreationTimestamp
     private LocalDateTime created_at;

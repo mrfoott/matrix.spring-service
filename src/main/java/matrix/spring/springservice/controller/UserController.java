@@ -15,13 +15,7 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    public static final String USER_PATH = "/api/v1/user";
-    public static final String USER_ID_PATH = USER_PATH + "/{userId}";
-
-    private final UserService userService;
-    private final ProductService productService;
-
-
+    private final String USER_PATH = "/api/v1/user";
 
 
 

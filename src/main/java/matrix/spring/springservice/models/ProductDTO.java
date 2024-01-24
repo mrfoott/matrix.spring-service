@@ -43,6 +43,8 @@ public class ProductDTO {
     private Integer soldQuantity;
 
     private LocalDateTime isDeleted;
+    private Integer categoryId;
+
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 

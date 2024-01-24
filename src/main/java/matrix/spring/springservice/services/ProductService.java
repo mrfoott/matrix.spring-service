@@ -13,7 +13,7 @@ public interface ProductService {
 
     Optional<ProductDTO> getProductById(UUID productId);
 
-    Optional<ProductDTO> getProductByCategory(UUID category_id);
+    List<ProductDTO> getProductsByCategory(Integer categoryId);
 
     ProductDTO createProduct(ProductDTO productDTO);
 

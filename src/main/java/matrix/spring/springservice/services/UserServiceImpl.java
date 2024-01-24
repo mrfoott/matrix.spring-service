@@ -75,14 +75,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean deleteItemInCart(UUID cartdetail_id) {
+    public Boolean deleteItemInCart(UUID cartDetailId) {
         return null;
     }
 
     @Override
-    public Optional<CartDetailDTO> updateItemInCart(UUID cartdetail_id, Integer itemQuantity) {
-        return null;
+    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+        return Optional.empty();
     }
+
+    @Override
+    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+        return Optional.empty();
+    }
+
 
     @Override
     public CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO) {

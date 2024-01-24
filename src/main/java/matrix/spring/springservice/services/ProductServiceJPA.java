@@ -2,6 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import matrix.spring.springservice.entities.Product;
 import matrix.spring.springservice.entities.Review;
 import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.mappers.ReviewMapper;
@@ -12,6 +13,7 @@ import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -44,8 +46,25 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductByCategory(UUID category_id) {
-        return Optional.empty();
+    public List<ProductDTO> getProductsByCategory(Integer categoryId) {
+
+        List<Product> productsListByCategory;
+
+        if (categoryId != null) {
+            productsListByCategory = listProductsByCategory(categoryId);
+        } else {
+            return null;
+        }
+
+        return productsListByCategory
+                .stream()
+                .map(productMapper::productToProductDto)
+                .collect(Collectors.toList());
+
+    }
+
+    List<Product> listProductsByCategory(Integer categoryId) {
+        return productRepository.findAllByCategoryId(categoryId);
     }
 
     @Override
@@ -64,7 +83,6 @@ public class ProductServiceJPA implements ProductService {
             existingProduct.setProductQuantity(productDTO.getProductQuantity());
             existingProduct.setBrand(productDTO.getBrand());
             existingProduct.setSoldQuantity(productDTO.getSoldQuantity());
-            existingProduct.setIsDeleted(productDTO.getIsDeleted());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -81,7 +99,7 @@ public class ProductServiceJPA implements ProductService {
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 
         productRepository.findById(productId).ifPresentOrElse(existingProduct -> {
-            existingProduct.setIsDeleted(productDTO.getIsDeleted());
+            existingProduct.setIsDeleted(LocalDateTime.now());
 
             atomicReference.set(Optional.of(productMapper
                     .productToProductDto(productRepository.save(existingProduct))));
@@ -111,7 +129,7 @@ public class ProductServiceJPA implements ProductService {
 
         List<Review> listReviews;
 
-        if (!productId.equals("")) {
+        if (!productId.toString().isEmpty()) {
             listReviews = listReviewsOfAProduct(productId);
         } else {
             return null;

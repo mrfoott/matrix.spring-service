@@ -32,8 +32,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductByCategory(UUID category_id) {
-        return Optional.empty();
+    public List<ProductDTO> getProductsByCategory(Integer categoryId) {
+        return new ArrayList<>(productDTOMap.values());
     }
 
     @Override
@@ -46,6 +46,7 @@ public class ProductServiceImpl implements ProductService {
                 .productQuantity(productDTO.getProductQuantity())
                 .brand(productDTO.getBrand())
                 .soldQuantity(0)
+                .categoryId(productDTO.getCategoryId())
                 .build();
 
         productDTOMap.put(newProduct.getId(), productDTO);
@@ -64,7 +65,6 @@ public class ProductServiceImpl implements ProductService {
         existing.setProductQuantity(productDTO.getProductQuantity());
         existing.setBrand(productDTO.getBrand());
         existing.setSoldQuantity(productDTO.getSoldQuantity());
-        existing.setIsDeleted(productDTO.getIsDeleted());
 
         productDTOMap.put(existing.getId(), existing);
 
@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDTO existingProduct = productDTOMap.get(productId);
 
-        existingProduct.setIsDeleted(LocalDateTime.now());
+//        existingProduct.setIsDeleted(LocalDateTime.now());
 
         productDTOMap.put(existingProduct.getId(), existingProduct);
 
