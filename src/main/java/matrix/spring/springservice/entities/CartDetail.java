@@ -39,5 +39,5 @@ public class CartDetail {
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
-
+    
 }

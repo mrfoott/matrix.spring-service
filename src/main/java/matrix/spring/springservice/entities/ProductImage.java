@@ -45,4 +45,10 @@ public class ProductImage {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
+    @ManyToOne
+    private Product product;
+
+    @ManyToOne
+    private Category category;
+
 }

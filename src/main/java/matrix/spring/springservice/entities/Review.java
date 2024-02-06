@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -46,5 +47,8 @@ public class Review {
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    @OneToMany(mappedBy = "review")
+    private List<ReviewImage> reviewImages;
 
 }

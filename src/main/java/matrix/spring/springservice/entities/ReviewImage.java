@@ -41,4 +41,7 @@ public class ReviewImage {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
+    @ManyToOne
+    private Review review;
+
 }

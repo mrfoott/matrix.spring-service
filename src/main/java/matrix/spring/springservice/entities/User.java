@@ -60,4 +60,7 @@ public class User {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
+    @ManyToOne
+    private Membership membership;
+
 }

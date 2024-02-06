@@ -48,9 +48,5 @@ public class OrderController {
 
     }
 
-    @GetMapping
-    public List<OrderDTO> getAllOrders() {
-
-    }
 
 }
