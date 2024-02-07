@@ -15,7 +15,7 @@ drop table if exists view_history;
 
 CREATE TABLE category
 (
-    id            VARCHAR(36) NOT NULL,
+    id            INT        NOT NULL,
     `version`       INT,
     category_name VARCHAR(50) NOT NULL,
     is_deleted    TIMESTAMP,

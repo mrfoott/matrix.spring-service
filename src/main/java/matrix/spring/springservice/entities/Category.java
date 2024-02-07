@@ -22,10 +22,7 @@ import java.util.UUID;
 public class Category {
 
     @Id
-    @GeneratedValue
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(length = 36, columnDefinition = "varchar", updatable = false, nullable = false)
-    private UUID id;
+    private Integer id;
 
     @Version
     private Integer version;
