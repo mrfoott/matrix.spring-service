@@ -70,6 +70,8 @@ public class AdminController {
 
     }
 
+//    PUT MAPPING
+
     public ResponseEntity updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
         if (productService.updateProductById(productId, productDTO).isEmpty()) {
             throw new NotFoundException();
@@ -78,8 +80,5 @@ public class AdminController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
 
     }
-
-
-//    PUT MAPPING
 
 }
