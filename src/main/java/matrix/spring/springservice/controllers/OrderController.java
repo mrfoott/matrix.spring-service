@@ -1,4 +1,4 @@
-package matrix.spring.springservice.controller;
+package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -6,7 +6,6 @@ import matrix.spring.springservice.models.OrderDTO;
 import matrix.spring.springservice.models.ShippingDTO;
 import matrix.spring.springservice.services.OrderService;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;

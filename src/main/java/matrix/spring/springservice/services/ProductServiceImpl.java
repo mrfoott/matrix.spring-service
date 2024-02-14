@@ -76,7 +76,7 @@ public class ProductServiceImpl implements ProductService {
 
         ProductDTO existingProduct = productDTOMap.get(productId);
 
-//        existingProduct.setIsDeleted(LocalDateTime.now());
+        existingProduct.setIsDeleted(LocalDateTime.now());
 
         productDTOMap.put(existingProduct.getId(), existingProduct);
 

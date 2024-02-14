@@ -15,7 +15,7 @@ import java.util.UUID;
 @Data
 public class ProductDTO {
 
-    private Integer id;
+    private UUID id;
     private Integer version;
 
     @NotNull

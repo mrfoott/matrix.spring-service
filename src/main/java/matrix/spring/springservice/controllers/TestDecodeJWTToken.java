@@ -1,4 +1,4 @@
-package matrix.spring.springservice.controller;
+package matrix.spring.springservice.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
