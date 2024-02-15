@@ -28,8 +28,10 @@ public interface UserService {
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 
-    ReviewDTO reviewProduct(ReviewDTO reviewDTO);
+    ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList);
 
     ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO);
+
+
 
 }

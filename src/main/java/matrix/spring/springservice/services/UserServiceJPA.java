@@ -160,7 +160,7 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList) {
         return reviewMapper.reviewToReviewDto(reviewRepository.save(reviewMapper.reviewDtoToReview(reviewDTO)));
     }
 

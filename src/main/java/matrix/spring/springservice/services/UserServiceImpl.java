@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList) {
         return null;
     }
 
