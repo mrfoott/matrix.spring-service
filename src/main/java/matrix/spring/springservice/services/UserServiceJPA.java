@@ -117,13 +117,13 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
 
         AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
 
         cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
 
-            existingCartItem.setItemQuantity(cartDetailDTO.getItemQuantity() + 1);
+            existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() + 1);
 
             atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
         }, () -> {
@@ -135,13 +135,13 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
 
         AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
 
         cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
 
-            existingCartItem.setItemQuantity(cartDetailDTO.getItemQuantity() - 1);
+            existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() - 1);
 
             atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
         }, () -> {
@@ -160,7 +160,7 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewDTOList) {
         return reviewMapper.reviewToReviewDto(reviewRepository.save(reviewMapper.reviewDtoToReview(reviewDTO)));
     }
 

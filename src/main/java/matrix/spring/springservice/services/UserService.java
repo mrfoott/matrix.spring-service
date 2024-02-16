@@ -22,13 +22,13 @@ public interface UserService {
 
     Boolean deleteItemInCart(UUID cartDetailId);
 
-    Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO);
+    Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId);
 
-    Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO);
+    Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId);
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 
-    ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList);
+    ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList);
 
     ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO);
 

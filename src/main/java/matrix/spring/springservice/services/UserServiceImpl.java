@@ -80,12 +80,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
         return Optional.empty();
     }
 
     @Override
-    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId, CartDetailDTO cartDetailDTO) {
+    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
         return Optional.empty();
     }
 
@@ -96,7 +96,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewDTO> reviewDTOList) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewDTOList) {
         return null;
     }
 

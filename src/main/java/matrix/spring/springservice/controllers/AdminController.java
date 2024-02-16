@@ -136,4 +136,10 @@ public class AdminController {
 
     }
 
+    public Boolean deleteItemInCart(UUID cartDetailId) {
+
+        return userService.deleteItemInCart(cartDetailId);
+
+    }
+
 }
