@@ -2,9 +2,12 @@ package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import matrix.spring.springservice.models.CartDetailDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.models.UserDTO;
 import matrix.spring.springservice.services.ProductService;
+import matrix.spring.springservice.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +26,8 @@ import java.util.UUID;
 public class AdminController {
 
     ProductService productService;
+
+    UserService userService;
 
     private final String ADMIN_PATH = "/api/v1/admin";
 
@@ -87,6 +92,48 @@ public class AdminController {
 
     public List<ReviewDTO> getProductReviews(UUID productId) {
         return productService.getProductReviews(productId);
+    }
+
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    public Optional<UserDTO> getUserById(UUID userId) {
+        return userService.getUserById(userId);
+    }
+
+    public ResponseEntity createUser(@Validated @RequestBody UserDTO userDTO) {
+
+        UserDTO newUser = userService.createUser(userDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
+
+    public ResponseEntity deleteUserById(@PathVariable("userId") UUID userId) {
+        if (userService.deleteUserById(userId).isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    public List<CartDetailDTO> getCartInfo(UUID userId) {
+
+        return userService.getCartInfo(userId);
+
+    }
+
+    public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
+
+        if (userService.updateUserById(userId, userDTO).isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+
     }
 
 }
