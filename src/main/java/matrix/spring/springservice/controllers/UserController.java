@@ -49,8 +49,20 @@ public class UserController {
     }
 
     public Optional<UserDTO> getUserById(UUID userId) {
+
+        if (userService.getUserById(userId).isEmpty()) {
+            throw new NotFoundException();
+        }
+
         return userService.getUserById(userId);
     }
 
+    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
+        return userService.plusOneItemInCart(cartDetailId);
+    }
+
+    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
+        return userService.minusOneItemInCart(cartDetailId);
+    }
 
 }

@@ -76,7 +76,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Boolean deleteItemInCart(UUID cartDetailId) {
-        return null;
+
+        cartDetailDTOMap.remove(cartDetailId);
+        return true;
+
     }
 
     @Override
