@@ -3,6 +3,8 @@ package matrix.spring.springservice.services;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.entities.CartDetail;
+import matrix.spring.springservice.entities.Review;
+import matrix.spring.springservice.entities.ReviewImage;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
@@ -30,6 +32,8 @@ public class UserServiceJPA implements UserService {
     private final ReceiverInfoMapper receiverInfoMapper;
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
+    private final ReviewImageRepository reviewImageRepository;
+    private final ReviewImageMapper reviewImageMapper;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -160,8 +164,26 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewDTOList) {
-        return reviewMapper.reviewToReviewDto(reviewRepository.save(reviewMapper.reviewDtoToReview(reviewDTO)));
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList) {
+        Review review = reviewMapper.reviewDtoToReview(reviewDTO);
+
+        Review savedReview = reviewRepository.save(review);
+
+        // Map ReviewImageDTO list to ReviewImage entity list
+        List<ReviewImage> reviewImages = reviewImageDTOList
+                .stream()
+                .map(reviewImageMapper::reviewImageDtoToReviewImage)
+                .collect(Collectors.toList());
+
+        // Set review id for each review image
+        reviewImages.forEach(reviewImage -> reviewImage.setReview(savedReview));
+
+        // Save review images to database
+        reviewImageRepository.saveAll(reviewImages);
+
+        // Map saved review back to DTO and return
+        return reviewMapper.reviewToReviewDto(savedReview);
+
     }
 
     @Override

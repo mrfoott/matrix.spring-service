@@ -84,18 +84,44 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
-        return Optional.empty();
+        CartDetailDTO exsisting = cartDetailDTOMap.get(cartDetailId);
+
+        exsisting.setItemQuantity(exsisting.getItemQuantity() + 1);
+
+        cartDetailDTOMap.put(cartDetailId, exsisting);
+
+        return Optional.of(exsisting);
+
     }
 
     @Override
     public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
-        return Optional.empty();
+
+        CartDetailDTO exsisting = cartDetailDTOMap.get(cartDetailId);
+
+        exsisting.setItemQuantity(exsisting.getItemQuantity() + 1);
+
+        cartDetailDTOMap.put(cartDetailId, exsisting);
+
+        return Optional.of(exsisting);
+
     }
 
 
     @Override
     public CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO) {
-        return null;
+
+        CartDetailDTO newCartDetail = CartDetailDTO.builder()
+                .userId(cartDetailDTO.getUserId())
+                .created_at(LocalDateTime.now())
+                .updated_at(LocalDateTime.now())
+                .itemQuantity(1)
+                .build();
+
+        cartDetailDTOMap.put(newCartDetail.getId(), newCartDetail);
+
+        return newCartDetail;
+
     }
 
     @Override
