@@ -48,8 +48,8 @@ public class UserServiceImpl implements UserService {
                 .roleId(0)
                 .membershipId(0)
                 .membershipPoint(0.0)
-                .created_at(LocalDateTime.now())
-                .updated_at(LocalDateTime.now()).build();
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now()).build();
 
         userDTOMap.put(newUser.getId(), newUser);
 
@@ -118,8 +118,8 @@ public class UserServiceImpl implements UserService {
 
         CartDetailDTO newCartDetail = CartDetailDTO.builder()
                 .userId(cartDetailDTO.getUserId())
-                .created_at(LocalDateTime.now())
-                .updated_at(LocalDateTime.now())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .itemQuantity(1)
                 .build();
 

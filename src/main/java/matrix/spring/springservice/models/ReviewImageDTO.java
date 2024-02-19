@@ -21,7 +21,7 @@ public class ReviewImageDTO {
 
     private LocalDateTime isDeleted;
     private UUID reviewId;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

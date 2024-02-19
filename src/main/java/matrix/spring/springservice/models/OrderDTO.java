@@ -35,7 +35,7 @@ public class OrderDTO {
 
     private UUID userId;
     private UUID receiverInfoId;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

@@ -62,15 +62,15 @@ public class Product {
     private Integer categoryId;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
 
-//    @ManyToOne
-//    private Category category;
+    @ManyToOne
+    private Category category;
 
 }

@@ -52,10 +52,10 @@ public class Order {
     private UUID receiverInfoId;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;

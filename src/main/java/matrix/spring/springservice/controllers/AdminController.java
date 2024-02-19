@@ -21,11 +21,11 @@ import java.util.UUID;
 @RestController
 public class AdminController {
 
-    private  final ProductService productService;
+    private final ProductService productService;
 
-   private final UserService userService;
+    private final UserService userService;
 
-   private final OrderService orderService;
+    private final OrderService orderService;
 
     private final String ADMIN_PATH = "/api/v1/admin";
 
@@ -42,7 +42,7 @@ public class AdminController {
     //    Admin get all categories
     private final String ADMIN_CATEGORIES = ADMIN_PATH + "/categories";
     //    Admin products of a category
-    private final String ADMIN_PRODUCT_CATEGORY = ADMIN_CATEGORIES + "/{categoryId}";
+    private final String ADMIN_PRODUCTS_CATEGORY = ADMIN_CATEGORIES + "/{categoryId}";
     //    Admin get all orders
     private final String ADMIN_ORDERS = ADMIN_PATH + "/orders";
     //    Admin get order's info
@@ -50,20 +50,26 @@ public class AdminController {
 
 //    GET MAPPING
 
-//    /api/v1/admin/products
+    //    /api/v1/admin/products
     @GetMapping(ADMIN_PRODUCTS)
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
-//    /api/v1/admin/products/productId
+    //    /api/v1/admin/products/productId
     @GetMapping(ADMIN_PRODUCT_ID)
     public Optional<ProductDTO> getProductById(@PathVariable("productId") UUID productId) {
         return productService.getProductById(productId);
     }
 
-//    /api/v1/products/categoryId
-    @GetMapping(ADMIN_PRODUCT_CATEGORY)
+    //    /api/v1/admin/categories
+    @GetMapping(ADMIN_CATEGORIES)
+    public List<CategoryDTO> getAllCategories() {
+        return productService.getAllCategories();
+    }
+
+    //    /api/v1/admin/categories/categoryId
+    @GetMapping(ADMIN_PRODUCTS_CATEGORY)
     public List<ProductDTO> getProductsByCategory(@PathVariable("categoryId") Integer categoryId) {
         return productService.getProductsByCategory(categoryId);
     }
@@ -75,7 +81,7 @@ public class AdminController {
 
 //    POST MAPPING
 
-//    /api/v1/admin/products
+    //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
     public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
 
@@ -87,7 +93,7 @@ public class AdminController {
 
     }
 
-//    /api/v1/admin/categories
+    //    /api/v1/admin/categories
     @PostMapping(ADMIN_CATEGORIES)
     public ResponseEntity createCategory(@Validated @RequestBody CategoryDTO categoryDTO) {
 

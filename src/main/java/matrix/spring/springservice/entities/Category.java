@@ -23,6 +23,7 @@ import java.util.UUID;
 public class Category {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Version
@@ -31,16 +32,20 @@ public class Category {
     @NotNull
     @NotBlank
     @Size(max = 100)
-    @Column(length = 50)
+    @Column(length = 50, name = "category_name")
     private String categoryName;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    @Column(name = "updated_at")
+
+    private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "category")
     private List<Product> products;

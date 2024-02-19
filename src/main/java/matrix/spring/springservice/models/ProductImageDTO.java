@@ -25,7 +25,7 @@ public class ProductImageDTO {
 
     private LocalDateTime isDeleted;
     private UUID productId;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

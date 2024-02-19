@@ -56,10 +56,10 @@ public class User {
     private Integer membershipId;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     private Membership membership;

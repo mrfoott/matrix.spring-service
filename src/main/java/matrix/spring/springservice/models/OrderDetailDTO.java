@@ -31,7 +31,7 @@ public class OrderDetailDTO {
 
     private UUID orderId;
     private UUID productId;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

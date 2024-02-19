@@ -45,7 +45,7 @@ public class ProductDTO {
     private LocalDateTime isDeleted;
     private Integer categoryId;
 
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

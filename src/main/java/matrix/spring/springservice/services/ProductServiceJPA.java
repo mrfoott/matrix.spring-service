@@ -45,6 +45,14 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
+    public List<CategoryDTO> getAllCategories() {
+        return categoryRepository.findAll()
+                .stream()
+                .map(categoryMapper::categoryToCategoryDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public Optional<ProductDTO> getProductById(UUID productId) {
         return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
                 .orElse(null)));

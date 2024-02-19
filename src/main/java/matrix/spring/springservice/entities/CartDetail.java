@@ -30,7 +30,6 @@ public class CartDetail {
     private Integer version;
 
     private UUID userId;
-
     private UUID productId;
 
     @NotNull
@@ -38,10 +37,10 @@ public class CartDetail {
     private Integer itemQuantity;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     private User user;

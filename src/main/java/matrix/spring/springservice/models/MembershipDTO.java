@@ -30,7 +30,7 @@ public class MembershipDTO {
     private BigDecimal maxPrice;
 
     private LocalDateTime isDeleted;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }

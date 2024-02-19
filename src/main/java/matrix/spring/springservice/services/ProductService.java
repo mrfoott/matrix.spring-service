@@ -13,6 +13,8 @@ public interface ProductService {
 
     List<ProductDTO> getAllProducts();
 
+    List<CategoryDTO> getAllCategories();
+
     Optional<ProductDTO> getProductById(UUID productId);
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);

@@ -47,10 +47,10 @@ public class OrderDetail {
     private UUID productId;
 
     @CreationTimestamp
-    private LocalDateTime created_at;
+    private LocalDateTime createdAt;
 
     @UpdateTimestamp
-    private LocalDateTime updated_at;
+    private LocalDateTime updatedAt;
 
     @ManyToOne
     private Order order;

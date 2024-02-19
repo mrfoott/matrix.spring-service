@@ -30,6 +30,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public List<CategoryDTO> getAllCategories() {
+        return new ArrayList<>(categoryDTOMap.values());
+    }
+
+    @Override
     public Optional<ProductDTO> getProductById(UUID productId) {
         return Optional.of(productDTOMap.get(productId));
     }
@@ -38,6 +43,8 @@ public class ProductServiceImpl implements ProductService {
     public CategoryDTO createCategory(CategoryDTO categoryDTO) {
         CategoryDTO newCategory = CategoryDTO.builder()
                 .categoryName(categoryDTO.getCategoryName())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         categoryDTOMap.put(newCategory.getId(), categoryDTO);

@@ -32,7 +32,7 @@ public class ReceiverInfoDTO {
 
     private LocalDateTime isDeleted;
     private UUID userId;
-    private LocalDateTime created_at;
-    private LocalDateTime updated_at;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 
 }
