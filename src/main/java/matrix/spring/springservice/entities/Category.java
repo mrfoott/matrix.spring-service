@@ -19,6 +19,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "category")
 public class Category {
 
     @Id
@@ -41,7 +42,7 @@ public class Category {
     @UpdateTimestamp
     private LocalDateTime updated_at;
 
-    @OneToMany
+    @OneToMany(mappedBy = "category")
     private List<Product> products;
 
 

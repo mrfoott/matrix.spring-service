@@ -31,6 +31,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> getInfoOfSelf(UUID userId) {
+        return Optional.of(userDTOMap.get(userId));
+    }
+
+    @Override
     public UserDTO createUser(UserDTO userDTO) {
 
         UserDTO newUser = UserDTO.builder()

@@ -17,6 +17,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "receiver_info")
 public class ReceiverInfo {
 
     @Id

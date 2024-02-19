@@ -17,6 +17,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "cart_detail")
 public class CartDetail {
 
     @Id
@@ -30,6 +31,8 @@ public class CartDetail {
 
     private UUID userId;
 
+    private UUID productId;
+
     @NotNull
     @PositiveOrZero
     private Integer itemQuantity;
@@ -39,5 +42,11 @@ public class CartDetail {
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    @ManyToOne
+    private User user;
+
+    @ManyToOne
+    private Product product;
     
 }

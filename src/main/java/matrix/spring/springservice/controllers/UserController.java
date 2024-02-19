@@ -48,7 +48,7 @@ public class UserController {
 
     }
 
-    public Optional<UserDTO> getUserById(UUID userId) {
+    public Optional<UserDTO> getInfoOfSelf(UUID userId) {
 
         if (userService.getUserById(userId).isEmpty()) {
             throw new NotFoundException();

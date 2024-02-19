@@ -55,9 +55,12 @@ public class OrderServiceImpl implements OrderService {
                 .receiverInfoId(orderDTO.getReceiverInfoId())
                 .build();
 
-        for (:
-             ) {
-            
-        }
+//        for (:
+//             ) {
+//
+//        }
+
+        return null;
+
     }
 }

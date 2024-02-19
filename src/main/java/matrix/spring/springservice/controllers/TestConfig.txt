@@ -1,0 +1,18 @@
+//ackage matrix.spring.springservice.security;
+//
+//
+//@EnableWebSecurity
+//public class SecurityConfig extends SecurityConfigurerAdapter<DefaultSecurityFilterChain, HttpSecurity> {
+//    @Override
+//    public void configure(HttpSecurity http) throws Exception {
+//        http
+//                .authorizeRequests()
+//                .requestMatchers(HttpMethod.GET, "/api/v1/admin/.*").hasRole("1")
+//                .requestMatchers(HttpMethod.POST, "/api/v1/admin/.*").hasRole("1")
+//                .requestMatchers(HttpMethod.PUT, "/api/v1/admin/.*").hasRole("1")
+//                .requestMatchers(HttpMethod.GET, "/api/v1/user/.*").hasAnyRole("0", "1")
+//                .requestMatchers(HttpMethod.POST, "/api/v1/user/.*").hasAnyRole("0", "1")
+//                .requestMatchers(HttpMethod.PUT, "/api/v1/user/.*").hasAnyRole("0", "1")
+//                .anyRequest().authenticated();
+//    }
+//}

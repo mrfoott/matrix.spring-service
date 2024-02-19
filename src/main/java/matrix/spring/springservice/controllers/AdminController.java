@@ -2,19 +2,15 @@ package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.models.CartDetailDTO;
-import matrix.spring.springservice.models.ProductDTO;
-import matrix.spring.springservice.models.ReviewDTO;
-import matrix.spring.springservice.models.UserDTO;
+import matrix.spring.springservice.models.*;
+import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.ProductService;
 import matrix.spring.springservice.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -25,9 +21,11 @@ import java.util.UUID;
 @RestController
 public class AdminController {
 
-    ProductService productService;
+    private  final ProductService productService;
 
-    UserService userService;
+   private final UserService userService;
+
+   private final OrderService orderService;
 
     private final String ADMIN_PATH = "/api/v1/admin";
 
@@ -36,31 +34,49 @@ public class AdminController {
     //    Admin get product's info
     private final String ADMIN_PRODUCT_ID = ADMIN_PRODUCTS + "/{productId}";
 
+
     //    Admin get all users
     private final String ADMIN_USERS = ADMIN_PATH + "/users";
     //    Admin get user's info
     private final String ADMIN_USER_ID = ADMIN_USERS + "/{userId}";
-
+    //    Admin get all categories
+    private final String ADMIN_CATEGORIES = ADMIN_PATH + "/categories";
+    //    Admin products of a category
+    private final String ADMIN_PRODUCT_CATEGORY = ADMIN_CATEGORIES + "/{categoryId}";
     //    Admin get all orders
     private final String ADMIN_ORDERS = ADMIN_PATH + "/orders";
     //    Admin get order's info
     private final String ADMIN_ORDER_ID = ADMIN_ORDERS + "/{orderId}";
 
 //    GET MAPPING
+
+//    /api/v1/admin/products
+    @GetMapping(ADMIN_PRODUCTS)
     public List<ProductDTO> getAllProducts() {
         return productService.getAllProducts();
     }
 
+//    /api/v1/admin/products/productId
+    @GetMapping(ADMIN_PRODUCT_ID)
     public Optional<ProductDTO> getProductById(@PathVariable("productId") UUID productId) {
         return productService.getProductById(productId);
     }
 
+//    /api/v1/products/categoryId
+    @GetMapping(ADMIN_PRODUCT_CATEGORY)
     public List<ProductDTO> getProductsByCategory(@PathVariable("categoryId") Integer categoryId) {
         return productService.getProductsByCategory(categoryId);
     }
 
+    @GetMapping()
+    public Optional<UserDTO> getUserByid(@PathVariable("userId") UUID userid) {
+        return userService.getUserById(userid);
+    }
+
 //    POST MAPPING
 
+//    /api/v1/admin/products
+    @PostMapping(ADMIN_PRODUCTS)
     public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
 
         ProductDTO newProduct = productService.createProduct(productDTO);
@@ -70,6 +86,19 @@ public class AdminController {
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
 
     }
+
+//    /api/v1/admin/categories
+    @PostMapping(ADMIN_CATEGORIES)
+    public ResponseEntity createCategory(@Validated @RequestBody CategoryDTO categoryDTO) {
+
+        CategoryDTO newCategory = productService.createCategory(categoryDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
+
 
 //    PUT MAPPING
 

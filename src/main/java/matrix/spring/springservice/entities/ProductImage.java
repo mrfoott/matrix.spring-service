@@ -17,6 +17,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "product_image")
 public class ProductImage {
 
     @Id
@@ -48,7 +49,5 @@ public class ProductImage {
     @ManyToOne
     private Product product;
 
-    @ManyToOne
-    private Category category;
 
 }

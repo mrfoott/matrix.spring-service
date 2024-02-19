@@ -12,6 +12,8 @@ public interface UserService {
 
     Optional<UserDTO> getUserById(UUID userId);
 
+    Optional<UserDTO> getInfoOfSelf(UUID userId);
+
     UserDTO createUser(UserDTO userDTO);
 
     Optional<UserDTO> deleteUserById(UUID userId);

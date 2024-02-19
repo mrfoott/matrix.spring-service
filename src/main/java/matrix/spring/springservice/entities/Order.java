@@ -20,6 +20,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "order")
 public class Order {
 
     @Id

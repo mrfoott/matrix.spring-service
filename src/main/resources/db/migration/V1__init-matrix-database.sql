@@ -1,21 +1,7 @@
-drop table if exists cart_detail;
-drop table if exists category;
-drop table if exists membership;
-drop table if exists `order`;
-drop table if exists order_detail;
-drop table if exists product;
-drop table if exists product_image;
-drop table if exists receiver_info;
-drop table if exists review;
-drop table if exists review_image;
-drop table if exists `role`;
-drop table if exists shipping;
-drop table if exists `user`;
-drop table if exists view_history;
 
 CREATE TABLE category
 (
-    id            INT        NOT NULL,
+    id            INT        NOT NULL       AUTO_INCREMENT,
     `version`       INT,
     category_name VARCHAR(50) NOT NULL,
     is_deleted    TIMESTAMP,
@@ -46,22 +32,11 @@ CREATE TABLE product
     brand               VARCHAR(255)   NOT NULL,
     sold_quantity       INT            NOT NULL CHECK (sold_quantity >= 0),
     is_deleted          TIMESTAMP,
-    category_id         VARCHAR(36),
+    category_id         INT,
     created_at          TIMESTAMP,
     updated_at          TIMESTAMP,
     PRIMARY KEY (id),
     FOREIGN KEY (category_id) REFERENCES category (id)
-) ;
-
-CREATE TABLE `cart_detail`
-(
-    id            VARCHAR(36) NOT NULL,
-    `version`       INT,
-    user_id       VARCHAR(36),
-    item_quantity INT         NOT NULL CHECK (item_quantity >= 0),
-    created_at    TIMESTAMP,
-    updated_at    TIMESTAMP,
-    PRIMARY KEY (id)
 ) ;
 
 CREATE TABLE membership
@@ -98,6 +73,17 @@ CREATE TABLE `user`
     PRIMARY KEY (id),
     FOREIGN KEY (role_id) REFERENCES role (id),
     FOREIGN KEY (membership_id) REFERENCES membership (id)
+) ;
+
+CREATE TABLE `cart_detail`
+(
+    id            VARCHAR(36) NOT NULL,
+    `version`       INT,
+    user_id       VARCHAR(36),
+    item_quantity INT         NOT NULL CHECK (item_quantity >= 0),
+    created_at    TIMESTAMP,
+    updated_at    TIMESTAMP,
+    PRIMARY KEY (id)
 ) ;
 
 CREATE TABLE receiver_info

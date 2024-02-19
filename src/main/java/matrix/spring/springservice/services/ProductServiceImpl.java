@@ -1,6 +1,7 @@
 package matrix.spring.springservice.services;
 
 import lombok.extern.slf4j.Slf4j;
+import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
 import org.springframework.stereotype.Service;
@@ -16,6 +17,8 @@ public class ProductServiceImpl implements ProductService {
 
     private Map<UUID, ReviewDTO> reviewDTOMap;
 
+    private Map<Integer, CategoryDTO> categoryDTOMap;
+
     public ProductServiceImpl() {
         this.productDTOMap = new HashMap<>();
         this.reviewDTOMap = new HashMap<>();
@@ -29,6 +32,18 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Optional<ProductDTO> getProductById(UUID productId) {
         return Optional.of(productDTOMap.get(productId));
+    }
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        CategoryDTO newCategory = CategoryDTO.builder()
+                .categoryName(categoryDTO.getCategoryName())
+                .build();
+
+        categoryDTOMap.put(newCategory.getId(), categoryDTO);
+
+        return newCategory;
+
     }
 
     @Override

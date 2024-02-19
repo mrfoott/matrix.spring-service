@@ -12,7 +12,7 @@ import java.util.UUID;
 @Data
 public class CategoryDTO {
 
-    private UUID id;
+    private Integer id;
     private Integer version;
 
     @NotNull

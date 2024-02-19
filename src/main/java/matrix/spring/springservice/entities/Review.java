@@ -19,6 +19,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "review")
 public class Review {
 
     @Id

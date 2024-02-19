@@ -19,6 +19,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "order_detail")
 public class OrderDetail {
 
     @Id
@@ -50,5 +51,8 @@ public class OrderDetail {
 
     @UpdateTimestamp
     private LocalDateTime updated_at;
+
+    @ManyToOne
+    private Order order;
 
 }

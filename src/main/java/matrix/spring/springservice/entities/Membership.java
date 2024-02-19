@@ -18,6 +18,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "membership")
 public class Membership {
 
     @Id

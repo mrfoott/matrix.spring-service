@@ -16,6 +16,7 @@ public class CartDetailDTO {
     private Integer version;
 
     private UUID userId;
+    private UUID productId;
 
     @NotNull
     @Positive

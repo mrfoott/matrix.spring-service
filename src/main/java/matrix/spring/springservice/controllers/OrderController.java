@@ -8,10 +8,7 @@ import matrix.spring.springservice.services.OrderService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.UUID;
@@ -21,22 +18,24 @@ import java.util.UUID;
 @RestController
 public class OrderController {
 
-    private final String ORDER_PATH = "/api/v1/order";
+    private final String ORDER_PATH = "/api/v1/orders";
     private final String ORDER_ID_PATH = ORDER_PATH + "/{orderId}";
+    private final String SHIPPING_PATH = "/api/v1/shipping";
+    private final String SHIPPING_ID_PATH = SHIPPING_PATH + "/{shippingId}";
 
     private final OrderService orderService;
 
-    @GetMapping
+    @GetMapping(ORDER_PATH)
     public List<OrderDTO> getAllOrders() {
         return orderService.getAllOrders();
     }
 
-    @GetMapping
+    @GetMapping(ORDER_ID_PATH)
     public OrderDTO getOrderById(UUID orderId) {
         return orderService.getOrderById(orderId).orElseThrow(NotFoundException::new);
     }
 
-    @GetMapping
+    @PutMapping(SHIPPING_ID_PATH)
     public ResponseEntity updateShipping(@PathVariable("shippingId") UUID orderId, @Validated @RequestBody ShippingDTO shippingDTO) {
 
         if (orderService.updateShipping(orderId, shippingDTO).isEmpty()) {

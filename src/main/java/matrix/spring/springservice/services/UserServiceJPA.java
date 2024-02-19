@@ -50,6 +50,11 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> getInfoOfSelf(UUID userId) {
+        return Optional.empty();
+    }
+
+    @Override
     public UserDTO createUser(UserDTO userDTO) {
         return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDTO)));
     }

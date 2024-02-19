@@ -4,10 +4,13 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.entities.Product;
 import matrix.spring.springservice.entities.Review;
+import matrix.spring.springservice.mappers.CategoryMapper;
 import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.mappers.ReviewMapper;
+import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.repositories.CategoryRepository;
 import matrix.spring.springservice.repositories.ProductRepository;
 import matrix.spring.springservice.repositories.ReviewRepository;
 import org.springframework.context.annotation.Primary;
@@ -30,6 +33,8 @@ public class ProductServiceJPA implements ProductService {
     private final ProductMapper productMapper;
     private final ReviewRepository reviewRepository;
     private final ReviewMapper reviewMapper;
+    private final CategoryRepository categoryRepository;
+    private final CategoryMapper categoryMapper;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -43,6 +48,11 @@ public class ProductServiceJPA implements ProductService {
     public Optional<ProductDTO> getProductById(UUID productId) {
         return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
                 .orElse(null)));
+    }
+
+    @Override
+    public CategoryDTO createCategory(CategoryDTO categoryDTO) {
+        return categoryMapper.categoryToCategoryDto(categoryRepository.save(categoryMapper.categoryDtoToCategory(categoryDTO)));
     }
 
     @Override

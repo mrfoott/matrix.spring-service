@@ -21,6 +21,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
+@Table(name = "product")
 public class Product {
 
     @Id
@@ -68,5 +69,8 @@ public class Product {
 
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
+
+//    @ManyToOne
+//    private Category category;
 
 }
