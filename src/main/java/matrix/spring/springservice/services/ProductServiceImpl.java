@@ -69,6 +69,8 @@ public class ProductServiceImpl implements ProductService {
                 .brand(productDTO.getBrand())
                 .soldQuantity(0)
                 .categoryId(productDTO.getCategoryId())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
                 .build();
 
         productDTOMap.put(newProduct.getId(), productDTO);
@@ -94,7 +96,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO) {
+    public Optional<ProductDTO> deleteProductById(UUID productId) {
 
         ProductDTO existingProduct = productDTOMap.get(productId);
 

@@ -1,6 +1,5 @@
 package matrix.spring.springservice.services;
 
-import matrix.spring.springservice.entities.Category;
 import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
@@ -25,7 +24,7 @@ public interface ProductService {
 
     Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO);
 
-    Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO);
+    Optional<ProductDTO> deleteProductById(UUID productId);
 
     List<ReviewDTO> getProductReviews(UUID productId);
 

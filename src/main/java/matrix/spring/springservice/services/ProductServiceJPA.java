@@ -112,7 +112,7 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> deleteProductById(UUID productId, ProductDTO productDTO) {
+    public Optional<ProductDTO> deleteProductById(UUID productId) {
 
         AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
 

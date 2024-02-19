@@ -79,7 +79,7 @@ public class AdminController {
         return userService.getUserById(userid);
     }
 
-//    POST MAPPING
+    //    POST MAPPING
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
@@ -108,6 +108,8 @@ public class AdminController {
 
 //    PUT MAPPING
 
+//    /api/v1/admin/products/productId
+    @PutMapping(ADMIN_PRODUCT_ID)
     public ResponseEntity updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
         if (productService.updateProductById(productId, productDTO).isEmpty()) {
             throw new NotFoundException();
@@ -117,8 +119,10 @@ public class AdminController {
 
     }
 
-    public ResponseEntity deleteProductById(@PathVariable("productId") UUID productId, @RequestBody ProductDTO productDTO) {
-        if (productService.deleteProductById(productId, productDTO).isEmpty()) {
+//    /api/v1/admin/products/productId
+    @DeleteMapping(ADMIN_PRODUCT_ID)
+    public ResponseEntity deleteProductById(@PathVariable("productId") UUID productId) {
+        if (productService.deleteProductById(productId).isEmpty()) {
             throw new NotFoundException();
         }
 
