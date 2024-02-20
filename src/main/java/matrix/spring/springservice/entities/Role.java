@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 public class Role {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Version
@@ -26,14 +27,18 @@ public class Role {
 
     @NotNull
     @NotBlank
+    @Column(name = "role_name")
     private String roleName;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 }

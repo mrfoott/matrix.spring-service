@@ -22,9 +22,24 @@ import java.util.UUID;
 @Setter
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Table(name = "product")
 public class Product {
+
+    public Product(UUID id, Integer version, String productName, String productDescription, BigDecimal price, Integer productQuantity, String brand, Integer soldQuantity, LocalDateTime isDeleted, Category category, LocalDateTime createdAt, LocalDateTime updatedAt, List<ProductImage> productImages) {
+        this.id = id;
+        this.version = version;
+        this.productName = productName;
+        this.productDescription = productDescription;
+        this.price = price;
+        this.productQuantity = productQuantity;
+        this.brand = brand;
+        this.soldQuantity = soldQuantity;
+        this.isDeleted = isDeleted;
+        this.setCategory(category);
+        this.createdAt = createdAt;
+        this.updatedAt = updatedAt;
+        this.productImages = productImages;
+    }
 
     @Id
     @GeneratedValue
@@ -67,7 +82,18 @@ public class Product {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
+//    @Column(name = "category_id")
 //    private Integer categoryId;
+
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
+
+    public void setCategory(Category category) {
+        this.category = category;
+        category.getProducts().add(this);
+    }
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -80,8 +106,6 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+
 
 }

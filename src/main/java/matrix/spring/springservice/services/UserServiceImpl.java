@@ -1,11 +1,13 @@
 package matrix.spring.springservice.services;
 
 import lombok.extern.slf4j.Slf4j;
+import matrix.spring.springservice.entities.ReviewImage;
 import matrix.spring.springservice.models.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -41,13 +43,13 @@ public class UserServiceImpl implements UserService {
         UserDTO newUser = UserDTO.builder()
                 .id(userDTO.getId())
                 .userEmail(userDTO.getUserEmail())
+                .userPhone(userDTO.getUserPhone())
                 .password(userDTO.getPassword())
                 .fullName(userDTO.getFullName())
                 .avatar(userDTO.getAvatar())
                 .membershipPoint(0.0)
                 .roleId(0)
                 .membershipId(0)
-                .membershipPoint(0.0)
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now()).build();
 
@@ -130,8 +132,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewDTOList) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList) {
+        ReviewDTO newReview = ReviewDTO.builder()
+                .productId(reviewDTO.getProductId())
+                .reviewContent(reviewDTO.getReviewContent())
+                .reviewRating(reviewDTO.getReviewRating())
+                .userId(reviewDTO.getUserId())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        List<ReviewImageDTO> newReviewImages = reviewImageDTOList.stream()
+                .map(reviewImageDTO -> {
+                    ReviewImageDTO newReviewImage = ReviewImageDTO.builder()
+                            .reviewId(newReview.getId())
+                            .userReviewImage(reviewImageDTO.getUserReviewImage())
+                            .createdAt(LocalDateTime.now())
+                            .updatedAt(LocalDateTime.now())
+                            .build();
+                    return newReviewImage;
+                }).collect(Collectors.toList());
+
         return null;
+
     }
 
     @Override

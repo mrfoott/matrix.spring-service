@@ -47,8 +47,22 @@ public class AdminController {
     private final String ADMIN_ORDERS = ADMIN_PATH + "/orders";
     //    Admin get order's info
     private final String ADMIN_ORDER_ID = ADMIN_ORDERS + "/{orderId}";
+//    Admin get all roles
+    private final String ADMIN_ROLES = ADMIN_PATH + "/roles";
+    private final String ADMIN_ROLE_ID = ADMIN_ROLES + "/{roleId}";
 
 //    GET MAPPING
+
+//    /api/v1/admin/users
+    @GetMapping(ADMIN_USERS)
+    public List<UserDTO> getAllUsers() {
+        return userService.getAllUsers();
+    }
+
+    @GetMapping(ADMIN_USER_ID)
+    public Optional<UserDTO> getUserByid(@PathVariable("userId") UUID userid) {
+        return userService.getUserById(userid);
+    }
 
     //    /api/v1/admin/products
     @GetMapping(ADMIN_PRODUCTS)
@@ -74,12 +88,19 @@ public class AdminController {
         return productService.getProductsByCategory(categoryId);
     }
 
-    @GetMapping()
-    public Optional<UserDTO> getUserByid(@PathVariable("userId") UUID userid) {
-        return userService.getUserById(userid);
-    }
-
     //    POST MAPPING
+
+    //    /api/v1/admin/users
+    @PostMapping(ADMIN_USERS)
+    public ResponseEntity createUser(@Validated @RequestBody UserDTO userDTO) {
+
+        UserDTO newUser = userService.createUser(userDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
@@ -105,10 +126,21 @@ public class AdminController {
 
     }
 
+//    /api/v1/admin/roles
+    @PostMapping(ADMIN_ROLES)
+    public ResponseEntity creteRole(@Validated @RequestBody RoleDTO roleDTO) {
+
+        RoleDTO newRole = productService.createRole(roleDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
 
 //    PUT MAPPING
 
-//    /api/v1/admin/products/productId
+    //    /api/v1/admin/products/productId
     @PutMapping(ADMIN_PRODUCT_ID)
     public ResponseEntity updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
         if (productService.updateProductById(productId, productDTO).isEmpty()) {
@@ -119,7 +151,7 @@ public class AdminController {
 
     }
 
-//    /api/v1/admin/products/productId
+    //    /api/v1/admin/products/productId
     @DeleteMapping(ADMIN_PRODUCT_ID)
     public ResponseEntity deleteProductById(@PathVariable("productId") UUID productId) {
         if (productService.deleteProductById(productId).isEmpty()) {
@@ -133,23 +165,10 @@ public class AdminController {
         return productService.getProductReviews(productId);
     }
 
-    public List<UserDTO> getAllUsers() {
-        return userService.getAllUsers();
-    }
-
     public Optional<UserDTO> getUserById(UUID userId) {
         return userService.getUserById(userId);
     }
 
-    public ResponseEntity createUser(@Validated @RequestBody UserDTO userDTO) {
-
-        UserDTO newUser = userService.createUser(userDTO);
-
-        HttpHeaders httpHeaders = new HttpHeaders();
-
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
-
-    }
 
     public ResponseEntity deleteUserById(@PathVariable("userId") UUID userId) {
         if (userService.deleteUserById(userId).isEmpty()) {

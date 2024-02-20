@@ -10,6 +10,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -44,11 +45,10 @@ public class Category {
 
     @UpdateTimestamp
     @Column(name = "updated_at")
-
     private LocalDateTime updatedAt;
 
+    @Builder.Default
     @OneToMany(mappedBy = "category")
-    private List<Product> products;
-
+    private List<Product> products = new ArrayList<>();
 
 }

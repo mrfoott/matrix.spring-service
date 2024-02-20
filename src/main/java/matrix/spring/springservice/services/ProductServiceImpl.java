@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.models.RoleDTO;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -19,9 +20,12 @@ public class ProductServiceImpl implements ProductService {
 
     private Map<Integer, CategoryDTO> categoryDTOMap;
 
+    private Map<Integer, RoleDTO> roleDTOMap;
+
     public ProductServiceImpl() {
         this.productDTOMap = new HashMap<>();
         this.reviewDTOMap = new HashMap<>();
+        this.categoryDTOMap = new HashMap<>();
     }
 
     @Override
@@ -111,6 +115,20 @@ public class ProductServiceImpl implements ProductService {
     public List<ReviewDTO> getProductReviews(UUID productId) {
 
         return new ArrayList<>(reviewDTOMap.values());
+
+    }
+
+    @Override
+    public RoleDTO createRole(RoleDTO roleDTO) {
+        RoleDTO newRole = RoleDTO.builder()
+                .roleName(roleDTO.getRoleName())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        roleDTOMap.put(newRole.getId(), roleDTO);
+
+        return newRole;
 
     }
 }

@@ -12,7 +12,7 @@ CREATE TABLE category
 
 CREATE TABLE `role`
 (
-    id         INT          NOT NULL,
+    id         INT          NOT NULL        AUTO_INCREMENT,
     `version`    INT,
     role_name  VARCHAR(255) NOT NULL,
     is_deleted TIMESTAMP,

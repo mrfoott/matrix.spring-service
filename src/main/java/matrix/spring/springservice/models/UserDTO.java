@@ -1,5 +1,6 @@
 package matrix.spring.springservice.models;
 
+import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
@@ -43,6 +44,8 @@ public class UserDTO {
     private LocalDateTime isDeleted;
     private Integer roleId;
     private Integer membershipId;
+
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

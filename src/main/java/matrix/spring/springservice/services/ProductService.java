@@ -3,6 +3,7 @@ package matrix.spring.springservice.services;
 import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.models.RoleDTO;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,5 +28,7 @@ public interface ProductService {
     Optional<ProductDTO> deleteProductById(UUID productId);
 
     List<ReviewDTO> getProductReviews(UUID productId);
+
+    RoleDTO createRole(RoleDTO roleDTO);
 
 }

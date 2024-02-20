@@ -7,12 +7,15 @@ import matrix.spring.springservice.entities.Review;
 import matrix.spring.springservice.mappers.CategoryMapper;
 import matrix.spring.springservice.mappers.ProductMapper;
 import matrix.spring.springservice.mappers.ReviewMapper;
+import matrix.spring.springservice.mappers.RoleMapper;
 import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
+import matrix.spring.springservice.models.RoleDTO;
 import matrix.spring.springservice.repositories.CategoryRepository;
 import matrix.spring.springservice.repositories.ProductRepository;
 import matrix.spring.springservice.repositories.ReviewRepository;
+import matrix.spring.springservice.repositories.RoleRepository;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
@@ -35,6 +38,8 @@ public class ProductServiceJPA implements ProductService {
     private final ReviewMapper reviewMapper;
     private final CategoryRepository categoryRepository;
     private final CategoryMapper categoryMapper;
+    private final RoleRepository roleRepository;
+    private final RoleMapper roleMapper;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -158,6 +163,11 @@ public class ProductServiceJPA implements ProductService {
                 .map(reviewMapper::reviewToReviewDto)
                 .collect(Collectors.toList());
 
+    }
+
+    @Override
+    public RoleDTO createRole(RoleDTO roleDTO) {
+        return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDTO)));
     }
 
     public List<Review> listReviewsOfAProduct(UUID productId) {
