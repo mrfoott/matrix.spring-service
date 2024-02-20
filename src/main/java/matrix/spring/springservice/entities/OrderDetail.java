@@ -36,26 +36,36 @@ public class OrderDetail {
 
     @NotNull
     @Positive
+    @Column(name = "order_quantity")
     private Integer orderQuantity;
 
     @NotNull
     @Positive
+    @Column(name = "price_at_order")
     private BigDecimal priceAtOrder;
 
     @NotNull
     @NotBlank
+    @Column(name = "product_name_at_order")
     private String productNameAtOrder;
 
-    private UUID orderId;
-    private UUID productId;
+//    private UUID orderId;
+//    private UUID productId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "order_id")
     private Order order;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 }

@@ -34,22 +34,29 @@ public class ProductImage {
 
     @NotNull
     @NotBlank
+    @Column(name = "image_link")
     private String imageLink;
 
     @NotNull
     @NotBlank
+    @Column(name = "image_description")
     private String imageDescription;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
-    private UUID productId;
+
+//    private UUID productId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
 
 

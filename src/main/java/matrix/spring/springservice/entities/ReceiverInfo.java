@@ -34,26 +34,34 @@ public class ReceiverInfo {
 
     @NotNull
     @NotBlank
+    @Column(name = "receiver_name")
     private String receiverName;
 
     @NotNull
     @NotBlank
+    @Column(name = "receiver_address")
     private String receiverAddress;
 
     @NotNull
     @NotBlank
+    @Column(name = "receiver_phone")
     private String receiverPhone;
 
     @NotNull
+    @Column(name = "is_default")
     private Integer isDefault;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
+
     private UUID userId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 }

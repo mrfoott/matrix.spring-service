@@ -34,18 +34,22 @@ public class Shipping {
 
     @NotNull
     @NotBlank
+    @Column(name = "shipping_status")
     private String shippingStatus;
 
     @NotNull
     @NotBlank
+    @Column(name = "shipping_location")
     private String shippingLocation;
 
     private UUID orderId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
 }

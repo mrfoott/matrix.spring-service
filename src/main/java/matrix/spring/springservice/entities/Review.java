@@ -36,20 +36,26 @@ public class Review {
 
     @NotNull
     @NotBlank
+    @Column(name = "review_content")
     private String reviewContent;
 
     @NotNull
     @Positive
+    @Column(name = "review_rating")
     private Double reviewRating;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
+
     private UUID userId;
     private UUID productId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "review")

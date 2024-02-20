@@ -37,27 +37,33 @@ public class Order {
 
     @NotNull
     @Positive
+    @Column(name = "total_price")
     private BigDecimal totalPrice;
 
     @NotNull
     @Positive
+    @Column(name = "shipping_fee")
     private BigDecimal shippingFee;
 
     @NotNull
     @NotBlank
+    @Column(name = "payment_method")
     private String paymentMethod;
 
     @NotNull
     @NotBlank
+    @Column(name = "payment_status")
     private String paymentStatus;
 
     private UUID userId;
     private UUID receiverInfoId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "order")

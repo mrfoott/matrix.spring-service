@@ -34,18 +34,24 @@ public class ReviewImage {
 
     @NotNull
     @NotBlank
+    @Column(name = "user_review_image")
     private String userReviewImage;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
-    private UUID reviewId;
+
+//    private UUID reviewId;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "review_id")
     private Review review;
 
 }

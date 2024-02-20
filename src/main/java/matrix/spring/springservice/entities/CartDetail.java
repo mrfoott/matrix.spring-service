@@ -32,23 +32,28 @@ public class CartDetail {
     @Version
     private Integer version;
 
-    private UUID userId;
-    private UUID productId;
+//    private UUID userId;
+//    private UUID productId;
 
     @NotNull
     @PositiveOrZero
+    @Column(name = "item_quantity")
     private Integer itemQuantity;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @ManyToOne
+    @JoinColumn(name = "product_id")
     private Product product;
     
 }

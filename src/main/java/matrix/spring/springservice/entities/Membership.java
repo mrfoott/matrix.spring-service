@@ -29,25 +29,32 @@ public class Membership {
 
     @NotNull
     @PositiveOrZero
+    @Column(name = "membership_rank")
     private Integer membershipRank;
 
     @NotNull
+    @Column(name = "discount_percentage")
     private Integer discountPercentage;
 
     @NotNull
     @PositiveOrZero
+    @Column(name = "min_price")
     private BigDecimal minPrice;
 
     @NotNull
     @Positive
+    @Column(name = "max_price")
     private BigDecimal maxPrice;
 
+    @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
     @CreationTimestamp
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
 
     @UpdateTimestamp
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     @OneToMany(mappedBy = "membership")
