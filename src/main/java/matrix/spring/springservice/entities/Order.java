@@ -22,7 +22,7 @@ import java.util.UUID;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "order")
+@Table(name = "orders")
 public class Order {
 
     @Id
@@ -55,7 +55,10 @@ public class Order {
     @Column(name = "payment_status")
     private String paymentStatus;
 
+    @Column(name = "user_id")
     private UUID userId;
+
+    @Column(name = "receiver_info_id")
     private UUID receiverInfoId;
 
     @CreationTimestamp

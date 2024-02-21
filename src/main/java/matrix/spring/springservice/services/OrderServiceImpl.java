@@ -45,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO createOrder(OrderDTO orderDTO, OrderDetailDTO orderDetailDTO, ReceiverInfoDTO receiverInfoDTO, List<ProductDTO> productDTOList) {
+    public OrderDTO createOrder(OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOList, ReceiverInfoDTO receiverInfoDTO, List<ProductDTO> productDTOList) {
         OrderDTO newOrder = OrderDTO.builder()
                 .totalPrice(orderDTO.getTotalPrice())
                 .shippingFee(orderDTO.getShippingFee())

@@ -66,6 +66,7 @@ public class ProductServiceImpl implements ProductService {
     public ProductDTO createProduct(ProductDTO productDTO) {
 
         ProductDTO newProduct = ProductDTO.builder()
+                .version(0)
                 .productName(productDTO.getProductName())
                 .productDescription(productDTO.getProductDescription())
                 .price(productDTO.getPrice())

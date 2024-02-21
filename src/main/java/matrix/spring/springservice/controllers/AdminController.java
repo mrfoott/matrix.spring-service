@@ -53,6 +53,18 @@ public class AdminController {
 
 //    GET MAPPING
 
+    //    /api/v1/admin/roles
+    @GetMapping(ADMIN_ORDERS)
+    public List<OrderDTO> getAllOrders() {
+        return orderService.getAllOrders();
+    }
+
+    //    /api/v1/admin/roles
+    @GetMapping(ADMIN_ROLES)
+    public List<RoleDTO> getAllRoles() {
+        return userService.getAllRoles();
+    }
+
 //    /api/v1/admin/users
     @GetMapping(ADMIN_USERS)
     public List<UserDTO> getAllUsers() {

@@ -89,12 +89,6 @@ public class Product {
     @JoinColumn(name = "category_id")
     private Category category;
 
-
-    public void setCategory(Category category) {
-        this.category = category;
-        category.getProducts().add(this);
-    }
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

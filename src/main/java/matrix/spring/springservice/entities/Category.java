@@ -47,7 +47,7 @@ public class Category {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @Builder.Default
+//    @Builder.Default
     @OneToMany(mappedBy = "category")
     private List<Product> products = new ArrayList<>();
 

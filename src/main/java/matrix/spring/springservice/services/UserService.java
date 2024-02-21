@@ -34,6 +34,6 @@ public interface UserService {
 
     ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO);
 
-
+    List<RoleDTO> getAllRoles();
 
 }

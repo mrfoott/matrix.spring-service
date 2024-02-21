@@ -102,7 +102,7 @@ CREATE TABLE receiver_info
     FOREIGN KEY (user_id) REFERENCES `user` (id)
 ) ;
 
-CREATE TABLE `order`
+CREATE TABLE `orders`
 (
     id             VARCHAR(36)    NOT NULL,
     `version`          INT,
@@ -172,7 +172,7 @@ CREATE TABLE shipping
     created_at        TIMESTAMP,
     updated_at        TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES `order` (id)
+    FOREIGN KEY (order_id) REFERENCES `orders` (id)
 ) ;
 
 CREATE TABLE view_history
@@ -199,6 +199,6 @@ CREATE TABLE order_detail
     created_at            TIMESTAMP,
     updated_at            TIMESTAMP,
     PRIMARY KEY (id),
-    FOREIGN KEY (order_id) REFERENCES `order` (id),
+    FOREIGN KEY (order_id) REFERENCES `orders` (id),
     FOREIGN KEY (product_id) REFERENCES product (id)
 ) ;

@@ -17,6 +17,8 @@ public class UserServiceImpl implements UserService {
 
     private Map<UUID, CartDetailDTO> cartDetailDTOMap;
 
+    private Map<Integer, RoleDTO> roleDTOMap;
+
     public UserServiceImpl() {
         this.userDTOMap = new HashMap<>();
         this.cartDetailDTOMap = new HashMap<>();
@@ -160,5 +162,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO) {
         return null;
+    }
+
+    @Override
+    public List<RoleDTO> getAllRoles() {
+        return new ArrayList<>(roleDTOMap.values());
     }
 }
