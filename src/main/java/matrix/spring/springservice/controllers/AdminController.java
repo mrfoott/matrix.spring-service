@@ -163,10 +163,21 @@ public class AdminController {
 
     }
 
+//    DELETE MAPPING
+
     //    /api/v1/admin/products/productId
     @DeleteMapping(ADMIN_PRODUCT_ID)
     public ResponseEntity deleteProductById(@PathVariable("productId") UUID productId) {
         if (productService.deleteProductById(productId).isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping(ADMIN_USER_ID)
+    public ResponseEntity deleteUserById(@PathVariable("userId") UUID userId) {
+        if (userService.deleteUserById(userId).isEmpty()) {
             throw new NotFoundException();
         }
 
@@ -182,21 +193,14 @@ public class AdminController {
     }
 
 
-    public ResponseEntity deleteUserById(@PathVariable("userId") UUID userId) {
-        if (userService.deleteUserById(userId).isEmpty()) {
-            throw new NotFoundException();
-        }
-
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
-    }
-
     public List<CartDetailDTO> getCartInfo(UUID userId) {
 
         return userService.getCartInfo(userId);
 
     }
 
-    public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
+    @PutMapping(ADMIN_USER_ID)
+    public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @Validated @RequestBody UserDTO userDTO) {
 
         if (userService.updateUserById(userId, userDTO).isEmpty()) {
             throw new NotFoundException();

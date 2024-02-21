@@ -80,7 +80,17 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO) {
-        return null;
+        UserDTO exsistingUser = userDTOMap.get(userId);
+
+        exsistingUser.setUserEmail(userDTO.getUserEmail());
+        exsistingUser.setUserPhone(userDTO.getUserPhone());
+        exsistingUser.setFullName(userDTO.getFullName());
+        exsistingUser.setUpdatedAt(LocalDateTime.now());
+
+        userDTOMap.put(exsistingUser.getId(), exsistingUser);
+
+        return Optional.empty();
+
     }
 
     @Override

@@ -106,6 +106,7 @@ public class UserServiceJPA implements UserService {
             existingUser.setUserEmail(userDTO.getUserEmail());
             existingUser.setFullName(userDTO.getFullName());
             existingUser.setUserPhone(userDTO.getUserPhone());
+            existingUser.setUpdatedAt(LocalDateTime.now());
 
             atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
         }, () -> {

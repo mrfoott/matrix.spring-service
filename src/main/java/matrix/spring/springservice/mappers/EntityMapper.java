@@ -13,9 +13,6 @@ public class EntityMapper {
 
     @ObjectFactory
     public <T> T map(Integer id, @TargetType Class<T> entityClass) {
-        if (id == null) {
-            return null;
-        }
         return entityManager.find(entityClass, id);
     }
 }
