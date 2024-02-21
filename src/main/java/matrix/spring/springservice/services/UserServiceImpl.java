@@ -19,6 +19,8 @@ public class UserServiceImpl implements UserService {
 
     private Map<Integer, RoleDTO> roleDTOMap;
 
+    private Map<UUID, ReceiverInfoDTO> receiverInfoDTOMap;
+
     public UserServiceImpl() {
         this.userDTOMap = new HashMap<>();
         this.cartDetailDTOMap = new HashMap<>();
@@ -171,11 +173,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO) {
-        return null;
+        ReceiverInfoDTO newReceiverInfo = ReceiverInfoDTO.builder()
+                .receiverName(receiverInfoDTO.getReceiverName())
+                .receiverAddress(receiverInfoDTO.getReceiverAddress())
+                .receiverPhone(receiverInfoDTO.getReceiverPhone())
+                .userId(receiverInfoDTO.getUserId())
+                .isDefault(receiverInfoDTO.getIsDefault())
+                .createdAt(LocalDateTime.now())
+                .updatedAt(LocalDateTime.now())
+                .build();
+
+        receiverInfoDTOMap.put(newReceiverInfo.getId(), newReceiverInfo);
+
+        return newReceiverInfo;
+
     }
 
     @Override
     public List<RoleDTO> getAllRoles() {
         return new ArrayList<>(roleDTOMap.values());
+    }
+
+    @Override
+    public List<UserDTO> getAllUsersByRoleId(Integer roleId) {
+        return new ArrayList<>(userDTOMap.values());
     }
 }

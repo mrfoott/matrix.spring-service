@@ -54,6 +54,8 @@ public class ReceiverInfo {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
+    @Column(name = "user_id")
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID userId;
 
     @CreationTimestamp

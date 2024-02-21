@@ -36,4 +36,6 @@ public interface UserService {
 
     List<RoleDTO> getAllRoles();
 
+    List<UserDTO> getAllUsersByRoleId(Integer roleId);
+
 }

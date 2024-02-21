@@ -10,8 +10,6 @@ import org.mapstruct.ObjectFactory;
 import org.mapstruct.TargetType;
 import org.springframework.stereotype.Component;
 
-import javax.persistence.EntityManager;
-
 
 @Mapper(componentModel = "spring", uses = { CategoryMapper.class })
 public interface ProductMapper {

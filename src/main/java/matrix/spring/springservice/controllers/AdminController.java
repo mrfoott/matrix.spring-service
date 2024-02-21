@@ -49,6 +49,7 @@ public class AdminController {
     private final String ADMIN_ORDER_ID = ADMIN_ORDERS + "/{orderId}";
 //    Admin get all roles
     private final String ADMIN_ROLES = ADMIN_PATH + "/roles";
+//    Admin get all users by role id
     private final String ADMIN_ROLE_ID = ADMIN_ROLES + "/{roleId}";
 
 //    GET MAPPING
@@ -63,6 +64,12 @@ public class AdminController {
     @GetMapping(ADMIN_ROLES)
     public List<RoleDTO> getAllRoles() {
         return userService.getAllRoles();
+    }
+
+//    /api/v1/admin/roles/roleId
+    @GetMapping(ADMIN_ROLE_ID)
+    public List<UserDTO> getAllUsersByRoleId(@PathVariable("roleId") Integer roleId) {
+        return userService.getAllUsersByRoleId(roleId);
     }
 
 //    /api/v1/admin/users
@@ -140,7 +147,7 @@ public class AdminController {
 
 //    /api/v1/admin/roles
     @PostMapping(ADMIN_ROLES)
-    public ResponseEntity creteRole(@Validated @RequestBody RoleDTO roleDTO) {
+    public ResponseEntity createRole(@Validated @RequestBody RoleDTO roleDTO) {
 
         RoleDTO newRole = productService.createRole(roleDTO);
 
@@ -187,11 +194,6 @@ public class AdminController {
     public List<ReviewDTO> getProductReviews(UUID productId) {
         return productService.getProductReviews(productId);
     }
-
-    public Optional<UserDTO> getUserById(UUID userId) {
-        return userService.getUserById(userId);
-    }
-
 
     public List<CartDetailDTO> getCartInfo(UUID userId) {
 

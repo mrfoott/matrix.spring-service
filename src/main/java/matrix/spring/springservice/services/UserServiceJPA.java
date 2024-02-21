@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.entities.CartDetail;
 import matrix.spring.springservice.entities.Review;
 import matrix.spring.springservice.entities.ReviewImage;
+import matrix.spring.springservice.entities.User;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
@@ -206,5 +207,25 @@ public class UserServiceJPA implements UserService {
                 .stream()
                 .map(roleMapper::roleToRoleDto)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<UserDTO> getAllUsersByRoleId(Integer roleId) {
+        List<User> allUsersByRoleId;
+
+        if (roleId != null) {
+            allUsersByRoleId = listUsersByRoleId(roleId);
+        } else {
+            return null;
+        }
+
+        return allUsersByRoleId
+                .stream()
+                .map(userMapper::userToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    public List<User> listUsersByRoleId(Integer roleId) {
+        return userRepository.findAllByRoleId(roleId);
     }
 }
