@@ -2,10 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import matrix.spring.springservice.entities.CartDetail;
-import matrix.spring.springservice.entities.Review;
-import matrix.spring.springservice.entities.ReviewImage;
-import matrix.spring.springservice.entities.User;
+import matrix.spring.springservice.entities.*;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
@@ -200,6 +197,27 @@ public class UserServiceJPA implements UserService {
         return receiverInfoMapper.receiverInfoToReceiverInfoDto(receiverInfoRepository
                 .save(receiverInfoMapper.receiverInfoDtoToReceiverInfo(receiverInfoDTO)));
     }
+
+    @Override
+    public List<ReceiverInfoDTO> getAllReceiverInfoOfAUserByUserId(UUID userId) {
+        List<ReceiverInfo> allReceiverInfoOfAUser;
+
+        if (userId != null) {
+            allReceiverInfoOfAUser = listReceiverInfoByUserId(userId);
+        } else {
+            return null;
+        }
+
+        return allReceiverInfoOfAUser
+                .stream()
+                .map(receiverInfoMapper::receiverInfoToReceiverInfoDto)
+                .collect(Collectors.toList());
+    }
+
+    private List<ReceiverInfo> listReceiverInfoByUserId(UUID userId) {
+        return receiverInfoRepository.findAllByUserId(userId);
+    }
+
 
     @Override
     public List<RoleDTO> getAllRoles() {

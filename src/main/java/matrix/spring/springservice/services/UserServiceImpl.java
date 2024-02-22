@@ -1,7 +1,6 @@
 package matrix.spring.springservice.services;
 
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.entities.ReviewImage;
 import matrix.spring.springservice.models.*;
 import org.springframework.stereotype.Service;
 
@@ -187,6 +186,11 @@ public class UserServiceImpl implements UserService {
 
         return newReceiverInfo;
 
+    }
+
+    @Override
+    public List<ReceiverInfoDTO> getAllReceiverInfoOfAUserByUserId(UUID userId) {
+        return new ArrayList<>(receiverInfoDTOMap.values());
     }
 
     @Override

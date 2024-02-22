@@ -34,6 +34,8 @@ public interface UserService {
 
     ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO);
 
+    List<ReceiverInfoDTO> getAllReceiverInfoOfAUserByUserId(UUID userId);
+
     List<RoleDTO> getAllRoles();
 
     List<UserDTO> getAllUsersByRoleId(Integer roleId);

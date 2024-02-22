@@ -2,19 +2,14 @@ package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.models.CartDetailDTO;
-import matrix.spring.springservice.models.ReceiverInfoDTO;
-import matrix.spring.springservice.models.RoleDTO;
-import matrix.spring.springservice.models.UserDTO;
+import matrix.spring.springservice.models.*;
+import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,11 +22,16 @@ public class UserController {
 
     private final UserService userService;
 
+    private final OrderService orderService;
+
     private final String USERS_PATH = "/api/v1/users";
 
     private final String USER_ID = USERS_PATH + "/{userId}";
 
     private final String USERS_RECEIVER = USERS_PATH + "/receivers";
+
+    private final String USER_RECEIVER_INFO = USERS_RECEIVER + "/{userId}";
+
 //    private final String USER_RECEIVER_ID = USERS_RECEIVER + "/{receiverId}";
 
     public Boolean deleteItemInCart(UUID cartDetailId) {
@@ -39,6 +39,22 @@ public class UserController {
         return userService.deleteItemInCart(cartDetailId);
 
     }
+
+//    /api/v1/users/receivers/userId
+    @GetMapping(USER_RECEIVER_INFO)
+    public List<ReceiverInfoDTO> getAllReceiverInfoOfAUserByUserId(@PathVariable("userId") UUID userId) {
+
+        return userService.getAllReceiverInfoOfAUserByUserId(userId);
+
+    }
+
+    @GetMapping
+    public List<OrderDTO> getAllOrdersOfUserByUserId (UUID userId) {
+
+        return orderService.getAllOrdersOfUserByUserId(userId);
+
+    }
+
 
 //    /api/v1/users/receivers
     @PostMapping(USERS_RECEIVER)
