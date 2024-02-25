@@ -80,6 +80,8 @@ CREATE TABLE `cart_detail`
     id            VARCHAR(36) NOT NULL,
     `version`       INT,
     user_id       VARCHAR(36),
+    product_id       VARCHAR(36),
+    product_name        VARCHAR(255),
     item_quantity INT         NOT NULL CHECK (item_quantity >= 0),
     created_at    TIMESTAMP,
     updated_at    TIMESTAMP,
