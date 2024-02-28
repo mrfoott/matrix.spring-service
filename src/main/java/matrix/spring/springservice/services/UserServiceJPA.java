@@ -181,8 +181,8 @@ public class UserServiceJPA implements UserService {
                 .map(reviewImageMapper::reviewImageDtoToReviewImage)
                 .collect(Collectors.toList());
 
-        // Set review id for each review image
-        reviewImages.forEach(reviewImage -> reviewImage.setReview(savedReview));
+//        // Set review id for each review image
+//        reviewImages.forEach(reviewImage -> reviewImage.setReview(savedReview));
 
         // Save review images to database
         reviewImageRepository.saveAll(reviewImages);

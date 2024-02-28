@@ -165,14 +165,14 @@ public class ProductServiceJPA implements ProductService {
 
     }
 
-    @Override
-    public RoleDTO createRole(RoleDTO roleDTO) {
-        return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDTO)));
-    }
-
     public List<Review> listReviewsOfAProduct(UUID productId) {
         return reviewRepository.findAllByProductId(productId);
     }
 
+
+    @Override
+    public RoleDTO createRole(RoleDTO roleDTO) {
+        return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDTO)));
+    }
 
 }

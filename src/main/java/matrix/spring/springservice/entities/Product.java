@@ -82,12 +82,12 @@ public class Product {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-//    @Column(name = "category_id")
-//    private Integer categoryId;
+    @Column(name = "category_id")
+    private Integer categoryId;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private Category category;
+//    @ManyToOne
+//    @JoinColumn(name = "category_id")
+//    private Category category;
 
     @CreationTimestamp
     @Column(name = "created_at")
