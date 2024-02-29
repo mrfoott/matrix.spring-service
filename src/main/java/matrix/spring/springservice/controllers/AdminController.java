@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -91,7 +89,7 @@ public class AdminController {
 
     //    /api/v1/admin/products/productId
     @GetMapping(ADMIN_PRODUCT_ID)
-    public Optional<ProductDTO> getProductById(@PathVariable("productId") UUID productId) {
+    public HashMap<String, ArrayList> getProductById(@PathVariable("productId") UUID productId) {
         return productService.getProductById(productId);
     }
 

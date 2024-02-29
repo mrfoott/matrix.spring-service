@@ -3,26 +3,20 @@ package matrix.spring.springservice.services;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.entities.Product;
+import matrix.spring.springservice.entities.ProductImage;
 import matrix.spring.springservice.entities.Review;
-import matrix.spring.springservice.mappers.CategoryMapper;
-import matrix.spring.springservice.mappers.ProductMapper;
-import matrix.spring.springservice.mappers.ReviewMapper;
-import matrix.spring.springservice.mappers.RoleMapper;
+import matrix.spring.springservice.entities.ReviewImage;
+import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.CategoryDTO;
 import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
 import matrix.spring.springservice.models.RoleDTO;
-import matrix.spring.springservice.repositories.CategoryRepository;
-import matrix.spring.springservice.repositories.ProductRepository;
-import matrix.spring.springservice.repositories.ReviewRepository;
-import matrix.spring.springservice.repositories.RoleRepository;
+import matrix.spring.springservice.repositories.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -40,6 +34,10 @@ public class ProductServiceJPA implements ProductService {
     private final CategoryMapper categoryMapper;
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+    private final ReviewImageRepository reviewImageRepository;
+    private final ReviewImageMapper reviewImageMapper;
+    private final ProductImageRepository productImageRepository;
+    private final ProductImageMapper productImageMapper;
 
     @Override
     public List<ProductDTO> getAllProducts() {
@@ -58,9 +56,89 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductById(UUID productId) {
-        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
-                .orElse(null)));
+    public HashMap<String, ArrayList> getProductById(UUID productId) {
+
+        HashMap<String, ArrayList> productInfo = new HashMap<>();
+
+        List<Product> productList = new ArrayList<>();
+
+        List<ReviewImage> reviewImageList = new ArrayList<>();
+
+        List<Review> listReviews = new ArrayList<>();
+
+        List<ProductImage> productImageList = new ArrayList<>();
+
+        Product product = productRepository.findById(productId).orElse(null);
+
+        if (product != null) {
+
+            ProductDTO productDTO = productMapper.productToProductDto(product);
+
+            productList.add(product);
+
+            productImageList = listProductImagesOfAProduct(productId);
+
+            productImageList
+                    .stream()
+                    .map(productImageMapper::productImageToProductImageDto)
+                    .collect(Collectors.toList());
+
+
+//        List reviews of a product
+
+            if (!productId.toString().isEmpty()) {
+                listReviews = listReviewsOfAProduct(productId);
+            } else {
+                return null;
+            }
+
+            listReviews
+                    .stream()
+                    .map(reviewMapper::reviewToReviewDto)
+                    .collect(Collectors.toList());
+
+            reviewImageList
+                    .stream()
+                    .map(reviewImageMapper::reviewImageToReviewImageDto)
+                    .collect(Collectors.toList());
+
+//        List review images of a product
+
+            for (Review review :
+                    listReviews) {
+                List<ReviewImage> listReviewImages = listReviewImagesOfAReview(review.getId());
+
+                for (ReviewImage reviewImage :
+                        listReviewImages) {
+
+                    reviewImageList.add(reviewImage);
+
+                }
+
+            }
+            productInfo.put("productList", (ArrayList) productList);
+            productInfo.put("productImageList", (ArrayList) productImageList);
+            productInfo.put("listReviews", (ArrayList) listReviews);
+            productInfo.put("reviewImageList", (ArrayList) reviewImageList);
+
+        } else {
+            return null;
+        }
+
+
+//        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
+//                .orElse(null)));
+
+        return productInfo;
+
+    }
+
+    List<ProductImage> listProductImagesOfAProduct(UUID productId) {
+        return productImageRepository.findAllByProductId(productId);
+    }
+
+    List<ReviewImage> listReviewImagesOfAReview(UUID reviewId) {
+        return reviewImageRepository.findAllByReviewId(reviewId);
     }
 
     @Override

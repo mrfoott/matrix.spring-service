@@ -11,10 +11,11 @@ import org.mapstruct.TargetType;
 import org.springframework.stereotype.Component;
 
 
-@Mapper(componentModel = "spring", uses = { CategoryMapper.class })
+//@Mapper(componentModel = "spring", uses = { CategoryMapper.class })
+@Mapper
 public interface ProductMapper {
 
-    @Mapping(source = "categoryId", target = "category")
+//    @Mapping(source = "categoryId", target = "category")
     Product productDtoToProduct(ProductDTO productDTO);
 
     ProductDTO productToProductDto(Product product);

@@ -5,9 +5,7 @@ import matrix.spring.springservice.models.ProductDTO;
 import matrix.spring.springservice.models.ReviewDTO;
 import matrix.spring.springservice.models.RoleDTO;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 public interface ProductService {
 
@@ -15,7 +13,7 @@ public interface ProductService {
 
     List<CategoryDTO> getAllCategories();
 
-    Optional<ProductDTO> getProductById(UUID productId);
+    HashMap<String, ArrayList> getProductById(UUID productId);
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 

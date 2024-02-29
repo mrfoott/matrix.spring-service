@@ -22,24 +22,25 @@ import java.util.UUID;
 @Setter
 @Entity
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "product")
 public class Product {
 
-    public Product(UUID id, Integer version, String productName, String productDescription, BigDecimal price, Integer productQuantity, String brand, Integer soldQuantity, LocalDateTime isDeleted, Category category, LocalDateTime createdAt, LocalDateTime updatedAt, List<ProductImage> productImages) {
-        this.id = id;
-        this.version = version;
-        this.productName = productName;
-        this.productDescription = productDescription;
-        this.price = price;
-        this.productQuantity = productQuantity;
-        this.brand = brand;
-        this.soldQuantity = soldQuantity;
-        this.isDeleted = isDeleted;
-        this.setCategory(category);
-        this.createdAt = createdAt;
-        this.updatedAt = updatedAt;
-        this.productImages = productImages;
-    }
+//    public Product(UUID id, Integer version, String productName, String productDescription, BigDecimal price, Integer productQuantity, String brand, Integer soldQuantity, LocalDateTime isDeleted, Category category, LocalDateTime createdAt, LocalDateTime updatedAt, List<ProductImage> productImages) {
+//        this.id = id;
+//        this.version = version;
+//        this.productName = productName;
+//        this.productDescription = productDescription;
+//        this.price = price;
+//        this.productQuantity = productQuantity;
+//        this.brand = brand;
+//        this.soldQuantity = soldQuantity;
+//        this.isDeleted = isDeleted;
+//        this.setCategory(category);
+//        this.createdAt = createdAt;
+//        this.updatedAt = updatedAt;
+//        this.productImages = productImages;
+//    }
 
     @Id
     @GeneratedValue
@@ -100,6 +101,7 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<ProductImage> productImages;
 
-
+//    @OneToMany(mappedBy = "product")
+//    private List<Review> productReviews;
 
 }

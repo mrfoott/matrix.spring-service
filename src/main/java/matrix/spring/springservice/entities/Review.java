@@ -58,7 +58,7 @@ public class Review {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "review")
-    private List<ReviewImage> reviewImages;
+//    @OneToMany(mappedBy = "review")
+//    private List<ReviewImage> reviewImages;
 
 }

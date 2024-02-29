@@ -9,6 +9,6 @@ public interface ProductImageMapper {
 
     ProductImage productImageDtoToProductImage(ProductImageDTO productImageDTO);
 
-    ProductImageDTO productImageToProductImageDto(ProductImageDTO productImageDTO);
+    ProductImageDTO productImageToProductImageDto(ProductImage productImage);
 
 }

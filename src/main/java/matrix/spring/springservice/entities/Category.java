@@ -48,7 +48,7 @@ public class Category {
     private LocalDateTime updatedAt;
 
 //    @Builder.Default
-    @OneToMany(mappedBy = "category")
-    private List<Product> products = new ArrayList<>();
+//    @OneToMany(mappedBy = "category")
+//    private List<Product> products = new ArrayList<>();
 
 }

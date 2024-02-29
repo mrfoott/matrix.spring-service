@@ -39,8 +39,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Optional<ProductDTO> getProductById(UUID productId) {
-        return Optional.of(productDTOMap.get(productId));
+    public HashMap<String, ArrayList> getProductById(UUID productId) {
+        return null;
     }
 
     @Override
