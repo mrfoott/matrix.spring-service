@@ -1,5 +1,6 @@
 package matrix.spring.springservice.services;
 
+import matrix.spring.springservice.entities.Membership;
 import matrix.spring.springservice.models.*;
 
 import java.util.List;
@@ -39,5 +40,9 @@ public interface UserService {
     List<RoleDTO> getAllRoles();
 
     List<UserDTO> getAllUsersByRoleId(Integer roleId);
+
+    MembershipDTO createMembership(MembershipDTO membershipDTO);
+
+    List<MembershipDTO> getAllMemberships();
 
 }

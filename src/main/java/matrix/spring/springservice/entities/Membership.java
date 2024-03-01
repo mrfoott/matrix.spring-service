@@ -22,6 +22,7 @@ import java.util.List;
 public class Membership {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Version
@@ -37,7 +38,6 @@ public class Membership {
     private Integer discountPercentage;
 
     @NotNull
-    @PositiveOrZero
     @Column(name = "min_price")
     private BigDecimal minPrice;
 

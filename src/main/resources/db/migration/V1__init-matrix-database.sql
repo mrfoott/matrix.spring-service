@@ -41,7 +41,7 @@ CREATE TABLE product
 
 CREATE TABLE membership
 (
-    id                  INT            NOT NULL,
+    id                  INT            NOT NULL         AUTO_INCREMENT,
     `version`             INT,
     membership_rank     INT            NOT NULL CHECK (membership_rank >= 0),
     discount_percentage INT            NOT NULL,

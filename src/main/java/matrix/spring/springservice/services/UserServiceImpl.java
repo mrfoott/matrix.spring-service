@@ -202,4 +202,15 @@ public class UserServiceImpl implements UserService {
     public List<UserDTO> getAllUsersByRoleId(Integer roleId) {
         return new ArrayList<>(userDTOMap.values());
     }
+
+    @Override
+    public MembershipDTO createMembership(MembershipDTO membershipDTO) {
+        return null;
+    }
+
+    @Override
+    public List<MembershipDTO> getAllMemberships() {
+        return null;
+    }
+
 }

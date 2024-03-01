@@ -34,6 +34,8 @@ public class UserServiceJPA implements UserService {
     private final ReviewImageMapper reviewImageMapper;
     private final RoleRepository roleRepository;
     private final RoleMapper roleMapper;
+    private final MembershipRepository membershipRepository;
+    private final MembershipMapper membershipMapper;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -240,6 +242,20 @@ public class UserServiceJPA implements UserService {
         return allUsersByRoleId
                 .stream()
                 .map(userMapper::userToUserDto)
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public MembershipDTO createMembership(MembershipDTO membershipDTO) {
+        return membershipMapper.membershipToMembershipDto(membershipRepository
+                .save(membershipMapper.membershipDtoToMembership(membershipDTO)));
+    }
+
+    @Override
+    public List<MembershipDTO> getAllMemberships() {
+        return membershipRepository.findAll()
+                .stream()
+                .map(membershipMapper::membershipToMembershipDto)
                 .collect(Collectors.toList());
     }
 

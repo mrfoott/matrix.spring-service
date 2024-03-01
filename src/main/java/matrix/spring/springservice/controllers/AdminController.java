@@ -45,12 +45,22 @@ public class AdminController {
     private final String ADMIN_ORDERS = ADMIN_PATH + "/orders";
     //    Admin get order's info
     private final String ADMIN_ORDER_ID = ADMIN_ORDERS + "/{orderId}";
-//    Admin get all roles
+    //    Admin get all roles
     private final String ADMIN_ROLES = ADMIN_PATH + "/roles";
-//    Admin get all users by role id
+    //    Admin get all users by role id
     private final String ADMIN_ROLE_ID = ADMIN_ROLES + "/{roleId}";
+    //    Admin get all memberships
+    private final String ADMIN_MEMBERSHIPS = ADMIN_PATH + "/memberships";
+    //    Admin get all users by membership id
+    private final String ADMIN_MEMBERSHIP_ID = ADMIN_MEMBERSHIPS + "/{membershipId}";
 
 //    GET MAPPING
+
+    //    /api/v1/admin/memberships
+    @GetMapping(ADMIN_MEMBERSHIPS)
+    public List<MembershipDTO> getAllMemberships() {
+        return userService.getAllMemberships();
+    }
 
     //    /api/v1/admin/roles
     @GetMapping(ADMIN_ORDERS)
@@ -64,13 +74,13 @@ public class AdminController {
         return userService.getAllRoles();
     }
 
-//    /api/v1/admin/roles/roleId
+    //    /api/v1/admin/roles/roleId
     @GetMapping(ADMIN_ROLE_ID)
     public List<UserDTO> getAllUsersByRoleId(@PathVariable("roleId") Integer roleId) {
         return userService.getAllUsersByRoleId(roleId);
     }
 
-//    /api/v1/admin/users
+    //    /api/v1/admin/users
     @GetMapping(ADMIN_USERS)
     public List<UserDTO> getAllUsers() {
         return userService.getAllUsers();
@@ -106,6 +116,18 @@ public class AdminController {
     }
 
     //    POST MAPPING
+
+    //    /api/v1/admin/memberships
+    @PostMapping(ADMIN_MEMBERSHIPS)
+    public ResponseEntity createMembership(@Validated @RequestBody MembershipDTO membershipDTO) {
+
+        MembershipDTO newMebership = userService.createMembership(membershipDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
 
     //    /api/v1/admin/users
     @PostMapping(ADMIN_USERS)
@@ -143,7 +165,7 @@ public class AdminController {
 
     }
 
-//    /api/v1/admin/roles
+    //    /api/v1/admin/roles
     @PostMapping(ADMIN_ROLES)
     public ResponseEntity createRole(@Validated @RequestBody RoleDTO roleDTO) {
 

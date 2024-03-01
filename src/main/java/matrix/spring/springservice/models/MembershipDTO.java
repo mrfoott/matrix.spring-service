@@ -22,7 +22,6 @@ public class MembershipDTO {
     private Integer discountPercentage;
 
     @NotNull
-    @Positive
     private BigDecimal minPrice;
 
     @NotNull
