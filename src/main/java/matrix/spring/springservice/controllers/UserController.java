@@ -28,6 +28,8 @@ public class UserController {
 
     private final String USER_ID = USERS_PATH + "/{userId}";
 
+    private final String USER_CART = USERS_PATH + "/carts";
+
     private final String USERS_RECEIVER = USERS_PATH + "/receivers";
 
     private final String USER_RECEIVER_INFO = USERS_RECEIVER + "/{userId}";
@@ -104,6 +106,15 @@ public class UserController {
 
 //    POST MAPPING
 
+    public ResponseEntity addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
+
+        CartDetailDTO newCartDetail = userService.addProductToCart(cartDetailDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
 
 
 }
