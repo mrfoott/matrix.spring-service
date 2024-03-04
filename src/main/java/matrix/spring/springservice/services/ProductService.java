@@ -1,9 +1,6 @@
 package matrix.spring.springservice.services;
 
-import matrix.spring.springservice.models.CategoryDTO;
-import matrix.spring.springservice.models.ProductDTO;
-import matrix.spring.springservice.models.ReviewDTO;
-import matrix.spring.springservice.models.RoleDTO;
+import matrix.spring.springservice.models.*;
 
 import java.util.*;
 
@@ -19,7 +16,7 @@ public interface ProductService {
 
     List<ProductDTO> getProductsByCategory(Integer categoryId);
 
-    ProductDTO createProduct(ProductDTO productDTO);
+    ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList);
 
     Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO);
 

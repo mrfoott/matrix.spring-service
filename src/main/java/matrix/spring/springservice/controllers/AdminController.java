@@ -1,7 +1,9 @@
 package matrix.spring.springservice.controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import matrix.spring.springservice.entities.ProductImage;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.ProductService;
@@ -143,15 +145,42 @@ public class AdminController {
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
-    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
+    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO, @RequestBody List<ProductImageDTO> productImageDTOList) {
 
-        ProductDTO newProduct = productService.createProduct(productDTO);
+        productService.createProduct(productDTO, productImageDTOList);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
         return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
 
     }
+
+//    @PostMapping(ADMIN_PRODUCTS)
+//    public ResponseEntity createProduct(HttpServletRequest request) {
+//        ProductDTO productDTO = extractProductDTO(request);
+//        List<ProductImageDTO> productImageDTOList = extractProductImageDTOList(request);
+//
+//        productService.createProduct(productDTO, productImageDTOList);
+//
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
+//    }
+
+
+
+//    @PostMapping(ADMIN_PRODUCTS)
+//    public ResponseEntity createProduct(@Validated @RequestBody CreateProductRequest productRequest) {
+//
+//        ProductDTO productDTO = productRequest.getProductDTO();
+//        List<ProductImageDTO> productImageDTOList = productRequest.getProductImageDTOList();
+//
+//        productService.createProduct(productDTO, productImageDTOList);
+//
+//        HttpHeaders httpHeaders = new HttpHeaders();
+//
+//        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+//
+//    }
 
     //    /api/v1/admin/categories
     @PostMapping(ADMIN_CATEGORIES)

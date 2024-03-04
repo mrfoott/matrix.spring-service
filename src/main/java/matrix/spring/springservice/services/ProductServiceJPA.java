@@ -7,10 +7,7 @@ import matrix.spring.springservice.entities.ProductImage;
 import matrix.spring.springservice.entities.Review;
 import matrix.spring.springservice.entities.ReviewImage;
 import matrix.spring.springservice.mappers.*;
-import matrix.spring.springservice.models.CategoryDTO;
-import matrix.spring.springservice.models.ProductDTO;
-import matrix.spring.springservice.models.ReviewDTO;
-import matrix.spring.springservice.models.RoleDTO;
+import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
@@ -169,8 +166,24 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
-        return productMapper.productToProductDto(productRepository.save(productMapper.productDtoToProduct(productDTO)));
+    public ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
+//        return productMapper.productToProductDto(productRepository.save(productMapper.productDtoToProduct(productDTO)));
+
+        Product product = productMapper.productDtoToProduct(productDTO);
+        product = productRepository.save(product);
+
+
+        List<ProductImage> productImages = new ArrayList<>();
+        for (ProductImageDTO productImageDTO : productImageDTOList) {
+            ProductImage productImage = productImageMapper.productImageDtoToProductImage(productImageDTO);
+            productImage.setProductId(product.getId());
+            productImages.add(productImage);
+        }
+
+        productImageRepository.saveAll(productImages);
+
+        return productMapper.productToProductDto(product);
+
     }
 
     @Override

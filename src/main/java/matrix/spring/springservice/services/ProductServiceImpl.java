@@ -1,10 +1,7 @@
 package matrix.spring.springservice.services;
 
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.models.CategoryDTO;
-import matrix.spring.springservice.models.ProductDTO;
-import matrix.spring.springservice.models.ReviewDTO;
-import matrix.spring.springservice.models.RoleDTO;
+import matrix.spring.springservice.models.*;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -63,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO) {
+    public ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
 
         ProductDTO newProduct = ProductDTO.builder()
                 .version(0)
@@ -131,5 +128,10 @@ public class ProductServiceImpl implements ProductService {
 
         return newRole;
 
+    }
+
+    @Override
+    public Map<String, List> getTopSellingProducts() {
+        return null;
     }
 }

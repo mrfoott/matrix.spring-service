@@ -98,8 +98,8 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-    @OneToMany(mappedBy = "product")
-    private List<ProductImage> productImages;
+//    @OneToMany(mappedBy = "product")
+//    private List<ProductImage> productImages;
 
 //    @OneToMany(mappedBy = "product")
 //    private List<Review> productReviews;
