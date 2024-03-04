@@ -267,25 +267,15 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public Map<String, List> getTopSellingProducts() {
+    public HashMap<String, ArrayList> getTopSellingProducts() {
 
-        HashMap<String, List> listOfProducts = new HashMap<>();
+        HashMap<String, ArrayList> listOfProducts = new HashMap<>();
 
         List<Product> listProducts = new ArrayList<>();
 
         List<ProductImage> listProductImages = new ArrayList<>();
 
         listProducts = get10TopSellingProducts();
-
-        listProducts
-                .stream()
-                .map(productMapper::productToProductDto)
-                .collect(Collectors.toList());
-
-        listProductImages
-                .stream()
-                .map(productImageMapper::productImageToProductImageDto)
-                .collect(Collectors.toList());
 
         for (Product product: listProducts ){
 
@@ -297,10 +287,26 @@ public class ProductServiceJPA implements ProductService {
 
         }
 
-        listOfProducts.put("listProducts", listProducts);
-        listOfProducts.put("listProductImages", listProductImages);
+        listProducts
+                .stream()
+                .map(productMapper::productToProductDto)
+                .collect(Collectors.toList());
+
+        listProductImages
+                .stream()
+                .map(productImageMapper::productImageToProductImageDto)
+                .collect(Collectors.toList());
+
+        listOfProducts.put("listProducts", (ArrayList) listProducts);
+        listOfProducts.put("listProductImages", (ArrayList) listProductImages);
 
         return listOfProducts;
+    }
+
+    public List<Product> get10TopSellingProducts() {
+
+        return productRepository.findFirst10ByOrderBySoldQuantityDesc();
+
     }
 
     @Override
@@ -308,10 +314,23 @@ public class ProductServiceJPA implements ProductService {
         return productImageMapper.productImageToProductImageDto(productImageRepository.save(productImageMapper.productImageDtoToProductImage(productImageDTO)));
     }
 
-    public List<Product> get10TopSellingProducts() {
+    @Override
+    public List<ProductDTO> getRandomProducts() {
 
-        return productRepository.findTop10BySoldQuantityOrderByProductNameAsc();
+        List<Product> productList = new ArrayList<>();
 
+        productList = get10RandomProducts();
+
+        List<ProductDTO> productDTOList = productList
+                .stream()
+                .map(productMapper::productToProductDto)
+                .collect(Collectors.toList());
+
+        return productDTOList;
+    }
+
+    public List<Product> get10RandomProducts() {
+        return productRepository.findRandomProducts();
     }
 
 }

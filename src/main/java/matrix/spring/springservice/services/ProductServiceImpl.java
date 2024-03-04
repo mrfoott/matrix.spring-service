@@ -131,12 +131,17 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Map<String, List> getTopSellingProducts() {
+    public HashMap<String, ArrayList> getTopSellingProducts() {
         return null;
     }
 
     @Override
     public ProductImageDTO addProductImage(ProductImageDTO productImageDTO) {
+        return null;
+    }
+
+    @Override
+    public List<ProductDTO> getRandomProducts() {
         return null;
     }
 }

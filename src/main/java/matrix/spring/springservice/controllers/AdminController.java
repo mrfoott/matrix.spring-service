@@ -29,6 +29,10 @@ public class AdminController {
 
     //    Admin get all products
     private final String ADMIN_PRODUCTS = ADMIN_PATH + "/products";
+
+    //    Admin get top selling products
+    private final String ADMIN_TOP_SELLING = ADMIN_PRODUCTS + "/topselling";
+
     //    Admin get all product images
     private final String ADMIN_PRODUCT_IMAGE = ADMIN_PRODUCTS + "/images";
 
@@ -58,6 +62,12 @@ public class AdminController {
     private final String ADMIN_MEMBERSHIP_ID = ADMIN_MEMBERSHIPS + "/{membershipId}";
 
 //    GET MAPPING
+
+//    /api/v1/admin/products/topselling
+    @GetMapping(ADMIN_TOP_SELLING)
+    public HashMap<String, ArrayList> get10TopSellingProducts() {
+        return productService.getTopSellingProducts();
+    }
 
     //    /api/v1/admin/memberships
     @GetMapping(ADMIN_MEMBERSHIPS)

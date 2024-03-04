@@ -26,9 +26,10 @@ public interface ProductService {
 
     RoleDTO createRole(RoleDTO roleDTO);
 
-    Map<String, List> getTopSellingProducts();
+    HashMap<String, ArrayList> getTopSellingProducts();
 
     ProductImageDTO addProductImage(ProductImageDTO productImageDTO);
 
+    List<ProductDTO> getRandomProducts();
 
 }

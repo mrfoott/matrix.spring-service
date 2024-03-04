@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.services.OrderService;
+import matrix.spring.springservice.services.ProductService;
 import matrix.spring.springservice.services.UserService;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -24,7 +23,15 @@ public class UserController {
 
     private final OrderService orderService;
 
+    private final ProductService productService;
+
     private final String USERS_PATH = "/api/v1/users";
+
+    private final String USER_PRODUCTS = USERS_PATH + "/products";
+
+    private final String USER_TOP_SELLING = USER_PRODUCTS + "/topselling";
+
+    private final String USER_RANDOM = USER_PRODUCTS + "/random";
 
     private final String USER_ID = USERS_PATH + "/{userId}";
 
@@ -40,6 +47,18 @@ public class UserController {
 
         return userService.deleteItemInCart(cartDetailId);
 
+    }
+
+//    /api/v1/users/products/random
+    @GetMapping(USER_RANDOM)
+    public List<ProductDTO> getRandomProducts() {
+        return productService.getRandomProducts();
+    }
+
+//    /api/v1/users/products/topselling
+    @GetMapping(USER_TOP_SELLING)
+    public HashMap<String, ArrayList> get10TopSellingProducts() {
+        return productService.getTopSellingProducts();
     }
 
 //    /api/v1/users/receivers/userId
