@@ -83,9 +83,9 @@ public class Product {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-    @Column(name = "category_id")
-    private Integer categoryId;
-
+//    @Column(name = "category_id")
+//    private Integer categoryId;
+//
 //    @ManyToOne
 //    @JoinColumn(name = "category_id")
 //    private Category category;
@@ -98,10 +98,14 @@ public class Product {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-//    @OneToMany(mappedBy = "product")
-//    private List<ProductImage> productImages;
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
 
-//    @OneToMany(mappedBy = "product")
-//    private List<Review> productReviews;
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> productImages;
+
+    @OneToMany(mappedBy = "product")
+    private List<Review> productReviews;
 
 }

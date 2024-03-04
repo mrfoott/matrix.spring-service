@@ -2,10 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import matrix.spring.springservice.entities.Product;
-import matrix.spring.springservice.entities.ProductImage;
-import matrix.spring.springservice.entities.Review;
-import matrix.spring.springservice.entities.ReviewImage;
+import matrix.spring.springservice.entities.*;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.repositories.*;
@@ -53,80 +50,80 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public HashMap<String, ArrayList> getProductById(UUID productId) {
+    public Optional<ProductDTO> getProductById(UUID productId) {
 
-        HashMap<String, ArrayList> productInfo = new HashMap<>();
+//        HashMap<String, ArrayList> productInfo = new HashMap<>();
+//
+//        List<Product> productList = new ArrayList<>();
+//
+//        List<ReviewImage> reviewImageList = new ArrayList<>();
+//
+//        List<Review> listReviews = new ArrayList<>();
+//
+//        List<ProductImage> productImageList = new ArrayList<>();
+//
+//        Product product = productRepository.findById(productId).orElse(null);
+//
+//        if (product != null) {
+//
+//            ProductDTO productDTO = productMapper.productToProductDto(product);
+//
+//            productList.add(product);
+//
+//            productImageList = listProductImagesOfAProduct(productId);
+//
+//            productImageList
+//                    .stream()
+//                    .map(productImageMapper::productImageToProductImageDto)
+//                    .collect(Collectors.toList());
+//
+//
+////        List reviews of a product
+//
+//            if (!productId.toString().isEmpty()) {
+//                listReviews = listReviewsOfAProduct(productId);
+//            } else {
+//                return null;
+//            }
+//
+//            listReviews
+//                    .stream()
+//                    .map(reviewMapper::reviewToReviewDto)
+//                    .collect(Collectors.toList());
+//
+//            reviewImageList
+//                    .stream()
+//                    .map(reviewImageMapper::reviewImageToReviewImageDto)
+//                    .collect(Collectors.toList());
+//
+////        List review images of a product
+//
+//            for (Review review :
+//                    listReviews) {
+//                List<ReviewImage> listReviewImages = listReviewImagesOfAReview(review.getId());
+//
+//                for (ReviewImage reviewImage :
+//                        listReviewImages) {
+//
+//                    reviewImageList.add(reviewImage);
+//
+//                }
+//
+//            }
+//            productInfo.put("productList", (ArrayList) productList);
+//            productInfo.put("productImageList", (ArrayList) productImageList);
+//            productInfo.put("listReviews", (ArrayList) listReviews);
+//            productInfo.put("reviewImageList", (ArrayList) reviewImageList);
+//
+//        } else {
+//            return null;
+//        }
 
-        List<Product> productList = new ArrayList<>();
 
-        List<ReviewImage> reviewImageList = new ArrayList<>();
+        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
+                .orElse(null)));
 
-        List<Review> listReviews = new ArrayList<>();
-
-        List<ProductImage> productImageList = new ArrayList<>();
-
-        Product product = productRepository.findById(productId).orElse(null);
-
-        if (product != null) {
-
-            ProductDTO productDTO = productMapper.productToProductDto(product);
-
-            productList.add(product);
-
-            productImageList = listProductImagesOfAProduct(productId);
-
-            productImageList
-                    .stream()
-                    .map(productImageMapper::productImageToProductImageDto)
-                    .collect(Collectors.toList());
-
-
-//        List reviews of a product
-
-            if (!productId.toString().isEmpty()) {
-                listReviews = listReviewsOfAProduct(productId);
-            } else {
-                return null;
-            }
-
-            listReviews
-                    .stream()
-                    .map(reviewMapper::reviewToReviewDto)
-                    .collect(Collectors.toList());
-
-            reviewImageList
-                    .stream()
-                    .map(reviewImageMapper::reviewImageToReviewImageDto)
-                    .collect(Collectors.toList());
-
-//        List review images of a product
-
-            for (Review review :
-                    listReviews) {
-                List<ReviewImage> listReviewImages = listReviewImagesOfAReview(review.getId());
-
-                for (ReviewImage reviewImage :
-                        listReviewImages) {
-
-                    reviewImageList.add(reviewImage);
-
-                }
-
-            }
-            productInfo.put("productList", (ArrayList) productList);
-            productInfo.put("productImageList", (ArrayList) productImageList);
-            productInfo.put("listReviews", (ArrayList) listReviews);
-            productInfo.put("reviewImageList", (ArrayList) reviewImageList);
-
-        } else {
-            return null;
-        }
-
-
-//        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
-//                .orElse(null)));
-
-        return productInfo;
+//        return productInfo;
 
     }
 
@@ -166,21 +163,27 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
-//        return productMapper.productToProductDto(productRepository.save(productMapper.productDtoToProduct(productDTO)));
+    public ProductDTO createProduct(ProductDTO productDTO) {
 
+        Category category = categoryRepository.findById(productDTO.getCategoryId()).orElse(null);
         Product product = productMapper.productDtoToProduct(productDTO);
+
+        List<ProductImageDTO> productImageDTOList = productDTO.getProductImages();
+        List<ProductImage> listImages = new ArrayList<>();
+
+        product.setCategory(category);
+
         product = productRepository.save(product);
 
-
-        List<ProductImage> productImages = new ArrayList<>();
         for (ProductImageDTO productImageDTO : productImageDTOList) {
             ProductImage productImage = productImageMapper.productImageDtoToProductImage(productImageDTO);
-            productImage.setProductId(product.getId());
-            productImages.add(productImage);
+
+            productImage.setProduct(product);
+            listImages.add(productImage);
+
         }
 
-        productImageRepository.saveAll(productImages);
+        productImageRepository.saveAll(listImages);
 
         return productMapper.productToProductDto(product);
 

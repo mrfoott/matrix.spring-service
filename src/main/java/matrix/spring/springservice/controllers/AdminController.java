@@ -112,7 +112,7 @@ public class AdminController {
 
     //    /api/v1/admin/products/productId
     @GetMapping(ADMIN_PRODUCT_ID)
-    public HashMap<String, ArrayList> getProductById(@PathVariable("productId") UUID productId) {
+    public Optional<ProductDTO> getProductById(@PathVariable("productId") UUID productId) {
         return productService.getProductById(productId);
     }
 
@@ -156,9 +156,9 @@ public class AdminController {
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
-    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
+    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
 
-        productService.createProduct(productDTO, productImageDTOList);
+        productService.createProduct(productDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 

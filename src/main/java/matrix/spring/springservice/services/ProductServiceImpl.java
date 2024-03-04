@@ -36,7 +36,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public HashMap<String, ArrayList> getProductById(UUID productId) {
+    public Optional<ProductDTO> getProductById(UUID productId) {
         return null;
     }
 
@@ -60,7 +60,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
+    public ProductDTO createProduct(ProductDTO productDTO) {
 
         ProductDTO newProduct = ProductDTO.builder()
                 .version(0)

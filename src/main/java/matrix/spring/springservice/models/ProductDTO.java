@@ -6,9 +6,12 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
+import matrix.spring.springservice.entities.Category;
+import matrix.spring.springservice.entities.ProductImage;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -18,34 +21,21 @@ public class ProductDTO {
     private UUID id;
     private Integer version;
 
-    @NotNull
-    @NotBlank
     private String productName;
-
-    @NotNull
-    @NotBlank
     private String productDescription;
-
-    @NotNull
-    @Positive
     private BigDecimal price;
-
-    @NotNull
-    @Positive
     private Integer productQuantity;
-
-    @NotNull
-    @NotBlank
     private String brand;
 
-    @NotNull
-    @PositiveOrZero
     private Integer soldQuantity;
 
     private LocalDateTime isDeleted;
     private Integer categoryId;
+    private Category category;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    List<ProductImageDTO> productImages;
 
 }

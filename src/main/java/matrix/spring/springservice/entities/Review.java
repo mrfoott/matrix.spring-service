@@ -64,4 +64,8 @@ public class Review {
 //    @OneToMany(mappedBy = "review")
 //    private List<ReviewImage> reviewImages;
 
+    @ManyToOne
+    @JoinColumn(name = "productId")
+    private Product product;
+
 }

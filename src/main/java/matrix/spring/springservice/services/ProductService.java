@@ -10,13 +10,13 @@ public interface ProductService {
 
     List<CategoryDTO> getAllCategories();
 
-    HashMap<String, ArrayList> getProductById(UUID productId);
+    Optional<ProductDTO> getProductById(UUID productId);
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 
     List<ProductDTO> getProductsByCategory(Integer categoryId);
 
-    ProductDTO createProduct(ProductDTO productDTO, List<ProductImageDTO> productImageDTOList);
+    ProductDTO createProduct(ProductDTO productDTO);
 
     Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO);
 

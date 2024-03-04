@@ -45,9 +45,9 @@ public class ProductImage {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-    @Column(name = "product_id")
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID productId;
+//    @Column(name = "product_id")
+//    @JdbcTypeCode(SqlTypes.CHAR)
+//    private UUID productId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -57,9 +57,9 @@ public class ProductImage {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
 
 
 }
