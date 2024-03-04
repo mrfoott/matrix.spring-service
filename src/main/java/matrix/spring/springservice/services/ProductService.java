@@ -29,4 +29,7 @@ public interface ProductService {
 
     RoleDTO createRole(RoleDTO roleDTO);
 
+    Map<String, List> getTopSellingProducts();
+
+
 }

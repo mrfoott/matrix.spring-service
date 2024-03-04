@@ -253,4 +253,47 @@ public class ProductServiceJPA implements ProductService {
         return roleMapper.roleToRoleDto(roleRepository.save(roleMapper.roleDtoToRole(roleDTO)));
     }
 
+    @Override
+    public Map<String, List> getTopSellingProducts() {
+
+        HashMap<String, List> listOfProducts = new HashMap<>();
+
+        List<Product> listProducts = new ArrayList<>();
+
+        List<ProductImage> listProductImages = new ArrayList<>();
+
+        listProducts = get10TopSellingProducts();
+
+        listProducts
+                .stream()
+                .map(productMapper::productToProductDto)
+                .collect(Collectors.toList());
+
+        listProductImages
+                .stream()
+                .map(productImageMapper::productImageToProductImageDto)
+                .collect(Collectors.toList());
+
+        for (Product product: listProducts ){
+
+            List<ProductImage> productImageList = listProductImagesOfAProduct(product.getId());
+
+            for (ProductImage productImage : productImageList) {
+                listProductImages.add(productImage);
+            }
+
+        }
+
+        listOfProducts.put("listProducts", listProducts);
+        listOfProducts.put("listProductImages", listProductImages);
+
+        return listOfProducts;
+    }
+
+    public List<Product> get10TopSellingProducts() {
+
+        return productRepository.findTop10BySoldQuantityOrderByProductNameAsc();
+
+    }
+
 }
