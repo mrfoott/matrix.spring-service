@@ -45,6 +45,8 @@ public class ProductImage {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
+    @Column(name = "product_id")
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID productId;
 
     @CreationTimestamp

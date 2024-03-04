@@ -28,5 +28,7 @@ public interface ProductService {
 
     Map<String, List> getTopSellingProducts();
 
+    ProductImageDTO addProductImage(ProductImageDTO productImageDTO);
+
 
 }

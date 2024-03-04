@@ -134,4 +134,9 @@ public class ProductServiceImpl implements ProductService {
     public Map<String, List> getTopSellingProducts() {
         return null;
     }
+
+    @Override
+    public ProductImageDTO addProductImage(ProductImageDTO productImageDTO) {
+        return null;
+    }
 }

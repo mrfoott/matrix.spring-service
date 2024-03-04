@@ -1,9 +1,7 @@
 package matrix.spring.springservice.controllers;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.entities.ProductImage;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.ProductService;
@@ -31,6 +29,9 @@ public class AdminController {
 
     //    Admin get all products
     private final String ADMIN_PRODUCTS = ADMIN_PATH + "/products";
+    //    Admin get all product images
+    private final String ADMIN_PRODUCT_IMAGE = ADMIN_PRODUCTS + "/images";
+
     //    Admin get product's info
     private final String ADMIN_PRODUCT_ID = ADMIN_PRODUCTS + "/{productId}";
 
@@ -181,6 +182,18 @@ public class AdminController {
 //        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
 //
 //    }
+
+//    /api/v1/admin/products/productId
+    @PostMapping(ADMIN_PRODUCT_IMAGE)
+    public ResponseEntity addProductImage(@Validated @RequestBody ProductImageDTO productImageDTO) {
+
+        ProductImageDTO newProductImage = productService.addProductImage(productImageDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+
+    }
 
     //    /api/v1/admin/categories
     @PostMapping(ADMIN_CATEGORIES)

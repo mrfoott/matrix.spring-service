@@ -15,7 +15,7 @@ public class ProductImageDTO {
     private UUID id;
     private Integer version;
 
-    @NotNull
+
     @NotBlank
     private String imageLink;
 

@@ -303,6 +303,11 @@ public class ProductServiceJPA implements ProductService {
         return listOfProducts;
     }
 
+    @Override
+    public ProductImageDTO addProductImage(ProductImageDTO productImageDTO) {
+        return productImageMapper.productImageToProductImageDto(productImageRepository.save(productImageMapper.productImageDtoToProductImage(productImageDTO)));
+    }
+
     public List<Product> get10TopSellingProducts() {
 
         return productRepository.findTop10BySoldQuantityOrderByProductNameAsc();
