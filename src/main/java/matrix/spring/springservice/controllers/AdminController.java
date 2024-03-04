@@ -156,7 +156,7 @@ public class AdminController {
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
-    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO, @RequestBody List<ProductImageDTO> productImageDTOList) {
+    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO, List<ProductImageDTO> productImageDTOList) {
 
         productService.createProduct(productDTO, productImageDTOList);
 

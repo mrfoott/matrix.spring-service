@@ -27,6 +27,10 @@ public class UserController {
 
     private final String USERS_PATH = "/api/v1/users";
 
+    private final String USER_CART = USERS_PATH + "/carts";
+
+    private final String USER_CART_ID = USER_CART + "/{cartDetailId}";
+
     private final String USER_PRODUCTS = USERS_PATH + "/products";
 
     private final String USER_TOP_SELLING = USER_PRODUCTS + "/topselling";
@@ -35,15 +39,14 @@ public class UserController {
 
     private final String USER_ID = USERS_PATH + "/{userId}";
 
-    private final String USER_CART = USERS_PATH + "/carts";
-
     private final String USERS_RECEIVER = USERS_PATH + "/receivers";
 
     private final String USER_RECEIVER_INFO = USERS_RECEIVER + "/{userId}";
 
 //    private final String USER_RECEIVER_ID = USERS_RECEIVER + "/{receiverId}";
 
-    public Boolean deleteItemInCart(UUID cartDetailId) {
+    @DeleteMapping(USER_CART_ID)
+    public Boolean deleteItemInCart(@PathVariable("cartDetailId") UUID cartDetailId) {
 
         return userService.deleteItemInCart(cartDetailId);
 
@@ -125,6 +128,7 @@ public class UserController {
 
 //    POST MAPPING
 
+    @PostMapping(USER_CART)
     public ResponseEntity addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
 
         CartDetailDTO newCartDetail = userService.addProductToCart(cartDetailDTO);

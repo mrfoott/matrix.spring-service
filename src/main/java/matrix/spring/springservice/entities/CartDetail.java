@@ -34,9 +34,11 @@ public class CartDetail {
     private Integer version;
 
     @Column(name = "user_id")
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID userId;
 
     @Column(name = "product_id")
+    @JdbcTypeCode(SqlTypes.CHAR)
     private UUID productId;
 
     @Column(name = "product_name")
