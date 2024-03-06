@@ -47,11 +47,11 @@ public class Review {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-    @Column(name = "user_id")
-    private UUID userId;
+//    @Column(name = "user_id")
+//    private UUID userId;
 
-    @Column(name = "product_id")
-    private UUID productId;
+//    @Column(name = "product_id")
+//    private UUID productId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -61,11 +61,15 @@ public class Review {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-//    @OneToMany(mappedBy = "review")
-//    private List<ReviewImage> reviewImages;
+    @OneToMany(mappedBy = "review")
+    private List<ReviewImage> reviewImages;
 
     @ManyToOne
     @JoinColumn(name = "productId")
     private Product product;
+
+    @ManyToOne
+    @JoinColumn(name = "userId")
+    private User user;
 
 }

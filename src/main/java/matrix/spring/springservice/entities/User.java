@@ -10,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -29,30 +30,20 @@ public class User {
     @Version
     private Integer version;
 
-    @NotNull
-    @NotBlank
     @Column(name = "user_email")
     private String userEmail;
 
-    @NotNull
-    @NotBlank
+    @Column(name = "password")
     private String password;
 
-    @NotNull
-    @NotBlank
     @Column(name = "full_name")
     private String fullName;
 
-    @NotNull
-    @NotBlank
     @Column(name = "user_phone")
     private String userPhone;
 
-    @NotNull
-    @NotBlank
     private String avatar;
 
-    @NotNull
     @Column(name = "membership_point")
     private Double membershipPoint;
 
@@ -86,5 +77,11 @@ public class User {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+
+    @OneToMany(mappedBy = "user")
+    private List<Order> orderList;
+
+    @OneToMany(mappedBy = "user")
+    private List<ReceiverInfo> receiverInfoList;
 
 }

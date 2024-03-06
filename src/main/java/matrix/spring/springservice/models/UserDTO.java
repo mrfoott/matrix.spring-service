@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -16,27 +17,19 @@ public class UserDTO {
     private UUID id;
     private Integer version;
 
-    @NotNull
-    @NotBlank
+
     private String userEmail;
 
-    @NotNull
-    @NotBlank
     private String password;
 
-    @NotNull
-    @NotBlank
+
     private String fullName;
 
-    @NotNull
-    @NotBlank
     private String userPhone;
 
-    @NotNull
-    @NotBlank
     private String avatar;
 
-    @NotNull
+
     private Double membershipPoint;
 
     private LocalDateTime membershipPromotedDay;
@@ -45,8 +38,10 @@ public class UserDTO {
     private Integer roleId;
     private Integer membershipId;
 
-    @Column(name = "created_at")
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private List<OrderDTO> orderList;
+    private List<ReceiverInfoDTO> receiverInfoList;
 
 }

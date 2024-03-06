@@ -150,7 +150,11 @@ public class AdminController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        newUser.setPassword(null);
+
+        UserDTO returnUser = newUser;
+
+        return new ResponseEntity(returnUser, httpHeaders, HttpStatus.CREATED);
 
     }
 

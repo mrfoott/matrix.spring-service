@@ -2,6 +2,7 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import matrix.spring.springservice.controllers.NotFoundException;
 import matrix.spring.springservice.entities.*;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -36,6 +38,8 @@ public class UserServiceJPA implements UserService {
     private final RoleMapper roleMapper;
     private final MembershipRepository membershipRepository;
     private final MembershipMapper membershipMapper;
+    private final ProductRepository productRepository;
+    private final ProductMapper productMapper;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -58,7 +62,22 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public UserDTO createUser(UserDTO userDTO) {
-        return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDTO)));
+//        return userMapper.userToUserDto(userRepository.save(userMapper.userDtoToUser(userDTO)));
+
+        Membership membership = membershipRepository.findById(userDTO.getMembershipId()).orElse(null);
+        Role role = roleRepository.findById(userDTO.getRoleId()).orElse(null);
+
+        User user = userMapper.userDtoToUser(userDTO);
+
+        user.setMembership(membership);
+        user.setRole(role);
+
+        user = userRepository.save(user);
+
+//        user.setPassword(null);
+
+        return userMapper.userToUserDto(user);
+
     }
 
     @Override
@@ -187,25 +206,36 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList) {
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO) {
+
+        User user = userRepository.findById(reviewDTO.getUserId()).orElse(null);
+        Product product = productRepository.findById(reviewDTO.getProductId()).orElse(null);
+
+        System.out.println(user);
+        System.out.println(product);
+
         Review review = reviewMapper.reviewDtoToReview(reviewDTO);
 
-        Review savedReview = reviewRepository.save(review);
+        review.setProduct(product);
+        review.setUser(user);
 
-        // Map ReviewImageDTO list to ReviewImage entity list
-        List<ReviewImage> reviewImages = reviewImageDTOList
-                .stream()
-                .map(reviewImageMapper::reviewImageDtoToReviewImage)
-                .collect(Collectors.toList());
+        review = reviewRepository.save(review);
 
-//        // Set review id for each review image
-//        reviewImages.forEach(reviewImage -> reviewImage.setReview(savedReview));
+        List<ReviewImageDTO> reviewImageDTOList = reviewDTO.getReviewImages();
+        List<ReviewImage> reviewImages = new ArrayList<>();
 
-        // Save review images to database
+        for (ReviewImageDTO reviewImageDTO : reviewImageDTOList) {
+
+            ReviewImage reviewImage = reviewImageMapper.reviewImageDtoToReviewImage(reviewImageDTO);
+
+            reviewImage.setReview(review);
+            reviewImages.add(reviewImage);
+
+        }
+
         reviewImageRepository.saveAll(reviewImages);
 
-        // Map saved review back to DTO and return
-        return reviewMapper.reviewToReviewDto(savedReview);
+        return reviewMapper.reviewToReviewDto(review);
 
     }
 

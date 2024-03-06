@@ -15,13 +15,14 @@ public class ReviewImageDTO {
     private UUID id;
     private Integer version;
 
-    @NotNull
-    @NotBlank
     private String userReviewImage;
 
     private LocalDateTime isDeleted;
-    private UUID reviewId;
+//    private UUID reviewId;
+
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private ReviewDTO reviewDTO;
 
 }

@@ -55,8 +55,8 @@ public class Order {
     @Column(name = "payment_status")
     private String paymentStatus;
 
-    @Column(name = "user_id")
-    private UUID userId;
+//    @Column(name = "user_id")
+//    private UUID userId;
 
     @Column(name = "receiver_info_id")
     private UUID receiverInfoId;
@@ -71,5 +71,9 @@ public class Order {
 
     @OneToMany(mappedBy = "order")
     private List<OrderDetail> orderDetails;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
 }

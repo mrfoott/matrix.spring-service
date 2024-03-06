@@ -11,6 +11,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -54,9 +55,9 @@ public class ReceiverInfo {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-    @Column(name = "user_id")
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID userId;
+//    @Column(name = "user_id")
+//    @JdbcTypeCode(SqlTypes.CHAR)
+//    private UUID userId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -65,5 +66,10 @@ public class ReceiverInfo {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
 
 }

@@ -40,7 +40,7 @@ public class ReviewImage {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-    private UUID reviewId;
+//    private UUID reviewId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -50,8 +50,8 @@ public class ReviewImage {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "review_id")
-//    private Review review;
+    @ManyToOne
+    @JoinColumn(name = "review_id")
+    private Review review;
 
 }

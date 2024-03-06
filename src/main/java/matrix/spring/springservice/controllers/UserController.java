@@ -45,6 +45,8 @@ public class UserController {
 
 //    private final String USER_RECEIVER_ID = USERS_RECEIVER + "/{receiverId}";
 
+    private final String USER_REVIEWS = USERS_PATH + "/reviews";
+
     @DeleteMapping(USER_CART_ID)
     public Boolean deleteItemInCart(@PathVariable("cartDetailId") UUID cartDetailId) {
 
@@ -82,16 +84,27 @@ public class UserController {
 
 //    /api/v1/users/receivers
     @PostMapping(USERS_RECEIVER)
-    public ResponseEntity addReceiverInfo(@Validated @RequestBody ReceiverInfoDTO receiverInfoDTO) {
+    public ResponseEntity<ReceiverInfoDTO> addReceiverInfo(@Validated @RequestBody ReceiverInfoDTO receiverInfoDTO) {
 
         ReceiverInfoDTO newReceiverInfo = userService.addReceiverInfo(receiverInfoDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(newReceiverInfo, httpHeaders, HttpStatus.CREATED);
 
     }
 
+//    /api/v1/users/reviews
+    @PostMapping(USER_REVIEWS)
+    public ResponseEntity reviewProduct(ReviewDTO reviewDTO) {
+
+        ReviewDTO newReview = userService.reviewProduct(reviewDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(newReview, httpHeaders, HttpStatus.CREATED);
+
+    }
 
     public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
 

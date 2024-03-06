@@ -1,6 +1,5 @@
 package matrix.spring.springservice.services;
 
-import matrix.spring.springservice.entities.Membership;
 import matrix.spring.springservice.models.*;
 
 import java.util.List;
@@ -31,7 +30,7 @@ public interface UserService {
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 
-    ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList);
+    ReviewDTO reviewProduct(ReviewDTO reviewDTO);
 
     ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO);
 

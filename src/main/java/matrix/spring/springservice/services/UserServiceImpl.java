@@ -145,26 +145,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public ReviewDTO reviewProduct(ReviewDTO reviewDTO, List<ReviewImageDTO> reviewImageDTOList) {
-        ReviewDTO newReview = ReviewDTO.builder()
-                .productId(reviewDTO.getProductId())
-                .reviewContent(reviewDTO.getReviewContent())
-                .reviewRating(reviewDTO.getReviewRating())
-                .userId(reviewDTO.getUserId())
-                .createdAt(LocalDateTime.now())
-                .updatedAt(LocalDateTime.now())
-                .build();
-
-        List<ReviewImageDTO> newReviewImages = reviewImageDTOList.stream()
-                .map(reviewImageDTO -> {
-                    ReviewImageDTO newReviewImage = ReviewImageDTO.builder()
-                            .reviewId(newReview.getId())
-                            .userReviewImage(reviewImageDTO.getUserReviewImage())
-                            .createdAt(LocalDateTime.now())
-                            .updatedAt(LocalDateTime.now())
-                            .build();
-                    return newReviewImage;
-                }).collect(Collectors.toList());
+    public ReviewDTO reviewProduct(ReviewDTO reviewDTO) {
 
         return null;
 
