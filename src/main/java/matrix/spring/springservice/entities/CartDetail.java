@@ -33,13 +33,13 @@ public class CartDetail {
     @Version
     private Integer version;
 
-    @Column(name = "user_id")
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID userId;
-
-    @Column(name = "product_id")
-    @JdbcTypeCode(SqlTypes.CHAR)
-    private UUID productId;
+//    @Column(name = "user_id")
+//    @JdbcTypeCode(SqlTypes.CHAR)
+//    private UUID userId;
+//
+//    @Column(name = "product_id")
+//    @JdbcTypeCode(SqlTypes.CHAR)
+//    private UUID productId;
 
     @Column(name = "product_name")
     private String productName;
@@ -57,12 +57,12 @@ public class CartDetail {
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
-//    @ManyToOne
-//    @JoinColumn(name = "user_id")
-//    private User user;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "product_id")
-//    private Product product;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    private Product product;
     
 }

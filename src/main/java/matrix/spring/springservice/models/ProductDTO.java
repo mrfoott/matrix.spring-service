@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Builder;
 import lombok.Data;
+import matrix.spring.springservice.entities.CartDetail;
 import matrix.spring.springservice.entities.Category;
 import matrix.spring.springservice.entities.ProductImage;
 
@@ -37,5 +38,7 @@ public class ProductDTO {
     private LocalDateTime updatedAt;
 
     List<ProductImageDTO> productImages;
+    List<ReviewDTO> productReviews;
+    List<CartDetailDTO> cartDetails;
 
 }

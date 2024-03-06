@@ -43,5 +43,6 @@ public class UserDTO {
 
     private List<OrderDTO> orderList;
     private List<ReceiverInfoDTO> receiverInfoList;
+    private List<CartDetailDTO> cartDetails;
 
 }

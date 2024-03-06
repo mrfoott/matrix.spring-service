@@ -122,13 +122,15 @@ public class UserController {
 
     }
 
-    public Optional<UserDTO> getInfoOfSelf(UUID userId) {
 
-        if (userService.getUserById(userId).isEmpty()) {
+    @GetMapping(USER_ID)
+    public Optional<UserDTO> getInfoOfSelf(@PathVariable("userId") UUID userId) {
+
+        if (userService.getInfoOfSelf(userId).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return userService.getUserById(userId);
+        return userService.getInfoOfSelf(userId);
     }
 
     public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
@@ -148,7 +150,7 @@ public class UserController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(newCartDetail, httpHeaders, HttpStatus.CREATED);
 
     }
 

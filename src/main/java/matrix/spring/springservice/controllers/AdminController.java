@@ -264,7 +264,7 @@ public class AdminController {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity("User is deleted!!!",HttpStatus.NO_CONTENT);
     }
 
     public List<ReviewDTO> getProductReviews(UUID productId) {

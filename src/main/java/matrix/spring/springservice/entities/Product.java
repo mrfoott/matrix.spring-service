@@ -108,4 +108,9 @@ public class Product {
     @OneToMany(mappedBy = "product")
     private List<Review> productReviews;
 
+    @OneToMany(mappedBy = "product")
+    private List<CartDetail> cartDetails;
+
+
+
 }

@@ -44,13 +44,7 @@ public class UserServiceJPA implements UserService {
     @Override
     public List<UserDTO> getAllUsers() {
 
-
-//        return userRepository.findAll()
-//                .stream()
-//                .map(userMapper::userToUserDto)
-//                .collect(Collectors.toList());
-
-        List<User> allUsers = userRepository.findAll();
+        List<User> allUsers = userRepository.findAllByRoleId(1);
 
         List<UserDTO> nonAdminUsers = allUsers.stream()
                 .map(userMapper::userToUserDto)
@@ -58,6 +52,8 @@ public class UserServiceJPA implements UserService {
 
         for (UserDTO userDTO : nonAdminUsers) {
             userDTO.setPassword(null);
+            userDTO.setCreatedAt(null);
+            userDTO.setUpdatedAt(null);
         }
 
         return nonAdminUsers;
@@ -66,13 +62,32 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public Optional<UserDTO> getUserById(UUID userId) {
-        return Optional.ofNullable(userMapper.userToUserDto(userRepository.findById(userId)
-                .orElse(null)));
+//        return Optional.ofNullable(userMapper.userToUserDto(userRepository.findById(userId)
+//                .orElse(null)));
+
+        User user = userRepository.findById(userId).orElse(null);
+
+        UserDTO userDTO = userMapper.userToUserDto(user);
+
+        userDTO.setPassword(null);
+        userDTO.setCreatedAt(null);
+        userDTO.setUpdatedAt(null);
+
+        return Optional.ofNullable(userDTO);
+
     }
 
     @Override
     public Optional<UserDTO> getInfoOfSelf(UUID userId) {
-        return Optional.empty();
+        User user = userRepository.findById(userId).orElse(null);
+
+        UserDTO userDTO = userMapper.userToUserDto(user);
+
+        userDTO.setPassword(null);
+        userDTO.setCreatedAt(null);
+        userDTO.setUpdatedAt(null);
+
+        return Optional.ofNullable(userDTO);
     }
 
     @Override
@@ -214,8 +229,20 @@ public class UserServiceJPA implements UserService {
             return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(cartDetail));
 
         } else {
-            return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
-                    .save(cartDetailMapper.cartDetailDtoToCartDetail(cartDetailDTO)));
+//            return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
+//                    .save(cartDetailMapper.cartDetailDtoToCartDetail(cartDetailDTO)));
+
+            User user = userRepository.findById(cartDetailDTO.getUserId()).orElse(null);
+            Product product = productRepository.findById(cartDetailDTO.getProductId()).orElse(null);
+
+            CartDetail cartDetail = cartDetailMapper.cartDetailDtoToCartDetail(cartDetailDTO);
+            cartDetail.setProduct(product);
+            cartDetail.setUser(user);
+
+            cartDetail = cartDetailRepository.save(cartDetail);
+
+            return cartDetailMapper.cartDetailToCartDetailDto(cartDetail);
+
         }
 
     }

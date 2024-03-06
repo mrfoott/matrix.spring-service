@@ -84,4 +84,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     private List<ReceiverInfo> receiverInfoList;
 
+    @OneToMany(mappedBy = "user")
+    private List<CartDetail> cartDetails;
+
 }
