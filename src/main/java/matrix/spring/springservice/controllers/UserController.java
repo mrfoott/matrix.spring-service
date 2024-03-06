@@ -29,7 +29,12 @@ public class UserController {
 
     private final String USER_CART = USERS_PATH + "/carts";
 
-    private final String USER_CART_ID = USER_CART + "/{cartDetailId}";
+    private final String USER_CART_PLUS_ONE = USER_CART + "/{userId}" + "/plusone" + "/{cartDetailId}";
+
+    private final String USER_CART_MINUS_ONE = USER_CART + "/{userId}" + "/minusone" + "/{cartDetailId}";
+
+
+    private final String USER_CART_ID = USER_CART + "/{userId}";
 
     private final String USER_PRODUCTS = USERS_PATH + "/products";
 
@@ -116,7 +121,9 @@ public class UserController {
 
     }
 
-    public List<CartDetailDTO> getCartInfo(UUID userId) {
+//    /api/v1/users/carts/userId
+    @GetMapping(USER_CART_ID)
+    public List<CartDetailDTO> getCartInfo(@PathVariable("userId") UUID userId) {
 
         return userService.getCartInfo(userId);
 
@@ -133,12 +140,30 @@ public class UserController {
         return userService.getInfoOfSelf(userId);
     }
 
-    public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
-        return userService.plusOneItemInCart(cartDetailId);
+//    /api/v1/users/carts/userId/plusone/cartdetailid
+    @PutMapping(USER_CART_PLUS_ONE)
+    public ResponseEntity plusOneItemInCart(@PathVariable("userId") UUID userId, @PathVariable("cartDetailId") @RequestBody UUID cartDetailId) {
+
+        Optional<CartDetailDTO> cartDetailDTO = userService.plusOneItemInCart(cartDetailId);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(cartDetailDTO, httpHeaders, HttpStatus.OK);
+
     }
 
-    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
-        return userService.minusOneItemInCart(cartDetailId);
+    @PutMapping(USER_CART_MINUS_ONE)
+    public ResponseEntity minusOneItemInCart(@PathVariable("userId") UUID userId, @PathVariable("cartDetailId") @RequestBody UUID cartDetailId) {
+
+        Optional<CartDetailDTO> cartDetailDTO = userService.minusOneItemInCart(cartDetailId);
+
+        if (cartDetailDTO.isPresent()) {
+            HttpHeaders httpHeaders = new HttpHeaders();
+            return new ResponseEntity(cartDetailDTO.get(), httpHeaders, HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Quantity cannot be less than 1");
+        }
+
     }
 
 //    POST MAPPING

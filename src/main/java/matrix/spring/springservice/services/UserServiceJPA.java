@@ -199,18 +199,16 @@ public class UserServiceJPA implements UserService {
     @Override
     public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
 
-        AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
-
-        cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
-
-            existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() - 1);
-
-            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
-
-        return atomicReference.get();
+        Optional<CartDetailDTO> cartDetailDTO = cartDetailRepository.findById(cartDetailId)
+                .map(existingCartItem -> {
+                    if (existingCartItem.getItemQuantity() > 1) {
+                        existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() - 1);
+                        return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem));
+                    } else {
+                        return null;
+                    }
+                });
+        return cartDetailDTO;
 
     }
 
