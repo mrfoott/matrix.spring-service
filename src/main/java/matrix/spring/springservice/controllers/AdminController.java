@@ -183,11 +183,11 @@ public class AdminController {
     @PostMapping(ADMIN_PRODUCTS)
     public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
 
-        productService.createProduct(productDTO);
+        ProductDTO newProduct = productService.createProduct(productDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(newProduct, httpHeaders, HttpStatus.CREATED);
 
     }
 
@@ -263,7 +263,9 @@ public class AdminController {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        Optional<ProductDTO> updatedProduct = productService.updateProductById(productId, productDTO);
+
+        return new ResponseEntity(updatedProduct, HttpStatus.OK);
 
     }
 

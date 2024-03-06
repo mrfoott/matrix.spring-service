@@ -196,23 +196,40 @@ public class ProductServiceJPA implements ProductService {
 
     @Override
     public Optional<ProductDTO> updateProductById(UUID productId, ProductDTO productDTO) {
-        AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
+//        AtomicReference<Optional<ProductDTO>> atomicReference = new AtomicReference<>();
+//
+//        productRepository.findById(productId).ifPresentOrElse(existingProduct -> {
+//            existingProduct.setProductName(productDTO.getProductName());
+//            existingProduct.setProductDescription(productDTO.getProductDescription());
+//            existingProduct.setPrice(productDTO.getPrice());
+//            existingProduct.setProductQuantity(productDTO.getProductQuantity());
+//            existingProduct.setBrand(productDTO.getBrand());
+//            existingProduct.setSoldQuantity(productDTO.getSoldQuantity());
+//
+//            atomicReference.set(Optional.of(productMapper
+//                    .productToProductDto(productRepository.save(existingProduct))));
+//        }, () -> {
+//            atomicReference.set(Optional.empty());
+//        });
+//
+//        return atomicReference.get();
 
-        productRepository.findById(productId).ifPresentOrElse(existingProduct -> {
-            existingProduct.setProductName(productDTO.getProductName());
-            existingProduct.setProductDescription(productDTO.getProductDescription());
-            existingProduct.setPrice(productDTO.getPrice());
-            existingProduct.setProductQuantity(productDTO.getProductQuantity());
-            existingProduct.setBrand(productDTO.getBrand());
-            existingProduct.setSoldQuantity(productDTO.getSoldQuantity());
+        Category category = categoryRepository.findById(productDTO.getCategoryId()).orElse(null);
 
-            atomicReference.set(Optional.of(productMapper
-                    .productToProductDto(productRepository.save(existingProduct))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
+        Product product = productRepository.findById(productId).orElse(null);
 
-        return atomicReference.get();
+        product.setCategory(category);
+        product.setProductName(productDTO.getProductName());
+        product.setProductDescription(productDTO.getProductDescription());
+        product.setPrice(productDTO.getPrice());
+        product.setProductQuantity(productDTO.getProductQuantity());
+        product.setBrand(productDTO.getBrand());
+        product.setSoldQuantity(productDTO.getSoldQuantity());
+
+        product = productRepository.save(product);
+
+        return Optional.of(productMapper.productToProductDto(product));
+
     }
 
     @Override
