@@ -14,7 +14,7 @@ public interface ProductService {
 
     CategoryDTO createCategory(CategoryDTO categoryDTO);
 
-    List<ProductDTO> getProductsByCategory(Integer categoryId);
+    CategoryDTO getProductsByCategory(Integer categoryId);
 
     ProductDTO createProduct(ProductDTO productDTO);
 

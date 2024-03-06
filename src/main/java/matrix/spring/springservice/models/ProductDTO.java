@@ -32,13 +32,13 @@ public class ProductDTO {
 
     private LocalDateTime isDeleted;
     private Integer categoryId;
-    private Category category;
+//    private Category category;
 
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
     List<ProductImageDTO> productImages;
     List<ReviewDTO> productReviews;
-    List<CartDetailDTO> cartDetails;
+//    List<CartDetailDTO> cartDetails;
 
 }

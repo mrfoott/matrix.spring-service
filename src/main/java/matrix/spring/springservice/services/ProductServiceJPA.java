@@ -35,10 +35,11 @@ public class ProductServiceJPA implements ProductService {
 
     @Override
     public List<ProductDTO> getAllProducts() {
-        return productRepository.findAll()
-                .stream()
-                .map(productMapper::productToProductDto)
-                .collect(Collectors.toList());
+
+        List<Product> productList = productRepository.findAll();
+
+        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+
     }
 
     @Override
@@ -141,20 +142,24 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getProductsByCategory(Integer categoryId) {
+    public CategoryDTO getProductsByCategory(Integer categoryId) {
 
-        List<Product> productsListByCategory;
+//        List<Product> productsListByCategory;
+//
+//        if (categoryId != null) {
+//            productsListByCategory = listProductsByCategory(categoryId);
+//        } else {
+//            return null;
+//        }
+//
+//        return productsListByCategory
+//                .stream()
+//                .map(productMapper::productToProductDto)
+//                .collect(Collectors.toList());
 
-        if (categoryId != null) {
-            productsListByCategory = listProductsByCategory(categoryId);
-        } else {
-            return null;
-        }
+        Category category = categoryRepository.findById(categoryId).orElse(null);
 
-        return productsListByCategory
-                .stream()
-                .map(productMapper::productToProductDto)
-                .collect(Collectors.toList());
+        return categoryMapper.categoryToCategoryDto(category);
 
     }
 

@@ -55,8 +55,8 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public List<ProductDTO> getProductsByCategory(Integer categoryId) {
-        return new ArrayList<>(productDTOMap.values());
+    public CategoryDTO getProductsByCategory(Integer categoryId) {
+        return null;
     }
 
     @Override

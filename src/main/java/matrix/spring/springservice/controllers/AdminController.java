@@ -133,7 +133,7 @@ public class AdminController {
 
     //    /api/v1/admin/categories/categoryId
     @GetMapping(ADMIN_PRODUCTS_CATEGORY)
-    public List<ProductDTO> getProductsByCategory(@PathVariable("categoryId") Integer categoryId) {
+    public CategoryDTO getProductsByCategory(@PathVariable("categoryId") Integer categoryId) {
         return productService.getProductsByCategory(categoryId);
     }
 
@@ -238,7 +238,7 @@ public class AdminController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(newCategory, httpHeaders, HttpStatus.CREATED);
 
     }
 

@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -15,12 +16,12 @@ public class CategoryDTO {
     private Integer id;
     private Integer version;
 
-    @NotNull
-    @NotBlank
     private String categoryName;
 
     private LocalDateTime isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private List<ProductDTO> productList;
 
 }
