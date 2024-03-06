@@ -38,7 +38,7 @@ public interface UserService {
 
     List<RoleDTO> getAllRoles();
 
-    List<UserDTO> getAllUsersByRoleId(Integer roleId);
+    RoleDTO getAllUsersByRoleId(Integer roleId);
 
     MembershipDTO createMembership(MembershipDTO membershipDTO);
 

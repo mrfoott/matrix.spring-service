@@ -2,6 +2,7 @@ package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import matrix.spring.springservice.entities.Role;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.ProductService;
@@ -89,7 +90,7 @@ public class AdminController {
 
     //    /api/v1/admin/roles/roleId
     @GetMapping(ADMIN_ROLE_ID)
-    public List<UserDTO> getAllUsersByRoleId(@PathVariable("roleId") Integer roleId) {
+    public RoleDTO getAllUsersByRoleId(@PathVariable("roleId") Integer roleId) {
         return userService.getAllUsersByRoleId(roleId);
     }
 

@@ -2,7 +2,6 @@ package matrix.spring.springservice.services;
 
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import matrix.spring.springservice.controllers.NotFoundException;
 import matrix.spring.springservice.entities.*;
 import matrix.spring.springservice.mappers.*;
 import matrix.spring.springservice.models.*;
@@ -281,8 +280,36 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public ReceiverInfoDTO addReceiverInfo(ReceiverInfoDTO receiverInfoDTO) {
-        return receiverInfoMapper.receiverInfoToReceiverInfoDto(receiverInfoRepository
-                .save(receiverInfoMapper.receiverInfoDtoToReceiverInfo(receiverInfoDTO)));
+//        return receiverInfoMapper.receiverInfoToReceiverInfoDto(receiverInfoRepository
+//                .save(receiverInfoMapper.receiverInfoDtoToReceiverInfo(receiverInfoDTO)));
+
+        User user = userRepository.findById(receiverInfoDTO.getUserId()).orElse(null);
+
+        ReceiverInfo receiverInfo = receiverInfoMapper.receiverInfoDtoToReceiverInfo(receiverInfoDTO);
+
+        receiverInfo.setUser(user);
+
+        if (receiverInfo.getIsDefault().equals(1)) {
+
+            List<ReceiverInfo> receiverInfoList = receiverInfoRepository.findAllByUserId(receiverInfoDTO.getUserId());
+
+            for (ReceiverInfo exsisting : receiverInfoList) {
+                exsisting.setIsDefault(0);
+            }
+
+            receiverInfoRepository.saveAll(receiverInfoList);
+            receiverInfo = receiverInfoRepository.save(receiverInfo);
+
+            return receiverInfoMapper.receiverInfoToReceiverInfoDto(receiverInfo);
+
+        } else {
+
+            receiverInfo = receiverInfoRepository.save(receiverInfo);
+
+            return receiverInfoMapper.receiverInfoToReceiverInfoDto(receiverInfo);
+
+        }
+
     }
 
     @Override
@@ -315,19 +342,22 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsersByRoleId(Integer roleId) {
-        List<User> allUsersByRoleId;
+    public RoleDTO getAllUsersByRoleId(Integer roleId) {
+//        List<User> allUsersByRoleId;
+//
+//        if (roleId != null) {
+//            allUsersByRoleId = listUsersByRoleId(roleId);
+//        } else {
+//            return null;
+//        }
+//
+//        return allUsersByRoleId
+//                .stream()
+//                .map(userMapper::userToUserDto)
+//                .collect(Collectors.toList());
 
-        if (roleId != null) {
-            allUsersByRoleId = listUsersByRoleId(roleId);
-        } else {
-            return null;
-        }
-
-        return allUsersByRoleId
-                .stream()
-                .map(userMapper::userToUserDto)
-                .collect(Collectors.toList());
+        Role role = roleRepository.findById(roleId).orElse(null);
+        return roleMapper.roleToRoleDto(role);
     }
 
     @Override

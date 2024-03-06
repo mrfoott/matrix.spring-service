@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -180,8 +179,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<UserDTO> getAllUsersByRoleId(Integer roleId) {
-        return new ArrayList<>(userDTOMap.values());
+    public RoleDTO getAllUsersByRoleId(Integer roleId) {
+        return null;
     }
 
     @Override
