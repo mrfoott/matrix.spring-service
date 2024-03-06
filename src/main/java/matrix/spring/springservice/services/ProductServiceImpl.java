@@ -110,6 +110,11 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
+    public Optional<ProductDTO> undeleteProductById(UUID productId) {
+        return Optional.empty();
+    }
+
+    @Override
     public List<ReviewDTO> getProductReviews(UUID productId) {
 
         return new ArrayList<>(reviewDTOMap.values());

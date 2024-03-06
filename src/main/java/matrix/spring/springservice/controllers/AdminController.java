@@ -281,6 +281,19 @@ public class AdminController {
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
+    @PatchMapping(ADMIN_PRODUCT_ID)
+    public ResponseEntity undeleteProductById(@PathVariable("productId") UUID productId) {
+        if (productService.undeleteProductById(productId).isEmpty()) {
+            throw new NotFoundException();
+        }
+
+        Optional<ProductDTO> productDTO = productService.undeleteProductById(productId);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(productDTO, httpHeaders, HttpStatus.NO_CONTENT);
+    }
+
     @DeleteMapping(ADMIN_USER_ID)
     public ResponseEntity deleteUserById(@PathVariable("userId") UUID userId) {
         if (userService.deleteUserById(userId).isEmpty()) {

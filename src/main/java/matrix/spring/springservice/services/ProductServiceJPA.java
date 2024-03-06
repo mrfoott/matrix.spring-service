@@ -249,6 +249,19 @@ public class ProductServiceJPA implements ProductService {
         return atomicReference.get();
     }
 
+    @Override
+    public Optional<ProductDTO> undeleteProductById(UUID productId) {
+
+        Product product = productRepository.findById(productId).orElse(null);
+
+        product.setIsDeleted(null);
+
+        product = productRepository.save(product);
+
+        return Optional.of(productMapper.productToProductDto(product));
+
+    }
+
 //    @Override
 //    public Optional<ReviewDTO> getProductReviews(UUID productId) {
 //        return Optional.ofNullable(reviewMapper.reviewToReviewDto(reviewRepository.findById(productId)

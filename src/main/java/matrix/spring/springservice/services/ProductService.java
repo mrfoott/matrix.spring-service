@@ -22,6 +22,8 @@ public interface ProductService {
 
     Optional<ProductDTO> deleteProductById(UUID productId);
 
+    Optional<ProductDTO> undeleteProductById(UUID productId);
+
     List<ReviewDTO> getProductReviews(UUID productId);
 
     RoleDTO createRole(RoleDTO roleDTO);
