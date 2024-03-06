@@ -7,6 +7,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Builder
 @Data
@@ -15,21 +16,18 @@ public class MembershipDTO {
     private Integer id;
     private Integer version;
 
-    @NotNull
     private Integer membershipRank;
 
-    @NotNull
     private Integer discountPercentage;
 
-    @NotNull
     private BigDecimal minPrice;
 
-    @NotNull
-    @Positive
     private BigDecimal maxPrice;
 
     private LocalDateTime isDeleted;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private List<UserDTO> userList;
 
 }

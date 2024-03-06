@@ -193,4 +193,9 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public MembershipDTO getAllUsersByMembershipId(Integer membershipId) {
+        return null;
+    }
+
 }

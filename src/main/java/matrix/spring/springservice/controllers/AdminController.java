@@ -64,6 +64,14 @@ public class AdminController {
 
 //    GET MAPPING
 
+//    /api/v1/admin/memberships/membershipid
+    @GetMapping(ADMIN_MEMBERSHIP_ID)
+    public MembershipDTO getAllUsersByMembershipId( @PathVariable("membershipId") Integer membershipId) {
+
+        return userService.getAllUsersByMembershipId(membershipId);
+
+    }
+
 //    /api/v1/admin/products/topselling
     @GetMapping(ADMIN_TOP_SELLING)
     public HashMap<String, ArrayList> get10TopSellingProducts() {

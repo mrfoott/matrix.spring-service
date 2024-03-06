@@ -368,10 +368,22 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public List<MembershipDTO> getAllMemberships() {
-        return membershipRepository.findAll()
-                .stream()
+        List<Membership> membershipList = membershipRepository.findAll();
+
+        List<MembershipDTO> membershipDTOList = membershipList.stream()
                 .map(membershipMapper::membershipToMembershipDto)
                 .collect(Collectors.toList());
+
+        return membershipDTOList;
+
+    }
+
+    @Override
+    public MembershipDTO getAllUsersByMembershipId(Integer membershipId) {
+        Membership membership = membershipRepository.findById(membershipId).orElse(null);
+
+        return membershipMapper.membershipToMembershipDto(membership);
+
     }
 
     public List<User> listUsersByRoleId(Integer roleId) {

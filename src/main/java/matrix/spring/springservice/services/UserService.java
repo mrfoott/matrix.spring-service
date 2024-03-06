@@ -44,4 +44,6 @@ public interface UserService {
 
     List<MembershipDTO> getAllMemberships();
 
+    MembershipDTO getAllUsersByMembershipId(Integer membershipId);
+
 }
