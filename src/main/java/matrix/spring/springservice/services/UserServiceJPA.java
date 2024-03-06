@@ -43,10 +43,25 @@ public class UserServiceJPA implements UserService {
 
     @Override
     public List<UserDTO> getAllUsers() {
-        return userRepository.findAll()
-                .stream()
+
+
+//        return userRepository.findAll()
+//                .stream()
+//                .map(userMapper::userToUserDto)
+//                .collect(Collectors.toList());
+
+        List<User> allUsers = userRepository.findAll();
+
+        List<UserDTO> nonAdminUsers = allUsers.stream()
                 .map(userMapper::userToUserDto)
                 .collect(Collectors.toList());
+
+        for (UserDTO userDTO : nonAdminUsers) {
+            userDTO.setPassword(null);
+        }
+
+        return nonAdminUsers;
+
     }
 
     @Override
