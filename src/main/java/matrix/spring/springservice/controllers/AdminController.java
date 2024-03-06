@@ -137,6 +137,18 @@ public class AdminController {
         return productService.getProductsByCategory(categoryId);
     }
 
+    //    PATCH MAPPING
+    @PatchMapping(ADMIN_USER_ID)
+    public ResponseEntity undeleteUserByUserId(@PathVariable("userId") UUID userId) {
+
+        Optional<UserDTO> userDTO = userService.undeleteUserByUserId(userId);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(userDTO, httpHeaders, HttpStatus.OK);
+
+    }
+
     //    POST MAPPING
 
     //    /api/v1/admin/memberships

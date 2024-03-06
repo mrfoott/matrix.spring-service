@@ -198,4 +198,9 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+    @Override
+    public Optional<UserDTO> undeleteUserByUserId(UUID userId) {
+        return Optional.empty();
+    }
+
 }

@@ -386,6 +386,20 @@ public class UserServiceJPA implements UserService {
 
     }
 
+    @Override
+    public Optional<UserDTO> undeleteUserByUserId(UUID userId) {
+        User user = userRepository.findById(userId).orElse(null);
+        assert user != null;
+        user.setIsDeleted(null);
+        user = userRepository.save(user);
+
+        UserDTO userDTO = userMapper.userToUserDto(user);
+        userDTO.setPassword(null);
+
+        return Optional.of(userDTO);
+
+    }
+
     public List<User> listUsersByRoleId(Integer roleId) {
         return userRepository.findAllByRoleId(roleId);
     }

@@ -46,4 +46,6 @@ public interface UserService {
 
     MembershipDTO getAllUsersByMembershipId(Integer membershipId);
 
+    Optional<UserDTO> undeleteUserByUserId(UUID userId);
+
 }
