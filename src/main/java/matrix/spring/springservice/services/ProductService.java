@@ -34,4 +34,6 @@ public interface ProductService {
 
     List<ProductDTO> getRandomProducts();
 
+    List<ProductDTO> getAllActiveProducts();
+
 }

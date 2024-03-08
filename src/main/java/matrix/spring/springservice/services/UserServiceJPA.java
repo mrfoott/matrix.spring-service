@@ -392,6 +392,21 @@ public class UserServiceJPA implements UserService {
 
     }
 
+    @Override
+    public List<UserDTO> getAllActiveUsers() {
+
+        List<User> userList = userRepository.findAllByIsDeletedNull();
+
+        List<UserDTO> userDTOList = userList.stream().map(userMapper::userToUserDto).collect(Collectors.toList());
+
+        for (UserDTO userDTO : userDTOList) {
+            userDTO.setPassword(null);
+        }
+
+        return userDTOList;
+
+    }
+
     public List<User> listUsersByRoleId(Integer roleId) {
         return userRepository.findAllByRoleId(roleId);
     }

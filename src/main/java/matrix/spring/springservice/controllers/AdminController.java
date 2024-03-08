@@ -33,6 +33,9 @@ public class AdminController {
     //    Admin get top selling products
     private final String ADMIN_TOP_SELLING = ADMIN_PRODUCTS + "/topselling";
 
+    //    Admin get all active products
+    private final String ADMIN_ACTIVE_PRODUCTS = ADMIN_PRODUCTS + "/active";
+
     //    Admin get all product images
     private final String ADMIN_PRODUCT_IMAGE = ADMIN_PRODUCTS + "/images";
 
@@ -42,6 +45,10 @@ public class AdminController {
 
     //    Admin get all users
     private final String ADMIN_USERS = ADMIN_PATH + "/users";
+
+    //    Admin get all active users
+    private final String ADMIN_ACTIVE_USERS = ADMIN_USERS + "/active";
+
     //    Admin get user's info
     private final String ADMIN_USER_ID = ADMIN_USERS + "/{userId}";
     //    Admin get all categories
@@ -62,6 +69,18 @@ public class AdminController {
     private final String ADMIN_MEMBERSHIP_ID = ADMIN_MEMBERSHIPS + "/{membershipId}";
 
 //    GET MAPPING
+
+//    /api/v1/admin/products/active
+    @GetMapping(ADMIN_ACTIVE_PRODUCTS)
+    public List<ProductDTO> getAllActiveProducts() {
+        return productService.getAllActiveProducts();
+    }
+
+//    /api/v1/admin/users/active
+    @GetMapping(ADMIN_ACTIVE_USERS)
+    public List<UserDTO> getAllActiveUsers() {
+        return userService.getAllActiveUsers();
+    }
 
 //    /api/v1/admin/memberships/membershipid
     @GetMapping(ADMIN_MEMBERSHIP_ID)

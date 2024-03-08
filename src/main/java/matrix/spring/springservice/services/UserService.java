@@ -48,4 +48,6 @@ public interface UserService {
 
     Optional<UserDTO> undeleteUserByUserId(UUID userId);
 
+    List<UserDTO> getAllActiveUsers();
+
 }

@@ -307,11 +307,9 @@ public class ProductServiceJPA implements ProductService {
     @Override
     public List<ProductDTO> getTopSellingProducts() {
 
-        List<Product> listProducts = get10RandomProducts();
+        List<Product> listProducts = get10TopSellingProducts();
 
-        List<ProductDTO> productDTOList = listProducts.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
-
-        return productDTOList;
+        return listProducts.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
 
     }
 
@@ -329,16 +327,17 @@ public class ProductServiceJPA implements ProductService {
     @Override
     public List<ProductDTO> getRandomProducts() {
 
-        List<Product> productList = new ArrayList<>();
+        List<Product> productList = get10RandomProducts();
 
-        productList = get10RandomProducts();
+        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+    }
 
-        List<ProductDTO> productDTOList = productList
-                .stream()
-                .map(productMapper::productToProductDto)
-                .collect(Collectors.toList());
+    @Override
+    public List<ProductDTO> getAllActiveProducts() {
+        List<Product> productList = productRepository.findAllByIsDeletedNull();
 
-        return productDTOList;
+        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+
     }
 
     public List<Product> get10RandomProducts() {

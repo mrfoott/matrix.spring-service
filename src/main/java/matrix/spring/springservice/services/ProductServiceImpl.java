@@ -149,4 +149,9 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> getRandomProducts() {
         return null;
     }
+
+    @Override
+    public List<ProductDTO> getAllActiveProducts() {
+        return null;
+    }
 }

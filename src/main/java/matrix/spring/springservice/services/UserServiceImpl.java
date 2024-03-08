@@ -203,4 +203,9 @@ public class UserServiceImpl implements UserService {
         return Optional.empty();
     }
 
+    @Override
+    public List<UserDTO> getAllActiveUsers() {
+        return null;
+    }
+
 }

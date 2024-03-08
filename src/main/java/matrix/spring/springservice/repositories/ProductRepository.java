@@ -15,8 +15,11 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     @Query("SELECT p FROM Product p WHERE p.isDeleted IS NULL ORDER BY p.soldQuantity DESC LIMIT 10")
     List<Product> findFirst10ByOrderBySoldQuantityDescAndIsDeletedIsNull();
 
-    @Query(value = "SELECT * FROM product ORDER BY RAND() LIMIT 10", nativeQuery = true)
+    @Query(value = "SELECT * FROM product WHERE is_deleted IS NULL ORDER BY RAND() LIMIT 10", nativeQuery = true)
     List<Product> findRandomProducts();
+
+    @Query("SELECT p FROM Product p WHERE p.isDeleted IS NULL")
+    List<Product> findAllByIsDeletedNull();
 
 //    @Query("SELECT p FROM Product p ORDER BY p.soldQuantity DESC, p.productName ASC")
 //    List<Product> findFirst10BySoldQuantityOrderByProductNameAsc();
