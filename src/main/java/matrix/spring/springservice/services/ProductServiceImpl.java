@@ -136,7 +136,7 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public HashMap<String, ArrayList> getTopSellingProducts() {
+    public List<ProductDTO> getTopSellingProducts() {
         return null;
     }
 

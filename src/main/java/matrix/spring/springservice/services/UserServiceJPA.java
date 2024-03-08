@@ -250,9 +250,6 @@ public class UserServiceJPA implements UserService {
         User user = userRepository.findById(reviewDTO.getUserId()).orElse(null);
         Product product = productRepository.findById(reviewDTO.getProductId()).orElse(null);
 
-        System.out.println(user);
-        System.out.println(product);
-
         Review review = reviewMapper.reviewDtoToReview(reviewDTO);
 
         review.setProduct(product);
@@ -261,18 +258,13 @@ public class UserServiceJPA implements UserService {
         review = reviewRepository.save(review);
 
         List<ReviewImageDTO> reviewImageDTOList = reviewDTO.getReviewImages();
-        List<ReviewImage> reviewImages = new ArrayList<>();
+        List<ReviewImage> reviewImages = reviewImageDTOList.stream().map(reviewImageMapper::reviewImageDtoToReviewImage).collect(Collectors.toList());
 
-        for (ReviewImageDTO reviewImageDTO : reviewImageDTOList) {
-
-            ReviewImage reviewImage = reviewImageMapper.reviewImageDtoToReviewImage(reviewImageDTO);
-
+        for (ReviewImage reviewImage : reviewImages) {
             reviewImage.setReview(review);
-            reviewImages.add(reviewImage);
-
         }
 
-        reviewImageRepository.saveAll(reviewImages);
+        reviewImages = reviewImageRepository.saveAll(reviewImages);
 
         return reviewMapper.reviewToReviewDto(review);
 

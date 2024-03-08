@@ -67,7 +67,7 @@ public class UserController {
 
 //    /api/v1/users/products/topselling
     @GetMapping(USER_TOP_SELLING)
-    public HashMap<String, ArrayList> get10TopSellingProducts() {
+    public List<ProductDTO> get10TopSellingProducts() {
         return productService.getTopSellingProducts();
     }
 

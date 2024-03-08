@@ -33,7 +33,6 @@ public class User {
     @Column(name = "user_email")
     private String userEmail;
 
-    @Column(name = "password")
     private String password;
 
     @Column(name = "full_name")
@@ -55,12 +54,6 @@ public class User {
 
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
-
-//    @Column(name = "role_id")
-//    private Integer roleId;
-
-//    @Column(name = "membership_id")
-//    private Integer membershipId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -86,5 +79,8 @@ public class User {
 
     @OneToMany(mappedBy = "user")
     private List<CartDetail> cartDetails;
+
+    @OneToMany(mappedBy = "user")
+    private List<Review> reviewList;
 
 }

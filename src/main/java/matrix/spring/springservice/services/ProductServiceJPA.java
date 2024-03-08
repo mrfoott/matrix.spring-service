@@ -305,45 +305,19 @@ public class ProductServiceJPA implements ProductService {
     }
 
     @Override
-    public HashMap<String, ArrayList> getTopSellingProducts() {
+    public List<ProductDTO> getTopSellingProducts() {
 
-        HashMap<String, ArrayList> listOfProducts = new HashMap<>();
+        List<Product> listProducts = get10RandomProducts();
 
-        List<Product> listProducts = new ArrayList<>();
+        List<ProductDTO> productDTOList = listProducts.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
 
-        List<ProductImage> listProductImages = new ArrayList<>();
+        return productDTOList;
 
-        listProducts = get10TopSellingProducts();
-
-        for (Product product: listProducts ){
-
-            List<ProductImage> productImageList = listProductImagesOfAProduct(product.getId());
-
-            for (ProductImage productImage : productImageList) {
-                listProductImages.add(productImage);
-            }
-
-        }
-
-        listProducts
-                .stream()
-                .map(productMapper::productToProductDto)
-                .collect(Collectors.toList());
-
-        listProductImages
-                .stream()
-                .map(productImageMapper::productImageToProductImageDto)
-                .collect(Collectors.toList());
-
-        listOfProducts.put("listProducts", (ArrayList) listProducts);
-        listOfProducts.put("listProductImages", (ArrayList) listProductImages);
-
-        return listOfProducts;
     }
 
     public List<Product> get10TopSellingProducts() {
 
-        return productRepository.findFirst10ByOrderBySoldQuantityDesc();
+        return productRepository.findFirst10ByOrderBySoldQuantityDescAndIsDeletedIsNull();
 
     }
 

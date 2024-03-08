@@ -47,12 +47,6 @@ public class Review {
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
 
-//    @Column(name = "user_id")
-//    private UUID userId;
-
-//    @Column(name = "product_id")
-//    private UUID productId;
-
     @CreationTimestamp
     @Column(name = "created_at")
     private LocalDateTime createdAt;

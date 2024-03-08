@@ -2,7 +2,6 @@ package matrix.spring.springservice.controllers;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import matrix.spring.springservice.entities.Role;
 import matrix.spring.springservice.models.*;
 import matrix.spring.springservice.services.OrderService;
 import matrix.spring.springservice.services.ProductService;
@@ -74,7 +73,7 @@ public class AdminController {
 
 //    /api/v1/admin/products/topselling
     @GetMapping(ADMIN_TOP_SELLING)
-    public HashMap<String, ArrayList> get10TopSellingProducts() {
+    public List<ProductDTO> get10TopSellingProducts() {
         return productService.getTopSellingProducts();
     }
 

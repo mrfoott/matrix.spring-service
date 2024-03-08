@@ -26,22 +26,6 @@ import java.util.UUID;
 @Table(name = "product")
 public class Product {
 
-//    public Product(UUID id, Integer version, String productName, String productDescription, BigDecimal price, Integer productQuantity, String brand, Integer soldQuantity, LocalDateTime isDeleted, Category category, LocalDateTime createdAt, LocalDateTime updatedAt, List<ProductImage> productImages) {
-//        this.id = id;
-//        this.version = version;
-//        this.productName = productName;
-//        this.productDescription = productDescription;
-//        this.price = price;
-//        this.productQuantity = productQuantity;
-//        this.brand = brand;
-//        this.soldQuantity = soldQuantity;
-//        this.isDeleted = isDeleted;
-//        this.setCategory(category);
-//        this.createdAt = createdAt;
-//        this.updatedAt = updatedAt;
-//        this.productImages = productImages;
-//    }
-
     @Id
     @GeneratedValue
     @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
@@ -82,13 +66,6 @@ public class Product {
 
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
-
-//    @Column(name = "category_id")
-//    private Integer categoryId;
-//
-//    @ManyToOne
-//    @JoinColumn(name = "category_id")
-//    private Category category;
 
     @CreationTimestamp
     @Column(name = "created_at")
