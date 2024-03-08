@@ -16,7 +16,7 @@ public interface OrderService {
 
     List<OrderDTO> getAllOrdersOfUserByUserId(UUID userId);
 
-    OrderDTO createOrder(OrderDTO orderDTO, List<OrderDetailDTO> orderDetailDTOList, ReceiverInfoDTO receiverInfoDTO, List<ProductDTO> productDTOList);
+    OrderDTO createOrder(OrderDTO orderDTO);
 
 //    Might not need payment service!!!
 

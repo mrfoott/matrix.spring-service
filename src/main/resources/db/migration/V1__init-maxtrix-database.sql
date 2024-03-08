@@ -43,7 +43,7 @@ CREATE TABLE membership
 (
     id                  INT            NOT NULL         AUTO_INCREMENT,
     `version`             INT,
-    membership_rank     INT            NOT NULL CHECK (membership_rank >= 0),
+    membership_rank     VARCHAR(255) NOT NULL,
     discount_percentage INT            NOT NULL,
     min_price           DECIMAL(19, 2) NOT NULL CHECK (min_price >= 0),
     max_price           DECIMAL(19, 2) NOT NULL CHECK (max_price > 0),
@@ -109,6 +109,7 @@ CREATE TABLE `orders`
     id             VARCHAR(36)    NOT NULL,
     `version`          INT,
     total_price      DECIMAL(19, 2) NOT NULL CHECK (total_price > 0),
+    discount_percentage INT,
     shipping_fee     DECIMAL(19, 2) NOT NULL CHECK (shipping_fee >= 0),
     payment_method   VARCHAR(255)   NOT NULL,
     payment_status   VARCHAR(255)   NOT NULL,

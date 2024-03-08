@@ -35,28 +35,20 @@ public class Order {
     @Version
     private Integer version;
 
-    @NotNull
-    @Positive
     @Column(name = "total_price")
     private BigDecimal totalPrice;
 
-    @NotNull
-    @Positive
+    @Column(name = "discount_percentage")
+    private Integer discountPercentage;
+
     @Column(name = "shipping_fee")
     private BigDecimal shippingFee;
 
-    @NotNull
-    @NotBlank
     @Column(name = "payment_method")
     private String paymentMethod;
 
-    @NotNull
-    @NotBlank
     @Column(name = "payment_status")
     private String paymentStatus;
-
-//    @Column(name = "user_id")
-//    private UUID userId;
 
     @Column(name = "receiver_info_id")
     private UUID receiverInfoId;

@@ -8,6 +8,7 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Builder
@@ -17,25 +18,21 @@ public class OrderDTO {
     private UUID id;
     private Integer version;
 
-    @NotNull
-    @Positive
     private BigDecimal totalPrice;
 
-    @NotNull
-    @Positive
+    private Integer discountPercentage;
+
     private BigDecimal shippingFee;
 
-    @NotNull
-    @NotBlank
     private String paymentMethod;
 
-    @NotNull
-    @NotBlank
     private String paymentStatus;
 
     private UUID userId;
     private UUID receiverInfoId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+
+    private List<String> cartDetailIdList;
 
 }

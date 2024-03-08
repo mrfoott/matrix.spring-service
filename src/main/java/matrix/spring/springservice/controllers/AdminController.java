@@ -171,13 +171,13 @@ public class AdminController {
 
     //    /api/v1/admin/memberships
     @PostMapping(ADMIN_MEMBERSHIPS)
-    public ResponseEntity createMembership(@Validated @RequestBody MembershipDTO membershipDTO) {
+    public ResponseEntity createMembership(@RequestBody MembershipDTO membershipDTO) {
 
-        MembershipDTO newMebership = userService.createMembership(membershipDTO);
+        MembershipDTO newMembership = userService.createMembership(membershipDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(newMembership, httpHeaders, HttpStatus.CREATED);
 
     }
 

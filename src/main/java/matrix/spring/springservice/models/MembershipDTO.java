@@ -16,7 +16,7 @@ public class MembershipDTO {
     private Integer id;
     private Integer version;
 
-    private Integer membershipRank;
+    private String membershipRank;
 
     private Integer discountPercentage;
 

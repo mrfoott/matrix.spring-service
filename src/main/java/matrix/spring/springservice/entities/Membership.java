@@ -28,21 +28,15 @@ public class Membership {
     @Version
     private Integer version;
 
-    @NotNull
-    @PositiveOrZero
     @Column(name = "membership_rank")
-    private Integer membershipRank;
+    private String membershipRank;
 
-    @NotNull
     @Column(name = "discount_percentage")
     private Integer discountPercentage;
 
-    @NotNull
     @Column(name = "min_price")
     private BigDecimal minPrice;
 
-    @NotNull
-    @Positive
     @Column(name = "max_price")
     private BigDecimal maxPrice;
 
