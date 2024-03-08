@@ -26,7 +26,7 @@ public interface UserService {
 
     Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId);
 
-    Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId);
+    Optional<Object> minusOneItemInCart(UUID cartDetailId);
 
     CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
 

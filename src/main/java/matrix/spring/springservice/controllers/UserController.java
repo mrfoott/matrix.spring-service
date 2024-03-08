@@ -152,10 +152,11 @@ public class UserController {
 
     }
 
+//    /api/v1/users/carts/userid/minusone/cartdetailid
     @PutMapping(USER_CART_MINUS_ONE)
     public ResponseEntity minusOneItemInCart(@PathVariable("userId") UUID userId, @PathVariable("cartDetailId") @RequestBody UUID cartDetailId) {
 
-        Optional<CartDetailDTO> cartDetailDTO = userService.minusOneItemInCart(cartDetailId);
+        Optional<Object> cartDetailDTO = userService.minusOneItemInCart(cartDetailId);
 
         if (cartDetailDTO.isPresent()) {
             HttpHeaders httpHeaders = new HttpHeaders();

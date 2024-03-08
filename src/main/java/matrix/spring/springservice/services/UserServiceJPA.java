@@ -10,10 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -196,15 +193,16 @@ public class UserServiceJPA implements UserService {
     }
 
     @Override
-    public Optional<CartDetailDTO> minusOneItemInCart(UUID cartDetailId) {
+    public Optional<Object> minusOneItemInCart(UUID cartDetailId) {
 
-        Optional<CartDetailDTO> cartDetailDTO = cartDetailRepository.findById(cartDetailId)
+        Optional<Object> cartDetailDTO = cartDetailRepository.findById(cartDetailId)
                 .map(existingCartItem -> {
                     if (existingCartItem.getItemQuantity() > 1) {
                         existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() - 1);
                         return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem));
                     } else {
-                        return null;
+                        deleteItemInCart(cartDetailId);
+                        return "Deleted!";
                     }
                 });
         return cartDetailDTO;
