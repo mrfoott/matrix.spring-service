@@ -50,8 +50,8 @@ public class Order {
     @Column(name = "payment_status")
     private String paymentStatus;
 
-    @Column(name = "receiver_info_id")
-    private UUID receiverInfoId;
+//    @Column(name = "receiver_info_id")
+//    private UUID receiverInfoId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -67,5 +67,12 @@ public class Order {
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
+
+    @OneToOne
+    @JoinColumn(name = "receiver_info_id")
+    private ReceiverInfo receiverInfo;
+
+    @OneToOne(mappedBy = "order")
+    private Shipping shipping;
 
 }

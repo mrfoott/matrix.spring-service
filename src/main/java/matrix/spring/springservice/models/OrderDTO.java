@@ -33,6 +33,8 @@ public class OrderDTO {
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 
+    private List<OrderDetailDTO> orderDetails;
+
     private List<String> cartDetailIdList;
 
 }

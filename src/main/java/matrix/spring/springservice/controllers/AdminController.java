@@ -169,6 +169,18 @@ public class AdminController {
 
     //    POST MAPPING
 
+    //    /ap1/v1/admin/orders
+    @PostMapping(ADMIN_ORDERS)
+    public ResponseEntity createOrder(OrderDTO orderDTO) {
+
+        OrderDTO newOrder = orderService.createOrder(orderDTO);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity(newOrder, httpHeaders, HttpStatus.CREATED);
+
+    }
+
     //    /api/v1/admin/memberships
     @PostMapping(ADMIN_MEMBERSHIPS)
     public ResponseEntity createMembership(@RequestBody MembershipDTO membershipDTO) {

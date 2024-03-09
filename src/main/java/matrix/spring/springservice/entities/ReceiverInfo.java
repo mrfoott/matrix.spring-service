@@ -71,5 +71,7 @@ public class ReceiverInfo {
     @JoinColumn(name = "user_id")
     private User user;
 
+    @OneToOne(mappedBy = "receiverInfo")
+    private Order order;
 
 }

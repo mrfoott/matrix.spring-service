@@ -34,13 +34,9 @@ public class Review {
     @Version
     private Integer version;
 
-    @NotNull
-    @NotBlank
     @Column(name = "review_content")
     private String reviewContent;
 
-    @NotNull
-    @Positive
     @Column(name = "review_rating")
     private Double reviewRating;
 

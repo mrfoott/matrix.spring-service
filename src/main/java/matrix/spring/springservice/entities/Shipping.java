@@ -42,7 +42,7 @@ public class Shipping {
     @Column(name = "shipping_location")
     private String shippingLocation;
 
-    private UUID orderId;
+//    private UUID orderId;
 
     @CreationTimestamp
     @Column(name = "created_at")
@@ -51,5 +51,9 @@ public class Shipping {
     @UpdateTimestamp
     @Column(name = "updated_at")
     private LocalDateTime updatedAt;
+
+    @OneToOne
+    @JoinColumn(name = "order_id")
+    private Order order;
 
 }
