@@ -93,11 +93,19 @@ public class OrderServiceJPA implements OrderService {
     public OrderDTO createOrder(OrderDTO orderDTO) {
 
         ReceiverInfo receiverInfo = receiverInfoRepository.findById(orderDTO.getReceiverInfoId()).orElse(null);
+        User user = userRepository.findById(orderDTO.getUserId()).orElse(null);
 
         Order order = orderMapper.orderDtoToOrder(orderDTO);
+        order.setUser(user);
         order.setReceiverInfo(receiverInfo);
+        assert user != null;
+        order.setDiscountPercentage(user.getMembership().getDiscountPercentage());
+        order.setPaymentMethod(orderDTO.getPaymentMethod());
+        order.setPaymentStatus(orderDTO.getPaymentStatus());
+        order.setTotalPrice(orderDTO.getTotalPrice());
+        order.setShippingFee(orderDTO.getShippingFee());
 
-//        order = orderRepository.save(order);
+        orderRepository.save(order);
 
         List<String> cartDetailIdList = orderDTO.getCartDetailIdList();
         List<OrderDetail> orderDetails = new ArrayList<>();
@@ -114,6 +122,8 @@ public class OrderServiceJPA implements OrderService {
             if ((product.getProductQuantity() - cartDetail.getItemQuantity()) >= 0) {
                 OrderDetail orderDetail = new OrderDetail();
 
+                orderDetail.setProduct(product);
+                orderDetail.setOrder(order);
                 orderDetail.setOrderQuantity(cartDetail.getItemQuantity());
                 orderDetail.setPriceAtOrder(cartDetail.getProduct().getPrice());
                 orderDetail.setProductNameAtOrder(cartDetail.getProductName());
@@ -123,7 +133,7 @@ public class OrderServiceJPA implements OrderService {
                 product.setProductQuantity(product.getProductQuantity() - cartDetail.getItemQuantity());
                 product.setSoldQuantity(product.getSoldQuantity() + cartDetail.getItemQuantity());
 
-                product = productRepository.save(product);
+                productRepository.save(product);
 
             } else {
                 break;
@@ -132,7 +142,7 @@ public class OrderServiceJPA implements OrderService {
 
         }
 
-        orderDetails = orderDetailRepository.saveAll(orderDetails);
+        orderDetailRepository.saveAll(orderDetails);
 
         for (CartDetail cartDetail : cartDetails) {
             userService.deleteItemInCart(cartDetail.getId());
@@ -140,10 +150,11 @@ public class OrderServiceJPA implements OrderService {
 
 
         Shipping shipping = new Shipping();
+        shipping.setOrder(order);
         shipping.setShippingStatus("Dang xu ly");
         shipping.setShippingLocation("184 Lê Đại Hành - VTC Academy - Booth 4");
 
-        shipping = shippingRepository.save(shipping);
+        shippingRepository.save(shipping);
 
         return orderMapper.orderToOrderDto(order);
     }

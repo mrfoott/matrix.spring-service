@@ -171,13 +171,13 @@ public class AdminController {
 
     //    /ap1/v1/admin/orders
     @PostMapping(ADMIN_ORDERS)
-    public ResponseEntity createOrder(OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> createOrder(OrderDTO orderDTO) {
 
         OrderDTO newOrder = orderService.createOrder(orderDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newOrder, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newOrder, httpHeaders, HttpStatus.CREATED);
 
     }
 
