@@ -154,4 +154,9 @@ public class ProductServiceImpl implements ProductService {
     public List<ProductDTO> getAllActiveProducts() {
         return null;
     }
+
+    @Override
+    public List<ProductDTO> getAllProductsByProductName(String productName) {
+        return null;
+    }
 }

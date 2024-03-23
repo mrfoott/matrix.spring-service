@@ -31,7 +31,7 @@ public class OrderController {
     }
 
     @GetMapping(ORDER_ID_PATH)
-    public OrderDTO getOrderById(UUID orderId) {
+    public OrderDTO getOrderById(@PathVariable UUID orderId) {
         return orderService.getOrderById(orderId).orElseThrow(NotFoundException::new);
     }
 

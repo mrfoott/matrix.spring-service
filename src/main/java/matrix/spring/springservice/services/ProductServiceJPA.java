@@ -340,6 +340,14 @@ public class ProductServiceJPA implements ProductService {
 
     }
 
+    @Override
+    public List<ProductDTO> getAllProductsByProductName(String productName) {
+//        List<Product> productList = productRepository.findAllByProductNameContainingIgnoreCase(productName);
+        List<Product> productList = productRepository.findAllByProductNameIsLikeIgnoreCase("%" + productName + "%");
+        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+
+    }
+
     public List<Product> get10RandomProducts() {
         return productRepository.findRandomProducts();
     }

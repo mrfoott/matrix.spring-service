@@ -21,6 +21,10 @@ public interface ProductRepository extends JpaRepository<Product, UUID> {
     @Query("SELECT p FROM Product p WHERE p.isDeleted IS NULL")
     List<Product> findAllByIsDeletedNull();
 
+    List<Product> findAllByProductNameIsLikeIgnoreCase(String productName);
+
+    List<Product> findAllByProductNameContainingIgnoreCase(String productName);
+
 //    @Query("SELECT p FROM Product p ORDER BY p.soldQuantity DESC, p.productName ASC")
 //    List<Product> findFirst10BySoldQuantityOrderByProductNameAsc();
 }

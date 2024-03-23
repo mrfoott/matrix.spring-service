@@ -34,9 +34,11 @@ public class UserController {
     private final String USER_CART_MINUS_ONE = USER_CART + "/{userId}" + "/minusone" + "/{cartDetailId}";
 
 
-    private final String USER_CART_ID = USER_CART + "/{userId}";
+    private final String USER_CART_ID = USER_CART + "/{cartDetailId}";
 
     private final String USER_PRODUCTS = USERS_PATH + "/products";
+
+    private final String USER_PRODUCTS_FIND = USER_PRODUCTS + "/find";
 
     private final String USER_TOP_SELLING = USER_PRODUCTS + "/topselling";
 
@@ -52,10 +54,22 @@ public class UserController {
 
     private final String USER_REVIEWS = USERS_PATH + "/reviews";
 
+    private final String USER_ORDERS = USERS_PATH + "/orders";
+
+    private final String USER_ORDERS_USER_ID = USER_ORDERS + "/{userId}";
+
     @DeleteMapping(USER_CART_ID)
     public Boolean deleteItemInCart(@PathVariable("cartDetailId") UUID cartDetailId) {
 
         return userService.deleteItemInCart(cartDetailId);
+
+    }
+
+//    /ap1/v1/users/products/find
+    @GetMapping(USER_PRODUCTS_FIND)
+    public List<ProductDTO> getAllProductsByProductName(@RequestBody String productName) {
+
+        return productService.getAllProductsByProductName(productName);
 
     }
 
@@ -79,8 +93,8 @@ public class UserController {
 
     }
 
-    @GetMapping
-    public List<OrderDTO> getAllOrdersOfUserByUserId (UUID userId) {
+    @GetMapping(USER_ORDERS_USER_ID)
+    public List<OrderDTO> getAllOrdersOfUserByUserId (@PathVariable("userId") UUID userId) {
 
         return orderService.getAllOrdersOfUserByUserId(userId);
 
@@ -95,29 +109,29 @@ public class UserController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newReceiverInfo, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newReceiverInfo, httpHeaders, HttpStatus.CREATED);
 
     }
 
 //    /api/v1/users/reviews
     @PostMapping(USER_REVIEWS)
-    public ResponseEntity reviewProduct(@RequestBody ReviewDTO reviewDTO) {
+    public ResponseEntity<ReviewDTO> reviewProduct(@RequestBody ReviewDTO reviewDTO) {
 
         ReviewDTO newReview = userService.reviewProduct(reviewDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newReview, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newReview, httpHeaders, HttpStatus.CREATED);
 
     }
 
-    public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
+    public ResponseEntity<UserDTO> updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
 
         if (userService.updateUserById(userId, userDTO).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 
     }
 
@@ -138,17 +152,18 @@ public class UserController {
         }
 
         return userService.getInfoOfSelf(userId);
+
     }
 
 //    /api/v1/users/carts/userId/plusone/cartdetailid
     @PutMapping(USER_CART_PLUS_ONE)
-    public ResponseEntity plusOneItemInCart(@PathVariable("userId") UUID userId, @PathVariable("cartDetailId") @RequestBody UUID cartDetailId) {
+    public ResponseEntity<Optional<CartDetailDTO>> plusOneItemInCart(@PathVariable("userId") UUID userId, @PathVariable("cartDetailId") @RequestBody UUID cartDetailId) {
 
         Optional<CartDetailDTO> cartDetailDTO = userService.plusOneItemInCart(cartDetailId);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(cartDetailDTO, httpHeaders, HttpStatus.OK);
+        return new ResponseEntity<>(cartDetailDTO, httpHeaders, HttpStatus.OK);
 
     }
 
@@ -160,7 +175,7 @@ public class UserController {
 
         if (cartDetailDTO.isPresent()) {
             HttpHeaders httpHeaders = new HttpHeaders();
-            return new ResponseEntity(cartDetailDTO.get(), httpHeaders, HttpStatus.OK);
+            return new ResponseEntity<>(cartDetailDTO.get(), httpHeaders, HttpStatus.OK);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Error: Quantity cannot be less than 1");
         }
@@ -170,13 +185,13 @@ public class UserController {
 //    POST MAPPING
 
     @PostMapping(USER_CART)
-    public ResponseEntity addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
+    public ResponseEntity<CartDetailDTO> addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
 
         CartDetailDTO newCartDetail = userService.addProductToCart(cartDetailDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newCartDetail, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newCartDetail, httpHeaders, HttpStatus.CREATED);
 
     }
 

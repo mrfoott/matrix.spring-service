@@ -183,13 +183,13 @@ public class AdminController {
 
     //    /api/v1/admin/memberships
     @PostMapping(ADMIN_MEMBERSHIPS)
-    public ResponseEntity createMembership(@RequestBody MembershipDTO membershipDTO) {
+    public ResponseEntity<MembershipDTO> createMembership(@RequestBody MembershipDTO membershipDTO) {
 
         MembershipDTO newMembership = userService.createMembership(membershipDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newMembership, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newMembership, httpHeaders, HttpStatus.CREATED);
 
     }
 
@@ -203,21 +203,21 @@ public class AdminController {
 
         newUser.setPassword(null);
 
-        UserDTO returnUser = newUser;
+//        UserDTO returnUser = newUser;
 
-        return new ResponseEntity(returnUser, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
 
     }
 
     //    /api/v1/admin/products
     @PostMapping(ADMIN_PRODUCTS)
-    public ResponseEntity createProduct(@Validated @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> createProduct(@Validated @RequestBody ProductDTO productDTO) {
 
         ProductDTO newProduct = productService.createProduct(productDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newProduct, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newProduct, httpHeaders, HttpStatus.CREATED);
 
     }
 
@@ -262,25 +262,25 @@ public class AdminController {
 
     //    /api/v1/admin/categories
     @PostMapping(ADMIN_CATEGORIES)
-    public ResponseEntity createCategory(@Validated @RequestBody CategoryDTO categoryDTO) {
+    public ResponseEntity<CategoryDTO> createCategory(@Validated @RequestBody CategoryDTO categoryDTO) {
 
         CategoryDTO newCategory = productService.createCategory(categoryDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(newCategory, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(newCategory, httpHeaders, HttpStatus.CREATED);
 
     }
 
     //    /api/v1/admin/roles
     @PostMapping(ADMIN_ROLES)
-    public ResponseEntity createRole(@Validated @RequestBody RoleDTO roleDTO) {
+    public ResponseEntity<RoleDTO> createRole(@Validated @RequestBody RoleDTO roleDTO) {
 
         RoleDTO newRole = productService.createRole(roleDTO);
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(httpHeaders, HttpStatus.CREATED);
 
     }
 
@@ -288,7 +288,7 @@ public class AdminController {
 
     //    /api/v1/admin/products/productId
     @PutMapping(ADMIN_PRODUCT_ID)
-    public ResponseEntity updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
+    public ResponseEntity<ProductDTO> updateProductById(@PathVariable("productId") UUID productId, @Validated @RequestBody ProductDTO productDTO) {
         if (productService.updateProductById(productId, productDTO).isEmpty()) {
             throw new NotFoundException();
         }
@@ -308,7 +308,7 @@ public class AdminController {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PatchMapping(ADMIN_PRODUCT_ID)
@@ -321,7 +321,7 @@ public class AdminController {
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity(productDTO, httpHeaders, HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>(productDTO, httpHeaders, HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping(ADMIN_USER_ID)
@@ -330,7 +330,7 @@ public class AdminController {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity("User is deleted!!!",HttpStatus.NO_CONTENT);
+        return new ResponseEntity<>("User is deleted!!!",HttpStatus.NO_CONTENT);
     }
 
     public List<ReviewDTO> getProductReviews(UUID productId) {
@@ -344,13 +344,19 @@ public class AdminController {
     }
 
     @PutMapping(ADMIN_USER_ID)
-    public ResponseEntity updateUserById(@PathVariable("userId") UUID userId, @Validated @RequestBody UserDTO userDTO) {
+    public ResponseEntity<Optional<UserDTO>> updateUserById(@PathVariable("userId") UUID userId, @Validated @RequestBody UserDTO userDTO) {
 
         if (userService.updateUserById(userId, userDTO).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        Optional<UserDTO> existingUser = userService.updateUserById(userId, userDTO);
+
+//        Optional<UserDTO> existing = userService
+
+        return new ResponseEntity<>(existingUser, httpHeaders, HttpStatus.OK);
 
     }
 

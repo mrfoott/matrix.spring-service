@@ -36,4 +36,6 @@ public interface ProductService {
 
     List<ProductDTO> getAllActiveProducts();
 
+    List<ProductDTO> getAllProductsByProductName(String productName);
+
 }

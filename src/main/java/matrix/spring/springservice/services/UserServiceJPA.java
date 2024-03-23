@@ -69,7 +69,7 @@ public class UserServiceJPA implements UserService {
         userDTO.setCreatedAt(null);
         userDTO.setUpdatedAt(null);
 
-        return Optional.ofNullable(userDTO);
+        return Optional.of(userDTO);
 
     }
 
@@ -145,20 +145,31 @@ public class UserServiceJPA implements UserService {
     @Override
     public Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO) {
 
-        AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
+//        AtomicReference<Optional<UserDTO>> atomicReference = new AtomicReference<>();
+//
+//        userRepository.findById(userId).ifPresentOrElse(existingUser -> {
+//            existingUser.setUserEmail(userDTO.getUserEmail());
+//            existingUser.setFullName(userDTO.getFullName());
+//            existingUser.setUserPhone(userDTO.getUserPhone());
+//            existingUser.setUpdatedAt(LocalDateTime.now());
+//
+//            atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
+//        }, () -> {
+//            atomicReference.set(Optional.empty());
+//        });
+//
+//        return atomicReference.get();
 
-        userRepository.findById(userId).ifPresentOrElse(existingUser -> {
-            existingUser.setUserEmail(userDTO.getUserEmail());
-            existingUser.setFullName(userDTO.getFullName());
-            existingUser.setUserPhone(userDTO.getUserPhone());
-            existingUser.setUpdatedAt(LocalDateTime.now());
+        User user = userRepository.findById(userId).orElse(null);
 
-            atomicReference.set(Optional.of(userMapper.userToUserDto(userRepository.save(existingUser))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
+        user.setUserEmail(userDTO.getUserEmail());
+        user.setFullName(userDTO.getFullName());
+        user.setUserPhone(userDTO.getUserPhone());
+        user.setUpdatedAt(LocalDateTime.now());
 
-        return atomicReference.get();
+        user = userRepository.save(user);
+
+        return Optional.ofNullable(userMapper.userToUserDto(user));
 
     }
 
@@ -177,18 +188,24 @@ public class UserServiceJPA implements UserService {
     @Override
     public Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId) {
 
-        AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
+//        AtomicReference<Optional<CartDetailDTO>> atomicReference = new AtomicReference<>();
+//
+//        cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
+//
+//            existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() + 1);
+//
+//            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
+//        }, () -> {
+//            atomicReference.set(Optional.empty());
+//        });
+//
+//        return atomicReference.get();
 
-        cartDetailRepository.findById(cartDetailId).ifPresentOrElse(existingCartItem -> {
+        CartDetail cartDetail = cartDetailRepository.findById(cartDetailId).orElse(null);
+        cartDetail.setItemQuantity(cartDetail.getItemQuantity() + 1);
+        cartDetailRepository.save(cartDetail);
 
-            existingCartItem.setItemQuantity(existingCartItem.getItemQuantity() + 1);
-
-            atomicReference.set(Optional.of(cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(existingCartItem))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
-
-        return atomicReference.get();
+        return Optional.ofNullable(cartDetailMapper.cartDetailToCartDetailDto(cartDetail));
 
     }
 
