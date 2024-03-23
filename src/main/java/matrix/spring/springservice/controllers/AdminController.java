@@ -171,7 +171,7 @@ public class AdminController {
 
     //    /ap1/v1/admin/orders
     @PostMapping(ADMIN_ORDERS)
-    public ResponseEntity<OrderDTO> createOrder(OrderDTO orderDTO) {
+    public ResponseEntity<OrderDTO> createOrder(@RequestBody OrderDTO orderDTO) {
 
         OrderDTO newOrder = orderService.createOrder(orderDTO);
 

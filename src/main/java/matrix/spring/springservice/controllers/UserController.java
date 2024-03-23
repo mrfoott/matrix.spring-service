@@ -101,7 +101,7 @@ public class UserController {
 
 //    /api/v1/users/reviews
     @PostMapping(USER_REVIEWS)
-    public ResponseEntity reviewProduct(ReviewDTO reviewDTO) {
+    public ResponseEntity reviewProduct(@RequestBody ReviewDTO reviewDTO) {
 
         ReviewDTO newReview = userService.reviewProduct(reviewDTO);
 

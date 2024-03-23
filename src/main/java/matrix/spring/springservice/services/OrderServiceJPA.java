@@ -100,10 +100,6 @@ public class OrderServiceJPA implements OrderService {
         order.setReceiverInfo(receiverInfo);
         assert user != null;
         order.setDiscountPercentage(user.getMembership().getDiscountPercentage());
-        order.setPaymentMethod(orderDTO.getPaymentMethod());
-        order.setPaymentStatus(orderDTO.getPaymentStatus());
-        order.setTotalPrice(orderDTO.getTotalPrice());
-        order.setShippingFee(orderDTO.getShippingFee());
 
         orderRepository.save(order);
 
@@ -142,7 +138,7 @@ public class OrderServiceJPA implements OrderService {
 
         }
 
-        orderDetailRepository.saveAll(orderDetails);
+        orderDetails = orderDetailRepository.saveAll(orderDetails);
 
         for (CartDetail cartDetail : cartDetails) {
             userService.deleteItemInCart(cartDetail.getId());
@@ -154,7 +150,7 @@ public class OrderServiceJPA implements OrderService {
         shipping.setShippingStatus("Dang xu ly");
         shipping.setShippingLocation("184 Lê Đại Hành - VTC Academy - Booth 4");
 
-        shippingRepository.save(shipping);
+        shipping = shippingRepository.save(shipping);
 
         return orderMapper.orderToOrderDto(order);
     }
