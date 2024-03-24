@@ -100,6 +100,7 @@ public class UserServiceJPA implements UserService {
 
         user.setMembership(membership);
         user.setRole(role);
+        user.setMembershipRank(membership.getMembershipRank());
 
         user = userRepository.save(user);
 

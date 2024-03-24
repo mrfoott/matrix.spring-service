@@ -9,6 +9,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -54,6 +55,15 @@ public class User {
 
     @Column(name = "is_deleted")
     private LocalDateTime isDeleted;
+
+    @Column(name = "dob")
+    private LocalDate dob;
+
+    @Column(name = "gender")
+    private String gender;
+
+    @Column(name = "membership_rank")
+    private String membershipRank;
 
     @CreationTimestamp
     @Column(name = "created_at")
