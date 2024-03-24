@@ -78,8 +78,33 @@ public class OrderServiceJPA implements OrderService {
 
     @Override
     public Optional<OrderDTO> getOrderById(UUID orderId) {
-        return Optional.ofNullable(orderMapper.orderToOrderDto(orderRepository.findById(orderId)
-                .orElse(null)));
+        OrderDTO orderDTO = orderMapper.orderToOrderDto(orderRepository.findById(orderId).orElse(null));
+
+        orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+        orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+        List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
+                .orElse(null)
+                .getOrderDetails();
+
+        List<OrderDetailDTO> orderDetailDTOs = new ArrayList<>();
+
+        for (OrderDetail orderDetail : orderDetails) {
+            OrderDetailDTO orderDetailDTO = orderDetailMapper.orderDetailToOrderDetailDto(orderDetail);
+            orderDetailDTO.setProductId(orderDetail.getProduct().getId());
+            orderDetailDTO.setOrderId(orderDetail.getOrder().getId());
+
+            List<ProductImage> productImages = orderDetail.getProduct().getProductImages();
+
+            orderDetailDTO.setProductImage(productImages.get(0).getImageLink());
+
+            orderDetailDTOs.add(orderDetailDTO);
+        }
+
+        orderDTO.setOrderDetails(orderDetailDTOs);
+
+        return Optional.of(orderDTO);
+
     }
 
     @Override
@@ -102,7 +127,7 @@ public class OrderServiceJPA implements OrderService {
     @Override
     public List<OrderDTO> getAllOrdersOfUserByUserId(UUID userId) {
 
-        List<Order> orderList;
+        List<Order> orderList = new ArrayList<>();
 
         if (!userId.toString().isEmpty()) {
             orderList = listOrdersOfAUser(userId);
@@ -110,10 +135,35 @@ public class OrderServiceJPA implements OrderService {
             return null;
         }
 
-        return orderList
-                .stream()
-                .map(orderMapper::orderToOrderDto)
-                .collect(Collectors.toList());
+        List<OrderDTO> orderDTOList = orderList.stream().map(orderMapper::orderToOrderDto).toList();
+
+        for (OrderDTO orderDTO : orderDTOList) {
+            orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+            orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+            List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
+                    .orElse(null)
+                    .getOrderDetails();
+
+            List<OrderDetailDTO> orderDetailDTOs = new ArrayList<>();
+
+            for (OrderDetail orderDetail : orderDetails) {
+                OrderDetailDTO orderDetailDTO = orderDetailMapper.orderDetailToOrderDetailDto(orderDetail);
+                orderDetailDTO.setProductId(orderDetail.getProduct().getId());
+                orderDetailDTO.setOrderId(orderDetail.getOrder().getId());
+
+                List<ProductImage> productImages = orderDetail.getProduct().getProductImages();
+
+                orderDetailDTO.setProductImage(productImages.get(0).getImageLink());
+
+                orderDetailDTOs.add(orderDetailDTO);
+            }
+
+            orderDTO.setOrderDetails(orderDetailDTOs);
+
+        }
+
+        return orderDTOList;
     }
 
     public List<Order> listOrdersOfAUser(UUID userId) {
@@ -154,6 +204,7 @@ public class OrderServiceJPA implements OrderService {
                 orderDetail.setOrderQuantity(cartDetail.getItemQuantity());
                 orderDetail.setPriceAtOrder(cartDetail.getProduct().getPrice());
                 orderDetail.setProductNameAtOrder(cartDetail.getProductName());
+                orderDetail.setProductImage(product.getProductImages().get(0).getImageLink());
 
                 orderDetails.add(orderDetail);
 

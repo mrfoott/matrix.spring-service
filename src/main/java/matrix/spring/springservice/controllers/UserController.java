@@ -56,6 +56,8 @@ public class UserController {
 
     private final String USER_ORDERS = USERS_PATH + "/orders";
 
+    private final String USER_ORDER_ID = USER_ORDERS + "/info" + "/{orderId}";
+
     private final String USER_ORDERS_USER_ID = USER_ORDERS + "/{userId}";
 
     @DeleteMapping(USER_CART_ID)
@@ -90,6 +92,13 @@ public class UserController {
     public List<ReceiverInfoDTO> getAllReceiverInfoOfAUserByUserId(@PathVariable("userId") UUID userId) {
 
         return userService.getAllReceiverInfoOfAUserByUserId(userId);
+
+    }
+
+    @GetMapping(USER_ORDER_ID)
+    public Optional<OrderDTO> getOrderById(@PathVariable("orderId") UUID orderId) {
+
+        return orderService.getOrderById(orderId);
 
     }
 
