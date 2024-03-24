@@ -29,6 +29,8 @@ public class OrderDetailDTO {
     @NotBlank
     private String productNameAtOrder;
 
+    private String productImage;
+
     private UUID orderId;
     private UUID productId;
     private LocalDateTime createdAt;

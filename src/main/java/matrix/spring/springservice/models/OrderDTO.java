@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
+import matrix.spring.springservice.entities.OrderDetail;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;

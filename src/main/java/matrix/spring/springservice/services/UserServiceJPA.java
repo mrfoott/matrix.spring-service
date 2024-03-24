@@ -52,6 +52,7 @@ public class UserServiceJPA implements UserService {
             userDTO.setPassword(null);
             userDTO.setCreatedAt(null);
             userDTO.setUpdatedAt(null);
+            userDTO.setMembershipId(userRepository.findById(userDTO.getId()).orElse(null).getMembership().getId());
         }
 
         return nonAdminUsers;
@@ -70,6 +71,7 @@ public class UserServiceJPA implements UserService {
         userDTO.setPassword(null);
         userDTO.setCreatedAt(null);
         userDTO.setUpdatedAt(null);
+        userDTO.setMembershipId(userRepository.findById(userDTO.getId()).orElse(null).getMembership().getId());
 
         return Optional.of(userDTO);
 
@@ -435,6 +437,7 @@ public class UserServiceJPA implements UserService {
 
         for (UserDTO userDTO : userDTOList) {
             userDTO.setPassword(null);
+            userDTO.setMembershipId(userRepository.findById(userDTO.getId()).orElse(null).getMembership().getId());
         }
 
         return userDTOList;

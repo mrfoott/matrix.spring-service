@@ -49,6 +49,9 @@ public class OrderDetail {
     @Column(name = "product_name_at_order")
     private String productNameAtOrder;
 
+    @Column(name = "product_image")
+    private String productImage;
+
 //    private UUID orderId;
 //    private UUID productId;
 

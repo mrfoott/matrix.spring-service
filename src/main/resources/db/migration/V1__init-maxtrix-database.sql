@@ -202,6 +202,7 @@ CREATE TABLE IF NOT EXISTS order_detail
     order_quantity        INT            NOT NULL CHECK (order_quantity > 0),
     price_at_order        DECIMAL(19, 2) NOT NULL CHECK (price_at_order > 0),
     product_name_at_order VARCHAR(255)   NOT NULL,
+    product_image         VARCHAR(255),
     order_id              VARCHAR(36),
     product_id            VARCHAR(36),
     created_at            TIMESTAMP,

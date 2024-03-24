@@ -34,15 +34,46 @@ public class OrderServiceJPA implements OrderService {
     private final OrderDetailMapper orderDetailMapper;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductImageRepository productImageRepository;
+    private final ProductImageMapper productImageMapper;
 
     private final UserService userService;
 
     @Override
     public List<OrderDTO> getAllOrders() {
-        return orderRepository.findAll()
+        List<OrderDTO> orderDTOList = orderRepository.findAll()
                 .stream()
                 .map(orderMapper::orderToOrderDto)
                 .collect(Collectors.toList());
+
+        for (OrderDTO orderDTO : orderDTOList) {
+            orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+            orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+            List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
+                    .orElse(null)
+                    .getOrderDetails();
+
+            List<OrderDetailDTO> orderDetailDTOs = new ArrayList<>();
+
+            for (OrderDetail orderDetail : orderDetails) {
+                OrderDetailDTO orderDetailDTO = orderDetailMapper.orderDetailToOrderDetailDto(orderDetail);
+                orderDetailDTO.setProductId(orderDetail.getProduct().getId());
+                orderDetailDTO.setOrderId(orderDetail.getOrder().getId());
+
+                List<ProductImage> productImages = orderDetail.getProduct().getProductImages();
+
+                orderDetailDTO.setProductImage(productImages.get(0).getImageLink());
+
+                orderDetailDTOs.add(orderDetailDTO);
+            }
+
+            orderDTO.setOrderDetails(orderDetailDTOs);
+
+        }
+
+        return orderDTOList;
+
     }
 
     @Override
