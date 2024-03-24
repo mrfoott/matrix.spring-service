@@ -36,6 +36,8 @@ public class UserServiceJPA implements UserService {
     private final MembershipMapper membershipMapper;
     private final ProductRepository productRepository;
     private final ProductMapper productMapper;
+    private final ProductImageRepository productImageRepository;
+    private final ProductImageMapper productImageMapper;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -82,6 +84,7 @@ public class UserServiceJPA implements UserService {
         userDTO.setPassword(null);
         userDTO.setCreatedAt(null);
         userDTO.setUpdatedAt(null);
+        userDTO.setMembershipId(user.getMembership().getId());
 
         return Optional.ofNullable(userDTO);
     }
@@ -132,10 +135,20 @@ public class UserServiceJPA implements UserService {
             return null;
         }
 
-        return itemsInCartOfAUser
-                .stream()
-                .map(cartDetailMapper::cartDetailToCartDetailDto)
-                .collect(Collectors.toList());
+        List<CartDetailDTO> cartDetailDTOList = new ArrayList<>();
+
+        for (CartDetail cartDetail : itemsInCartOfAUser) {
+            CartDetailDTO cartDetailDTO = cartDetailMapper.cartDetailToCartDetailDto(cartDetail);
+
+            cartDetailDTO.setUserId(cartDetail.getUser().getId());
+            cartDetailDTO.setProductId(cartDetail.getProduct().getId());
+            cartDetailDTO.setProductQuantity(cartDetail.getProduct().getProductQuantity());
+
+            cartDetailDTOList.add(cartDetailDTO);
+
+        }
+        return cartDetailDTOList;
+
     }
 
     public List<CartDetail> cartDetailByUserId(UUID userId) {
@@ -247,9 +260,14 @@ public class UserServiceJPA implements UserService {
             User user = userRepository.findById(cartDetailDTO.getUserId()).orElse(null);
             Product product = productRepository.findById(cartDetailDTO.getProductId()).orElse(null);
 
+            List<ProductImage> productImages = productImageRepository.findAllByProductId(cartDetailDTO.getProductId());
+
             CartDetail cartDetail = cartDetailMapper.cartDetailDtoToCartDetail(cartDetailDTO);
             cartDetail.setProduct(product);
             cartDetail.setUser(user);
+            cartDetail.setProductImage(productImages.get(0).getImageLink());
+            cartDetail.setProductName(product.getProductName());
+            cartDetail.setProductPrice(product.getPrice());
 
             cartDetail = cartDetailRepository.save(cartDetail);
 

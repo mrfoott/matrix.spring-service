@@ -34,7 +34,7 @@ public class UserController {
     private final String USER_CART_MINUS_ONE = USER_CART + "/{userId}" + "/minusone" + "/{cartDetailId}";
 
 
-    private final String USER_CART_ID = USER_CART + "/{cartDetailId}";
+    private final String USER_CART_ID = USER_CART + "/{userId}";
 
     private final String USER_PRODUCTS = USERS_PATH + "/products";
 

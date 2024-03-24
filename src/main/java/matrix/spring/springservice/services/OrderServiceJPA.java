@@ -152,6 +152,10 @@ public class OrderServiceJPA implements OrderService {
 
         shipping = shippingRepository.save(shipping);
 
-        return orderMapper.orderToOrderDto(order);
+        OrderDTO returnOrder = orderMapper.orderToOrderDto(order);
+        returnOrder.setUserId(order.getUser().getId());
+        returnOrder.setReceiverInfoId(order.getReceiverInfo().getId());
+
+        return returnOrder;
     }
 }

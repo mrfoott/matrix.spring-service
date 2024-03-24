@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -19,6 +20,9 @@ public class CartDetailDTO {
     private UUID userId;
     private UUID productId;
     private String productName;
+    private String productImage;
+    private BigDecimal productPrice;
+    private Integer productQuantity;
 
     @NotNull
     @Positive

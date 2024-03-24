@@ -11,6 +11,7 @@ import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -43,6 +44,15 @@ public class CartDetail {
 
     @Column(name = "product_name")
     private String productName;
+
+    @Column(name = "product_image")
+    private String productImage;
+
+    @Column(name = "product_price")
+    private BigDecimal productPrice;
+
+//    @Column(name = "product_quantity")
+//    private Integer productQuantity;
 
     @NotNull
     @PositiveOrZero

@@ -1,5 +1,5 @@
 
-CREATE TABLE category
+CREATE TABLE IF NOT EXISTS category
 (
     id            INT        NOT NULL       AUTO_INCREMENT,
     `version`       INT,
@@ -10,7 +10,7 @@ CREATE TABLE category
     PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE `role`
+CREATE TABLE IF NOT EXISTS `role`
 (
     id         INT          NOT NULL        AUTO_INCREMENT,
     `version`    INT,
@@ -21,7 +21,7 @@ CREATE TABLE `role`
     PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE product
+CREATE TABLE IF NOT EXISTS product
 (
     id                  VARCHAR(36)    NOT NULL,
     `version`             INT,
@@ -39,7 +39,7 @@ CREATE TABLE product
     FOREIGN KEY (category_id) REFERENCES category (id)
 ) ;
 
-CREATE TABLE membership
+CREATE TABLE IF NOT EXISTS membership
 (
     id                  INT            NOT NULL         AUTO_INCREMENT,
     `version`             INT,
@@ -53,7 +53,7 @@ CREATE TABLE membership
     PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE `user`
+CREATE TABLE IF NOT EXISTS `user`
 (
     id                      VARCHAR(36)  NOT NULL,
     `version`                 INT,
@@ -75,12 +75,14 @@ CREATE TABLE `user`
     FOREIGN KEY (membership_id) REFERENCES membership (id)
 ) ;
 
-CREATE TABLE `cart_detail`
+CREATE TABLE IF NOT EXISTS `cart_detail`
 (
     id            VARCHAR(36) NOT NULL,
     `version`       INT,
     user_id       VARCHAR(36),
     product_id       VARCHAR(36),
+    product_image   VARCHAR(255),
+    product_price   DECIMAL(19, 2),
     product_name        VARCHAR(255),
     item_quantity INT         NOT NULL CHECK (item_quantity >= 0),
     created_at    TIMESTAMP,
@@ -88,7 +90,7 @@ CREATE TABLE `cart_detail`
     PRIMARY KEY (id)
 ) ;
 
-CREATE TABLE receiver_info
+CREATE TABLE IF NOT EXISTS receiver_info
 (
     id               VARCHAR(36)  NOT NULL,
     `version`          INT,
@@ -104,7 +106,7 @@ CREATE TABLE receiver_info
     FOREIGN KEY (user_id) REFERENCES `user` (id)
 ) ;
 
-CREATE TABLE `orders`
+CREATE TABLE IF NOT EXISTS `orders`
 (
     id             VARCHAR(36)    NOT NULL,
     `version`          INT,
@@ -122,7 +124,7 @@ CREATE TABLE `orders`
     FOREIGN KEY (receiver_info_id) REFERENCES receiver_info (id)
 ) ;
 
-CREATE TABLE product_image
+CREATE TABLE IF NOT EXISTS product_image
 (
     id                VARCHAR(36)  NOT NULL,
     `version`           INT,
@@ -136,7 +138,7 @@ CREATE TABLE product_image
     FOREIGN KEY (product_id) REFERENCES product (id)
 ) ;
 
-CREATE TABLE review
+CREATE TABLE IF NOT EXISTS review
 (
     id             VARCHAR(36) NOT NULL,
     `version`        INT,
@@ -152,7 +154,7 @@ CREATE TABLE review
     FOREIGN KEY (product_id) REFERENCES product (id)
 ) ;
 
-CREATE TABLE review_image
+CREATE TABLE IF NOT EXISTS review_image
 (
     id                VARCHAR(36)  NOT NULL,
     `version`           INT,
@@ -165,7 +167,7 @@ CREATE TABLE review_image
     FOREIGN KEY (review_id) REFERENCES review (id)
 ) ;
 
-CREATE TABLE shipping
+CREATE TABLE IF NOT EXISTS shipping
 (
     id                VARCHAR(36)  NOT NULL,
     `version`           INT,
@@ -178,7 +180,7 @@ CREATE TABLE shipping
     FOREIGN KEY (order_id) REFERENCES `orders` (id)
 ) ;
 
-CREATE TABLE view_history
+CREATE TABLE IF NOT EXISTS view_history
 (
     id         VARCHAR(36) NOT NULL,
     `version`    INT,
@@ -190,7 +192,7 @@ CREATE TABLE view_history
     FOREIGN KEY (product_id) REFERENCES product (id)
 ) ;
 
-CREATE TABLE order_detail
+CREATE TABLE IF NOT EXISTS order_detail
 (
     id                    VARCHAR(36)    NOT NULL,
     `version`               INT,
