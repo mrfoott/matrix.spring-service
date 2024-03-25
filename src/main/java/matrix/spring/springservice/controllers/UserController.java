@@ -60,6 +60,15 @@ public class UserController {
 
     private final String USER_ORDERS_USER_ID = USER_ORDERS + "/{userId}";
 
+    private final String USER_ID_AVATAR = USER_ID + "/avatar";
+
+    @PutMapping(USER_ID_AVATAR)
+    public Optional<UserDTO> updateAvatar(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
+
+        return userService.updateAvatar(userDTO);
+
+    }
+
     @DeleteMapping(USER_CART_ID)
     public Boolean deleteItemInCart(@PathVariable("cartDetailId") UUID cartDetailId) {
 
@@ -134,13 +143,18 @@ public class UserController {
 
     }
 
-    public ResponseEntity<UserDTO> updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
+    @PutMapping(USER_ID)
+    public ResponseEntity<Optional<UserDTO>> updateUserById(@PathVariable("userId") UUID userId, @RequestBody UserDTO userDTO) {
 
         if (userService.updateUserById(userId, userDTO).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        Optional<UserDTO> returnUser = userService.getUserById(userDTO.getId());
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity<>(returnUser, httpHeaders, HttpStatus.OK);
 
     }
 

@@ -94,6 +94,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public Optional<UserDTO> updateAvatar(UserDTO userDTO) {
+        return Optional.empty();
+    }
+
+    @Override
     public Boolean deleteItemInCart(UUID cartDetailId) {
 
         cartDetailDTOMap.remove(cartDetailId);

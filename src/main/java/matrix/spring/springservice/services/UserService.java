@@ -22,6 +22,8 @@ public interface UserService {
 
     Optional<UserDTO> updateUserById(UUID userId, UserDTO userDTO);
 
+    Optional<UserDTO> updateAvatar(UserDTO userDTO);
+
     Boolean deleteItemInCart(UUID cartDetailId);
 
     Optional<CartDetailDTO> plusOneItemInCart(UUID cartDetailId);

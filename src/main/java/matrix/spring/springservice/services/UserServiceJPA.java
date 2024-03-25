@@ -189,6 +189,22 @@ public class UserServiceJPA implements UserService {
 
     }
 
+    @Override
+    public Optional<UserDTO> updateAvatar(UserDTO userDTO) {
+
+        User user = userRepository.findById(userDTO.getId()).orElse(null);
+
+        assert user != null;
+        user.setAvatar(userDTO.getAvatar());
+
+        userRepository.save(user);
+
+        UserDTO returnUser = userMapper.userToUserDto(user);
+
+        return Optional.ofNullable(returnUser);
+
+    }
+
 
     @Override
     public Boolean deleteItemInCart(UUID cartDetailId) {
