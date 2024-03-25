@@ -12,6 +12,8 @@ public interface OrderService {
 
     Optional<OrderDTO> getOrderById(UUID orderId);
 
+    Optional<ShippingDTO> getShippingById(UUID shippingId);
+
     Optional<ShippingDTO> updateShipping(UUID shippingId, ShippingDTO shippingDTO);
 
     List<OrderDTO> getAllOrdersOfUserByUserId(UUID userId);

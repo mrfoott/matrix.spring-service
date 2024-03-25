@@ -28,6 +28,11 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
+    public Optional<ShippingDTO> getShippingById(UUID shippingId) {
+        return Optional.empty();
+    }
+
+    @Override
     public Optional<ShippingDTO> updateShipping(UUID shippingId, ShippingDTO shippingDTO) {
         ShippingDTO existingShipping = shippingDTOMap.get(shippingId);
 

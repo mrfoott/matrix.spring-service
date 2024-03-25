@@ -6,6 +6,7 @@ import jakarta.validation.constraints.Positive;
 import lombok.Builder;
 import lombok.Data;
 import matrix.spring.springservice.entities.OrderDetail;
+import matrix.spring.springservice.entities.Shipping;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -31,6 +32,7 @@ public class OrderDTO {
 
     private UUID userId;
     private UUID receiverInfoId;
+    private UUID shippingId;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
 

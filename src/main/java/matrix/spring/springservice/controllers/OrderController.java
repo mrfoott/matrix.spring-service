@@ -11,6 +11,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Slf4j
@@ -33,6 +34,13 @@ public class OrderController {
     @GetMapping(ORDER_ID_PATH)
     public OrderDTO getOrderById(@PathVariable UUID orderId) {
         return orderService.getOrderById(orderId).orElseThrow(NotFoundException::new);
+    }
+
+    @GetMapping(SHIPPING_ID_PATH)
+    public Optional<ShippingDTO> getShippingById(@PathVariable("shippingId") UUID shippingId) {
+
+        return orderService.getShippingById(shippingId);
+
     }
 
     @PutMapping(SHIPPING_ID_PATH)

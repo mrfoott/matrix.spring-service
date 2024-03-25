@@ -49,6 +49,7 @@ public class OrderServiceJPA implements OrderService {
         for (OrderDTO orderDTO : orderDTOList) {
             orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
             orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+            orderDTO.setShippingId(shippingRepository.findByOrderId(orderDTO.getId()).getId());
 
             List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
                     .orElse(null)
@@ -82,6 +83,7 @@ public class OrderServiceJPA implements OrderService {
 
         orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
         orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+        orderDTO.setShippingId(shippingRepository.findByOrderId(orderDTO.getId()).getId());
 
         List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
                 .orElse(null)
@@ -104,6 +106,18 @@ public class OrderServiceJPA implements OrderService {
         orderDTO.setOrderDetails(orderDetailDTOs);
 
         return Optional.of(orderDTO);
+
+    }
+
+    @Override
+    public Optional<ShippingDTO> getShippingById(UUID shippingId) {
+        Shipping shipping = shippingRepository.findById(shippingId).orElse(null);
+
+        ShippingDTO shippingDTO = shippingMapper.shippingToShippingDto(shipping);
+
+        shippingDTO.setOrderId(shipping.getOrder().getId());
+
+        return Optional.of(shippingDTO);
 
     }
 
@@ -140,6 +154,7 @@ public class OrderServiceJPA implements OrderService {
         for (OrderDTO orderDTO : orderDTOList) {
             orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
             orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+            orderDTO.setShippingId(shippingRepository.findByOrderId(orderDTO.getId()).getId());
 
             List<OrderDetail> orderDetails = orderRepository.findById(orderDTO.getId())
                     .orElse(null)
