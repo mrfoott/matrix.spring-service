@@ -36,6 +36,8 @@ public class UserController {
 
     private final String USER_CART_ID = USER_CART + "/{userId}";
 
+    private final String USER_CART_DETAIL_ID = USER_CART + "/{cartDetailId}";
+
     private final String USER_PRODUCTS = USERS_PATH + "/products";
 
     private final String USER_PRODUCTS_FIND = USER_PRODUCTS + "/find";
@@ -69,7 +71,7 @@ public class UserController {
 
     }
 
-    @DeleteMapping(USER_CART_ID)
+    @DeleteMapping(USER_CART_DETAIL_ID)
     public Boolean deleteItemInCart(@PathVariable("cartDetailId") UUID cartDetailId) {
 
         return userService.deleteItemInCart(cartDetailId);
@@ -78,7 +80,7 @@ public class UserController {
 
 //    /ap1/v1/users/products/find
     @GetMapping(USER_PRODUCTS_FIND)
-    public List<ProductDTO> getAllProductsByProductName(@RequestBody String productName) {
+    public List<ProductDTO> getAllProductsByProductName(@RequestParam String productName) {
 
         return productService.getAllProductsByProductName(productName);
 

@@ -124,18 +124,30 @@ public class OrderServiceJPA implements OrderService {
     @Override
     public Optional<ShippingDTO> updateShipping(UUID shippingId, ShippingDTO shippingDTO) {
 
-        AtomicReference<Optional<ShippingDTO>> atomicReference = new AtomicReference<>();
+//        AtomicReference<Optional<ShippingDTO>> atomicReference = new AtomicReference<>();
+//
+//        shippingRepository.findById(shippingId).ifPresentOrElse(existingShipping -> {
+//            existingShipping.setShippingLocation(shippingDTO.getShippingLocation());
+//            existingShipping.setShippingStatus(shippingDTO.getShippingStatus());
+//
+//            atomicReference.set(Optional.of(shippingMapper
+//                    .shippingToShippingDto(shippingRepository.save(existingShipping))));
+//        }, () -> {
+//            atomicReference.set(Optional.empty());
+//        });
+//        return atomicReference.get();
 
-        shippingRepository.findById(shippingId).ifPresentOrElse(existingShipping -> {
-            existingShipping.setShippingLocation(shippingDTO.getShippingLocation());
-            existingShipping.setShippingStatus(shippingDTO.getShippingStatus());
+        Shipping shipping = shippingRepository.findById(shippingId).orElse(null);
+        shipping.setShippingStatus(shippingDTO.getShippingStatus());
+        shipping.setShippingLocation(shippingDTO.getShippingLocation());
 
-            atomicReference.set(Optional.of(shippingMapper
-                    .shippingToShippingDto(shippingRepository.save(existingShipping))));
-        }, () -> {
-            atomicReference.set(Optional.empty());
-        });
-        return atomicReference.get();
+        shippingRepository.save(shipping);
+
+        ShippingDTO returnShipping = shippingMapper.shippingToShippingDto(shipping);
+        returnShipping.setOrderId(shipping.getOrder().getId());
+
+        return Optional.of(returnShipping);
+
     }
 
     @Override

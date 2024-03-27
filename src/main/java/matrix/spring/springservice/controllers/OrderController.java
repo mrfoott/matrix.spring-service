@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import matrix.spring.springservice.models.OrderDTO;
 import matrix.spring.springservice.models.ShippingDTO;
 import matrix.spring.springservice.services.OrderService;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -44,13 +45,17 @@ public class OrderController {
     }
 
     @PutMapping(SHIPPING_ID_PATH)
-    public ResponseEntity updateShipping(@PathVariable("shippingId") UUID orderId, @Validated @RequestBody ShippingDTO shippingDTO) {
+    public ResponseEntity<Optional<ShippingDTO>> updateShipping(@PathVariable("shippingId") UUID shippingId, @Validated @RequestBody ShippingDTO shippingDTO) {
 
-        if (orderService.updateShipping(orderId, shippingDTO).isEmpty()) {
+        if (orderService.updateShipping(shippingId, shippingDTO).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return new ResponseEntity(HttpStatus.NO_CONTENT);
+        Optional<ShippingDTO> returnShipping = orderService.getShippingById(shippingId);
+
+        HttpHeaders httpHeaders = new HttpHeaders();
+
+        return new ResponseEntity<>(returnShipping, httpHeaders, HttpStatus.OK);
 
     }
 
