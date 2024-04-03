@@ -53,78 +53,27 @@ public class ProductServiceJPA implements ProductService {
     @Override
     public Optional<ProductDTO> getProductById(UUID productId) {
 
-//        HashMap<String, ArrayList> productInfo = new HashMap<>();
-//
-//        List<Product> productList = new ArrayList<>();
-//
-//        List<ReviewImage> reviewImageList = new ArrayList<>();
-//
-//        List<Review> listReviews = new ArrayList<>();
-//
-//        List<ProductImage> productImageList = new ArrayList<>();
-//
-//        Product product = productRepository.findById(productId).orElse(null);
-//
-//        if (product != null) {
-//
-//            ProductDTO productDTO = productMapper.productToProductDto(product);
-//
-//            productList.add(product);
-//
-//            productImageList = listProductImagesOfAProduct(productId);
-//
-//            productImageList
-//                    .stream()
-//                    .map(productImageMapper::productImageToProductImageDto)
-//                    .collect(Collectors.toList());
-//
-//
-////        List reviews of a product
-//
-//            if (!productId.toString().isEmpty()) {
-//                listReviews = listReviewsOfAProduct(productId);
-//            } else {
-//                return null;
-//            }
-//
-//            listReviews
-//                    .stream()
-//                    .map(reviewMapper::reviewToReviewDto)
-//                    .collect(Collectors.toList());
-//
-//            reviewImageList
-//                    .stream()
-//                    .map(reviewImageMapper::reviewImageToReviewImageDto)
-//                    .collect(Collectors.toList());
-//
-////        List review images of a product
-//
-//            for (Review review :
-//                    listReviews) {
-//                List<ReviewImage> listReviewImages = listReviewImagesOfAReview(review.getId());
-//
-//                for (ReviewImage reviewImage :
-//                        listReviewImages) {
-//
-//                    reviewImageList.add(reviewImage);
-//
-//                }
-//
-//            }
-//            productInfo.put("productList", (ArrayList) productList);
-//            productInfo.put("productImageList", (ArrayList) productImageList);
-//            productInfo.put("listReviews", (ArrayList) listReviews);
-//            productInfo.put("reviewImageList", (ArrayList) reviewImageList);
-//
-//        } else {
-//            return null;
-//        }
+        Product product = productRepository.findById(productId).orElse(null);
 
+        ProductDTO productDTO = productMapper.productToProductDto(product);
 
-        return Optional.ofNullable(productMapper.productToProductDto(productRepository.findById(productId)
-                .orElse(null)));
+        List<Review> reviewList = reviewRepository.findAllByProductId(productId);
 
-//        return productInfo;
+        List<ReviewDTO> reviewDTOList = reviewList.stream().map(reviewMapper::reviewToReviewDto).toList();
+
+        for (ReviewDTO reviewDTO : reviewDTOList) {
+
+            Review review = reviewRepository.findById(reviewDTO.getId()).orElse(null);
+
+            reviewDTO.setProductId(review.getProduct().getId());
+            reviewDTO.setUserId(review.getUser().getId());
+
+        }
+
+        productDTO.setProductReviews(reviewDTOList);
+        productDTO.setCategoryId(product.getCategory().getId());
+
+        return Optional.ofNullable(productDTO);
 
     }
 

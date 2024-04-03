@@ -172,11 +172,11 @@ public class UserController {
     @GetMapping(USER_ID)
     public Optional<UserDTO> getInfoOfSelf(@PathVariable("userId") UUID userId) {
 
-        if (userService.getInfoOfSelf(userId).isEmpty()) {
+        if (userService.getUserById(userId).isEmpty()) {
             throw new NotFoundException();
         }
 
-        return userService.getInfoOfSelf(userId);
+        return userService.getUserById(userId);
 
     }
 

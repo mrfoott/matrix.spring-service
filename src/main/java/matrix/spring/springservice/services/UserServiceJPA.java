@@ -68,10 +68,24 @@ public class UserServiceJPA implements UserService {
 
         UserDTO userDTO = userMapper.userToUserDto(user);
 
+        List<CartDetail> cartDetails = cartDetailRepository.findAllByUserId(userId);
+
+        List<CartDetailDTO> cartDetailDTOList = cartDetails.stream().map(cartDetailMapper::cartDetailToCartDetailDto).toList();
+
+        for (CartDetailDTO cartDetailDTO : cartDetailDTOList) {
+
+            CartDetail cartDetail = cartDetailRepository.findById(cartDetailDTO.getId()).orElse(null);
+
+            cartDetailDTO.setProductId(cartDetail.getProduct().getId());
+            cartDetailDTO.setUserId(cartDetail.getUser().getId());
+
+        }
+
         userDTO.setPassword(null);
         userDTO.setCreatedAt(null);
         userDTO.setUpdatedAt(null);
         userDTO.setMembershipId(userRepository.findById(userDTO.getId()).orElse(null).getMembership().getId());
+        userDTO.setCartDetails(cartDetailDTOList);
 
         return Optional.of(userDTO);
 
