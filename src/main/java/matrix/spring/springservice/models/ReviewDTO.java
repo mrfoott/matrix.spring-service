@@ -27,6 +27,8 @@ public class ReviewDTO {
     private UUID userId;
     private UUID productId;
 
+    private String userFullName;
+
 //    private User user;
 //    private Product product;
 
