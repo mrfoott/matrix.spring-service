@@ -78,6 +78,7 @@ public class UserServiceJPA implements UserService {
 
             cartDetailDTO.setProductId(cartDetail.getProduct().getId());
             cartDetailDTO.setUserId(cartDetail.getUser().getId());
+            cartDetailDTO.setProductQuantity(cartDetail.getProduct().getProductQuantity());
 
         }
 
