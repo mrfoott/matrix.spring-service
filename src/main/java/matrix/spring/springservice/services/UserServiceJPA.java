@@ -302,6 +302,7 @@ public class UserServiceJPA implements UserService {
             cartDetail.setProductImage(productImages.get(0).getImageLink());
             cartDetail.setProductName(product.getProductName());
             cartDetail.setProductPrice(product.getPrice());
+            cartDetail.setItemQuantity(cartDetailDTO.getItemQuantity());
 
             cartDetail = cartDetailRepository.save(cartDetail);
 
