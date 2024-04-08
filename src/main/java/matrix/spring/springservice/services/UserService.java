@@ -30,7 +30,7 @@ public interface UserService {
 
     Optional<Object> minusOneItemInCart(UUID cartDetailId);
 
-    CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO);
+    Optional<UserDTO> addProductToCart(CartDetailDTO cartDetailDTO);
 
     ReviewDTO reviewProduct(ReviewDTO reviewDTO);
 

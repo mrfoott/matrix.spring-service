@@ -275,7 +275,7 @@ public class UserServiceJPA implements UserService {
 
 
     @Override
-    public CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO) {
+    public Optional<UserDTO> addProductToCart(CartDetailDTO cartDetailDTO) {
 
         Optional<CartDetail> existingCartDetail = cartDetailRepository.findByUserIdAndProductId(cartDetailDTO.getUserId(), cartDetailDTO.getProductId());
 
@@ -285,7 +285,7 @@ public class UserServiceJPA implements UserService {
 
             cartDetail.setItemQuantity(cartDetail.getItemQuantity() + 1);
 
-            return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(cartDetail));
+            cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(cartDetail));
 
         } else {
 //            return cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository
@@ -305,9 +305,11 @@ public class UserServiceJPA implements UserService {
 
             cartDetail = cartDetailRepository.save(cartDetail);
 
-            return cartDetailMapper.cartDetailToCartDetailDto(cartDetail);
+            cartDetailMapper.cartDetailToCartDetailDto(cartDetail);
 
         }
+
+        return getUserById(cartDetailDTO.getUserId());
 
     }
 

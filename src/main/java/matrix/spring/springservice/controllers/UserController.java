@@ -210,13 +210,15 @@ public class UserController {
 //    POST MAPPING
 
     @PostMapping(USER_CART)
-    public ResponseEntity<CartDetailDTO> addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
+    public ResponseEntity<Optional<UserDTO>> addProductToCart(@RequestBody CartDetailDTO cartDetailDTO) {
 
-        CartDetailDTO newCartDetail = userService.addProductToCart(cartDetailDTO);
+        Optional<UserDTO> returnUser = userService.addProductToCart(cartDetailDTO);
+
+//        Optional<UserDTO> returnUser = userService.getUserById(cartDetailDTO.getUserId());
 
         HttpHeaders httpHeaders = new HttpHeaders();
 
-        return new ResponseEntity<>(newCartDetail, httpHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<>(returnUser, httpHeaders, HttpStatus.CREATED);
 
     }
 

@@ -133,7 +133,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public CartDetailDTO addProductToCart(CartDetailDTO cartDetailDTO) {
+    public Optional<UserDTO> addProductToCart(CartDetailDTO cartDetailDTO) {
 
         CartDetailDTO newCartDetail = CartDetailDTO.builder()
                 .userId(cartDetailDTO.getUserId())
@@ -144,7 +144,7 @@ public class UserServiceImpl implements UserService {
 
         cartDetailDTOMap.put(newCartDetail.getId(), newCartDetail);
 
-        return newCartDetail;
+        return null;
 
     }
 
