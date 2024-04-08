@@ -283,7 +283,7 @@ public class UserServiceJPA implements UserService {
 
             CartDetail cartDetail = existingCartDetail.get();
 
-            cartDetail.setItemQuantity(cartDetail.getItemQuantity() + 1);
+            cartDetail.setItemQuantity(cartDetail.getItemQuantity() + cartDetailDTO.getItemQuantity());
 
             cartDetailMapper.cartDetailToCartDetailDto(cartDetailRepository.save(cartDetail));
 
