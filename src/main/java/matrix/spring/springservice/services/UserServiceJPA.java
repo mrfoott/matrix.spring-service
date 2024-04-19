@@ -38,6 +38,12 @@ public class UserServiceJPA implements UserService {
     private final ProductMapper productMapper;
     private final ProductImageRepository productImageRepository;
     private final ProductImageMapper productImageMapper;
+    private final OrderRepository orderRepository;
+    private final OrderMapper orderMapper;
+    private final OrderDetailRepository orderDetailRepository;
+    private final OrderDetailMapper orderDetailMapper;
+    private final ShippingRepository shippingRepository;
+    private final ShippingMapper shippingMapper;
 
     @Override
     public List<UserDTO> getAllUsers() {
@@ -82,11 +88,33 @@ public class UserServiceJPA implements UserService {
 
         }
 
+        List<Order> orderList = orderRepository.findAllByUserId(userId);
+        List<OrderDTO> orderDTOList = orderList.stream().map(orderMapper::orderToOrderDto).toList();
+
+        for (OrderDTO orderDTO : orderDTOList) {
+
+            List<OrderDetail> orderDetails = orderDetailRepository.findAllByOrderId(orderDTO.getId());
+            List<OrderDetailDTO> orderDetailDTOList = orderDetails.stream().map(orderDetailMapper::orderDetailToOrderDetailDto).toList();
+
+            for (OrderDetailDTO orderDetailDTO : orderDetailDTOList) {
+                orderDetailDTO.setOrderId(orderDetailRepository.findById(orderDetailDTO.getId()).orElse(null).getOrder().getId());
+                orderDetailDTO.setProductId(orderDetailRepository.findById(orderDetailDTO.getId()).orElse(null).getProduct().getId());
+            }
+
+            orderDTO.setOrderDetails(orderDetailDTOList);
+            orderDTO.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+            orderDTO.setShippingId(shippingRepository.findByOrderId(orderDTO.getId()).getId());
+            orderDTO.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+        }
+
         userDTO.setPassword(null);
         userDTO.setCreatedAt(null);
         userDTO.setUpdatedAt(null);
         userDTO.setMembershipId(userRepository.findById(userDTO.getId()).orElse(null).getMembership().getId());
         userDTO.setCartDetails(cartDetailDTOList);
+        userDTO.setOrderList(orderDTOList);
+        userDTO.setRoleId(userRepository.findById(userDTO.getId()).orElse(null).getRole().getId());
 
         return Optional.of(userDTO);
 
