@@ -40,7 +40,13 @@ public class ProductServiceJPA implements ProductService {
 
         List<Product> productList = productRepository.findAll();
 
-        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = productList.stream().map(productMapper::productToProductDto).toList();
+
+        for (ProductDTO productDTO : productDTOList) {
+            productDTO.setCategoryId(productRepository.findById(productDTO.getId()).orElse(null).getCategory().getId());
+        }
+
+        return productDTOList;
 
     }
 
@@ -75,6 +81,7 @@ public class ProductServiceJPA implements ProductService {
 
         productDTO.setProductReviews(reviewDTOList);
         productDTO.setCategoryId(product.getCategory().getId());
+        productDTO.setCreatedAt(productRepository.findById(productDTO.getId()).orElse(null).getCreatedAt());
 
         return Optional.ofNullable(productDTO);
 
@@ -286,9 +293,15 @@ public class ProductServiceJPA implements ProductService {
 
     @Override
     public List<ProductDTO> getAllActiveProducts() {
-        List<Product> productList = productRepository.findAllByIsDeletedNull();
 
-        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+        List<Product> productList = productRepository.findAllByIsDeletedNull();
+        List<ProductDTO> productDTOList = productList.stream().map(productMapper::productToProductDto).toList();
+
+        for (ProductDTO productDTO : productDTOList) {
+            productDTO.setCategoryId(productRepository.findById(productDTO.getId()).orElse(null).getCategory().getId());
+        }
+
+        return productDTOList;
 
     }
 
