@@ -224,6 +224,8 @@ public class UserServiceJPA implements UserService {
         user.setFullName(userDTO.getFullName());
         user.setUserPhone(userDTO.getUserPhone());
         user.setUpdatedAt(LocalDateTime.now());
+        user.setGender(userDTO.getGender());
+        user.setDob(userDTO.getDob());
 
         user = userRepository.save(user);
 
