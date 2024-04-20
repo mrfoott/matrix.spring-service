@@ -309,7 +309,13 @@ public class ProductServiceJPA implements ProductService {
     public List<ProductDTO> getAllProductsByProductName(String productName) {
 //        List<Product> productList = productRepository.findAllByProductNameContainingIgnoreCase(productName);
         List<Product> productList = productRepository.findAllByProductNameIsLikeIgnoreCase("%" + productName + "%");
-        return productList.stream().map(productMapper::productToProductDto).collect(Collectors.toList());
+        List<ProductDTO> productDTOList = productList.stream().map(productMapper::productToProductDto).toList();
+
+        for (ProductDTO productDTO : productDTOList) {
+            productDTO.setCategoryId(productRepository.findById(productDTO.getId()).orElse(null).getCategory().getId());
+        }
+
+        return productDTOList;
 
     }
 
