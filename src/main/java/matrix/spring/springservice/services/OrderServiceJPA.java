@@ -1,5 +1,6 @@
 package matrix.spring.springservice.services;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import matrix.spring.springservice.entities.*;
 import matrix.spring.springservice.mappers.*;
@@ -8,10 +9,9 @@ import matrix.spring.springservice.repositories.*;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
@@ -36,6 +36,8 @@ public class OrderServiceJPA implements OrderService {
     private final ProductMapper productMapper;
     private final ProductImageRepository productImageRepository;
     private final ProductImageMapper productImageMapper;
+    private final MembershipRepository membershipRepository;
+    private final MembershipMapper membershipMapper;
 
     private final UserService userService;
 
@@ -198,6 +200,7 @@ public class OrderServiceJPA implements OrderService {
     }
 
     @Override
+    @Transactional
     public OrderDTO createOrder(OrderDTO orderDTO) {
 
         ReceiverInfo receiverInfo = receiverInfoRepository.findById(orderDTO.getReceiverInfoId()).orElse(null);
@@ -264,7 +267,64 @@ public class OrderServiceJPA implements OrderService {
         OrderDTO returnOrder = orderMapper.orderToOrderDto(order);
         returnOrder.setUserId(order.getUser().getId());
         returnOrder.setReceiverInfoId(order.getReceiverInfo().getId());
+        returnOrder.setShippingId(shipping.getId());
+
+//        BigDecimal currentOrderTotal = calculateOrderTotal(orderDTO);
+        BigDecimal currentOrderTotal = orderDTO.getTotalPrice();
+
+        LocalDateTime currentDate = LocalDateTime.now();
+        LocalDateTime oneYearAgo = currentDate.minusYears(1);
+        BigDecimal totalOrderValueLastYear = getTotalOrderValueLastYear(user, oneYearAgo);
+        Membership membership = user.getMembership();
+
+        BigDecimal totalOrderValue = currentOrderTotal.add(totalOrderValueLastYear);
+
+        if (totalOrderValue.compareTo(membership.getMinPrice()) >= 0) {
+            updateMembership(user, currentDate, totalOrderValue);
+        }
+
 
         return returnOrder;
     }
+
+//    private BigDecimal calculateOrderTotal(OrderDTO orderDTO) {
+//        BigDecimal total = BigDecimal.ZERO;
+//        for (OrderDetailDTO orderDetailDTO : orderDTO.getOrderDetails()) {
+//            BigDecimal price = orderDetailDTO.getPriceAtOrder();
+//            int quantity = orderDetailDTO.getOrderQuantity();
+//            total = total.add(price.multiply(BigDecimal.valueOf(quantity)));
+//        }
+//        return total;
+//    }
+
+    private BigDecimal getTotalOrderValueLastYear(User user, LocalDateTime oneYearAgo) {
+        BigDecimal total = BigDecimal.ZERO;
+        for (Order order : user.getOrderList()) {
+            LocalDateTime orderDate = order.getCreatedAt();
+            if (orderDate.isAfter(oneYearAgo)) {
+                total = total.add(order.getTotalPrice());
+            }
+        }
+        return total;
+    }
+
+    private void updateMembership(User user, LocalDateTime currentDate, BigDecimal totalOrderValue) {
+        List<Membership> memberships = membershipRepository.findAll();
+        memberships.sort(Comparator.comparing(Membership::getMinPrice).reversed());
+
+//        BigDecimal totalOrderValue = user.getOrderList().stream()
+//                .map(Order::getTotalPrice)
+//                .reduce(BigDecimal.ZERO, BigDecimal::add);
+        for (Membership membership : memberships) {
+            if (totalOrderValue.compareTo(membership.getMinPrice()) >= 0) {
+                user.setMembership(membership);
+                user.setMembershipPromotedDay(currentDate);
+                user.setMembershipExpiredDay(currentDate.plusYears(1));
+                user.setMembershipRank(membership.getMembershipRank());
+                userRepository.save(user);
+                break;
+            }
+        }
+    }
+
 }
