@@ -26,6 +26,7 @@ public class ReviewDTO {
     private LocalDateTime isDeleted;
     private UUID userId;
     private UUID productId;
+    private String userAvatar;
 
     private String userFullName;
 

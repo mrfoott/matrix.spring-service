@@ -76,6 +76,7 @@ public class ProductServiceJPA implements ProductService {
             reviewDTO.setProductId(review.getProduct().getId());
             reviewDTO.setUserId(review.getUser().getId());
             reviewDTO.setUserFullName(userRepository.findById(review.getUser().getId()).orElse(null).getFullName());
+            reviewDTO.setUserAvatar(userRepository.findById(review.getUser().getId()).orElse(null).getAvatar());
 
         }
 
