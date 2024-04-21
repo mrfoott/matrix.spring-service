@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -277,10 +278,10 @@ public class OrderServiceJPA implements OrderService {
         BigDecimal totalOrderValueLastYear = getTotalOrderValueLastYear(user, oneYearAgo);
         Membership membership = user.getMembership();
 
-        BigDecimal totalOrderValue = currentOrderTotal.add(totalOrderValueLastYear);
+        BigDecimal totalOrderedValue = currentOrderTotal.add(totalOrderValueLastYear);
 
-        if (totalOrderValue.compareTo(membership.getMinPrice()) >= 0) {
-            updateMembership(user, currentDate, totalOrderValue);
+        if (totalOrderedValue.compareTo(membership.getMinPrice()) >= 0) {
+            updateMembership(user, currentDate, totalOrderedValue, currentOrderTotal);
         }
 
 
@@ -323,7 +324,7 @@ public class OrderServiceJPA implements OrderService {
         return total;
     }
 
-    private void updateMembership(User user, LocalDateTime currentDate, BigDecimal totalOrderValue) {
+    private void updateMembership(User user, LocalDateTime currentDate, BigDecimal totalOrderedValue, BigDecimal currentOrderTotal) {
         List<Membership> memberships = membershipRepository.findAll();
         memberships.sort(Comparator.comparing(Membership::getMinPrice).reversed());
 
@@ -331,11 +332,18 @@ public class OrderServiceJPA implements OrderService {
 //                .map(Order::getTotalPrice)
 //                .reduce(BigDecimal.ZERO, BigDecimal::add);
         for (Membership membership : memberships) {
-            if (totalOrderValue.compareTo(membership.getMinPrice()) >= 0) {
+            if (totalOrderedValue.compareTo(membership.getMinPrice()) >= 0) {
                 user.setMembership(membership);
                 user.setMembershipPromotedDay(currentDate);
                 user.setMembershipExpiredDay(currentDate.plusYears(1));
                 user.setMembershipRank(membership.getMembershipRank());
+
+//                int membershipPoint = currentOrderTotal.divide(BigDecimal.TEN.pow(currentOrderTotal.scale() - 5), RoundingMode.DOWN).intValue();
+                BigDecimal reducedNumber = currentOrderTotal.setScale(currentOrderTotal.scale() - 3, BigDecimal.ROUND_DOWN);
+                int membershipPoint = (reducedNumber.intValue())/1000;
+
+
+                user.setMembershipPoint(user.getMembershipPoint() + (int) membershipPoint);
                 userRepository.save(user);
                 break;
             }
