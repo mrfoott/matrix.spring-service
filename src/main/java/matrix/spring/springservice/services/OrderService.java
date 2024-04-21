@@ -20,6 +20,8 @@ public interface OrderService {
 
     OrderDTO createOrder(OrderDTO orderDTO);
 
+    OrderDTO updateOrder(OrderDTO orderDTO);
+
 //    Might not need payment service!!!
 
 }

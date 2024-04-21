@@ -37,6 +37,15 @@ public class OrderController {
         return orderService.getOrderById(orderId).orElseThrow(NotFoundException::new);
     }
 
+    @PutMapping(ORDER_ID_PATH)
+    public Optional<OrderDTO> updateOrderById(@PathVariable("orderId") UUID orderId, @RequestBody OrderDTO orderDTO) {
+
+        OrderDTO returnOrder = orderService.updateOrder(orderDTO);
+
+        return Optional.ofNullable(returnOrder);
+
+    }
+
     @GetMapping(SHIPPING_ID_PATH)
     public Optional<ShippingDTO> getShippingById(@PathVariable("shippingId") UUID shippingId) {
 

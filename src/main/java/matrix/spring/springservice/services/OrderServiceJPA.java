@@ -287,6 +287,21 @@ public class OrderServiceJPA implements OrderService {
         return returnOrder;
     }
 
+    @Override
+    public OrderDTO updateOrder(OrderDTO orderDTO) {
+
+        Order order = orderRepository.findById(orderDTO.getId()).orElse(null);
+
+        order.setPaymentStatus(orderDTO.getPaymentStatus());
+
+        orderRepository.save(order);
+
+        OrderDTO returnOrder = orderMapper.orderToOrderDto(order);
+
+        return returnOrder;
+
+    }
+
 //    private BigDecimal calculateOrderTotal(OrderDTO orderDTO) {
 //        BigDecimal total = BigDecimal.ZERO;
 //        for (OrderDetailDTO orderDetailDTO : orderDTO.getOrderDetails()) {
