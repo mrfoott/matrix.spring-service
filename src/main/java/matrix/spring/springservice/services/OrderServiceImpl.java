@@ -73,4 +73,14 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO updateOrder(OrderDTO orderDTO) {
         return null;
     }
+
+    @Override
+    public OrderDTO updateBillOfLadingCode(OrderDTO orderDTO) {
+        return null;
+    }
+
+    @Override
+    public OrderDTO updateDeliveryDate(OrderDTO orderDTO) {
+        return null;
+    }
 }

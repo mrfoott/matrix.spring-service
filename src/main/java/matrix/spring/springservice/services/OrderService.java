@@ -22,6 +22,10 @@ public interface OrderService {
 
     OrderDTO updateOrder(OrderDTO orderDTO);
 
+    OrderDTO updateBillOfLadingCode(OrderDTO orderDTO);
+
+    OrderDTO updateDeliveryDate(OrderDTO orderDTO);
+
 //    Might not need payment service!!!
 
 }

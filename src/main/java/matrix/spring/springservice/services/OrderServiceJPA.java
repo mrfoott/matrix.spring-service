@@ -318,6 +318,43 @@ public class OrderServiceJPA implements OrderService {
 
     }
 
+    @Override
+    public OrderDTO updateBillOfLadingCode(OrderDTO orderDTO) {
+
+        Order order = orderRepository.findById(orderDTO.getId()).orElse(null);
+
+        order.setBillOfLadingCode(orderDTO.getBillOfLadingCode());
+
+        orderRepository.save(order);
+
+        OrderDTO returnOrder = orderMapper.orderToOrderDto(order);
+
+        returnOrder.setShippingId(orderRepository.findById(orderDTO.getId()).orElse(null).getShipping().getId());
+        returnOrder.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+        returnOrder.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+        return returnOrder;
+
+    }
+
+    @Override
+    public OrderDTO updateDeliveryDate(OrderDTO orderDTO) {
+        Order order = orderRepository.findById(orderDTO.getId()).orElse(null);
+
+//        order.setDeliveryDate(orderDTO.getDeliveryDate());
+        order.setDeliveryDate(orderDTO.getDeliveryDate());
+
+        orderRepository.save(order);
+
+        OrderDTO returnOrder = orderMapper.orderToOrderDto(order);
+
+        returnOrder.setShippingId(orderRepository.findById(orderDTO.getId()).orElse(null).getShipping().getId());
+        returnOrder.setUserId(orderRepository.findById(orderDTO.getId()).orElse(null).getUser().getId());
+        returnOrder.setReceiverInfoId(orderRepository.findById(orderDTO.getId()).orElse(null).getReceiverInfo().getId());
+
+        return returnOrder;
+    }
+
 //    private BigDecimal calculateOrderTotal(OrderDTO orderDTO) {
 //        BigDecimal total = BigDecimal.ZERO;
 //        for (OrderDetailDTO orderDetailDTO : orderDTO.getOrderDetails()) {

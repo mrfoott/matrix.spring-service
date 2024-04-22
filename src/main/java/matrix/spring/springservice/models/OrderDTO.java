@@ -9,6 +9,7 @@ import matrix.spring.springservice.entities.OrderDetail;
 import matrix.spring.springservice.entities.Shipping;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class OrderDTO {
 
     private String estimatedDeliveryDate;
 
-    private LocalDateTime deliveryDate;
+    private LocalDate deliveryDate;
 
     private String billOfLadingCode;
 

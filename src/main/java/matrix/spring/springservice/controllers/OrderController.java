@@ -22,6 +22,11 @@ public class OrderController {
 
     private final String ORDER_PATH = "/api/v1/orders";
     private final String ORDER_ID_PATH = ORDER_PATH + "/{orderId}";
+
+    private final String ORDER_ID_PATH_BOLC = ORDER_PATH + "/{orderId}" + "/bolc";
+
+    private final String ORDER_ID_PATH_DLD = ORDER_PATH + "/{orderId}" + "/dld";
+
     private final String SHIPPING_PATH = "/api/v1/shipping";
     private final String SHIPPING_ID_PATH = SHIPPING_PATH + "/{shippingId}";
 
@@ -35,6 +40,20 @@ public class OrderController {
     @GetMapping(ORDER_ID_PATH)
     public OrderDTO getOrderById(@PathVariable UUID orderId) {
         return orderService.getOrderById(orderId).orElseThrow(NotFoundException::new);
+    }
+
+    @PutMapping(ORDER_ID_PATH_BOLC)
+    public Optional<OrderDTO> updateBOLC(@PathVariable("orderId") UUID orderId, @RequestBody OrderDTO orderDTO) {
+        OrderDTO returnOrder = orderService.updateBillOfLadingCode(orderDTO);
+
+        return Optional.ofNullable(returnOrder);
+    }
+
+    @PutMapping(ORDER_ID_PATH_DLD)
+    public Optional<OrderDTO> updateDLD(@PathVariable("orderId") UUID orderId, @RequestBody OrderDTO orderDTO) {
+        OrderDTO returnOrder = orderService.updateDeliveryDate(orderDTO);
+
+        return Optional.ofNullable(returnOrder);
     }
 
     @PutMapping(ORDER_ID_PATH)

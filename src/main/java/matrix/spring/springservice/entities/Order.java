@@ -12,6 +12,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -53,8 +54,11 @@ public class Order {
     @Column(name = "estimated_delivery_date")
     private String estimatedDeliveryDate;
 
+//    @Column(name = "delivery_date")
+//    private LocalDate deliveryDate;
+
     @Column(name = "delivery_date")
-    private LocalDateTime deliveryDate;
+    private LocalDate deliveryDate;
 
     @Column(name = "bill_of_lading_code")
     private String billOfLadingCode;
