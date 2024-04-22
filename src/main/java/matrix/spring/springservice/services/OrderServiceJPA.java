@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicReference;
@@ -212,6 +213,20 @@ public class OrderServiceJPA implements OrderService {
         order.setReceiverInfo(receiverInfo);
         assert user != null;
         order.setDiscountPercentage(user.getMembership().getDiscountPercentage());
+        order.setShippingUnit("PN Express");
+
+        LocalDate today = LocalDate.now();
+        LocalDate estimatedDayPlus3 = today.plusDays(3);
+        int day3 = estimatedDayPlus3.getDayOfMonth();
+        int month3 = estimatedDayPlus3.getMonthValue();
+        int year3 = estimatedDayPlus3.getYear();
+
+        LocalDate estimatedDayPlus5 = today.plusDays(5);
+        int day5 = estimatedDayPlus5.getDayOfMonth();
+        int month5 = estimatedDayPlus5.getMonthValue();
+        int year5 = estimatedDayPlus5.getYear();
+
+        order.setEstimatedDeliveryDate(day3 + "/" + month3 + "/" + year3 + " - " + day5 + "/" + month5 + "/" + year5);
 
         orderRepository.save(order);
 

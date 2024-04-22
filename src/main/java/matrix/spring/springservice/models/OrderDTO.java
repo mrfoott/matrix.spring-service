@@ -30,6 +30,14 @@ public class OrderDTO {
 
     private String paymentStatus;
 
+    private String estimatedDeliveryDate;
+
+    private LocalDateTime deliveryDate;
+
+    private String billOfLadingCode;
+
+    private String shippingUnit;
+
     private UUID userId;
     private UUID receiverInfoId;
     private UUID shippingId;

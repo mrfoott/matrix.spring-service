@@ -50,6 +50,18 @@ public class Order {
     @Column(name = "payment_status")
     private String paymentStatus;
 
+    @Column(name = "estimated_delivery_date")
+    private String estimatedDeliveryDate;
+
+    @Column(name = "delivery_date")
+    private LocalDateTime deliveryDate;
+
+    @Column(name = "bill_of_lading_code")
+    private String billOfLadingCode;
+
+    @Column(name = "shipping_unit")
+    private String shippingUnit;
+
 //    @Column(name = "receiver_info_id")
 //    private UUID receiverInfoId;
 
