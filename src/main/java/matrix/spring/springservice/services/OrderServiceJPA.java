@@ -234,10 +234,26 @@ public class OrderServiceJPA implements OrderService {
         List<OrderDetail> orderDetails = new ArrayList<>();
         List<CartDetail> cartDetails = new ArrayList<>();
 
+        boolean hasInvalidCartDetail = false;
+
+        if (orderDTO.getCartDetailIdList().isEmpty()) {
+            throw new IllegalArgumentException("CartDetailIdList cannot be empty");
+        }
+
         for (String cartDetailId : cartDetailIdList) {
             CartDetail cartDetail = cartDetailRepository.findById(UUID.fromString(cartDetailId)).orElse(null);
+            if (cartDetail == null) {
+                hasInvalidCartDetail = true;
+                throw new IllegalArgumentException("Invalid cartDetailId: " + cartDetailId);
+            }
             cartDetails.add(cartDetail);
         }
+
+        if (hasInvalidCartDetail) {
+            return null;
+        }
+
+        boolean hasEnoughStock = true;
 
         for (CartDetail cartDetail : cartDetails) {
             Product product = cartDetail.getProduct();
@@ -260,10 +276,16 @@ public class OrderServiceJPA implements OrderService {
                 productRepository.save(product);
 
             } else {
-                break;
-//                return "Not enough in-stock quantity";
+//                hasEnoughStock = false;
+//                break;
+////                return "Not enough in-stock quantity";
+                throw new IllegalArgumentException("Không đủ hàng trong kho: " + product.getProductName() + ", số lượng: " + cartDetail.getItemQuantity());
             }
 
+        }
+
+        if (!hasEnoughStock) {
+            return null;
         }
 
         orderDetails = orderDetailRepository.saveAll(orderDetails);
