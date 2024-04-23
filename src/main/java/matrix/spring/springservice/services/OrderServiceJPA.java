@@ -237,14 +237,14 @@ public class OrderServiceJPA implements OrderService {
         boolean hasInvalidCartDetail = false;
 
         if (orderDTO.getCartDetailIdList().isEmpty()) {
-            throw new IllegalArgumentException("CartDetailIdList cannot be empty");
+            throw new IllegalArgumentException("Giỏ hàng trống");
         }
 
         for (String cartDetailId : cartDetailIdList) {
             CartDetail cartDetail = cartDetailRepository.findById(UUID.fromString(cartDetailId)).orElse(null);
             if (cartDetail == null) {
                 hasInvalidCartDetail = true;
-                throw new IllegalArgumentException("Invalid cartDetailId: " + cartDetailId);
+                throw new IllegalArgumentException("Id giỏ hàng không tồn tại: " + cartDetailId);
             }
             cartDetails.add(cartDetail);
         }
