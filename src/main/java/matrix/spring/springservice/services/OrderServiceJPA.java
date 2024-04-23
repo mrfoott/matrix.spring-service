@@ -331,6 +331,8 @@ public class OrderServiceJPA implements OrderService {
         Order order = orderRepository.findById(orderDTO.getId()).orElse(null);
 
         order.setPaymentStatus(orderDTO.getPaymentStatus());
+        order.setBillOfLadingCode(orderDTO.getBillOfLadingCode());
+        order.setDeliveryDate(orderDTO.getDeliveryDate());
 
         orderRepository.save(order);
 
